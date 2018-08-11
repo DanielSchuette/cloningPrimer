@@ -7,7 +7,6 @@ import (
 
 /*
 * TODO:
-*  find forward primer: func FindForward()
 *  find complement/reverse complement of a sequence: func Reverse(), func Complement()
 *  find reverse primer: func FindReverse()
 *  add restriction site + random bp's: AddOverhang
@@ -46,28 +45,14 @@ func FindForward(seq, restrict string, start, length, random int) (string, error
 			break
 		}
 	}
-	// append restriction side
-	result := restrict + string(b) /* concatenate the newly assembled string and the user input `restrict' */
-
-	// append pseudo random nucleotides
-	for i := 2; i < (random + 2); i++ {
-		switch {
-		case i%4 == 0:
-			result = "G" + result
-		case i%3 == 0:
-			result = "C" + result
-		case i%2 == 0:
-			result = "T" + result
-		default:
-			result = "A" + result
-		}
-	}
+	result := restrict + string(b)             /* concatenate the newly assembled string and the user input `restrict' */
+	result = AddOverhang(result, random, true) /* add `random' number of nucleotides to front of `result' */
 	return result, nil
 }
 
 // FindReverse finds a reverse primer of specified length binding at the specified end position
 // TODO: documentation
-func FindReverse(seq string, end, length int) (string, error) {
+func FindReverse(seq, restrict string, start, length, random int) (string, error) {
 	return "", nil
 }
 
@@ -80,4 +65,35 @@ func IsNucleotide(letter byte) bool {
 	default:
 		return false
 	}
+}
+
+// Reverse finds the reverse of a nucleotide sequence
+func Reverse() {
+	return
+}
+
+// Complement finds the complement of a nucleotide sequence
+func Complement() {
+	return
+}
+
+// AddOverhang appends pseudo-random nucleotides as an overhang to the front (`front' = True) or back (`front' = False) of the input nucleotide sequence `seq' (overhang is of length `len')
+func AddOverhang(seq string, len int, front bool) string {
+	overhang := ""
+	for i := 2; i < (len + 2); i++ {
+		switch {
+		case i%4 == 0:
+			overhang = "G" + overhang
+		case i%3 == 0:
+			overhang = "C" + overhang
+		case i%2 == 0:
+			overhang = "T" + overhang
+		default:
+			overhang = "A" + overhang
+		}
+	}
+	if front {
+		return overhang + result
+	}
+	return result + overhang
 }
