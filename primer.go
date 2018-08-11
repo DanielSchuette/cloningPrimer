@@ -7,6 +7,7 @@ import (
 
 /*
 * TODO:
+*  UNIT TESTS!
 *  find complement/reverse complement of a sequence: func Reverse(), func Complement()
 *  find reverse primer: func FindReverse()
 *  add restriction site + random bp's: AddOverhang
@@ -30,7 +31,7 @@ func FindForward(seq, restrict string, start, length, random int) (string, error
 	}
 
 	// return an error if `random' > 6 or < 3
-	if (random < 3) && (random > 6) {
+	if (random < 3) || (random > 6) {
 		return "", fmt.Errorf("invalid input random = %v, expected integer value between 3 and 6", random)
 	}
 
@@ -38,8 +39,8 @@ func FindForward(seq, restrict string, start, length, random int) (string, error
 	b := make([]byte, 0)
 	for i, l := range []byte(seq) {
 		if (i >= (start - 1)) && !(i > (length - 1)) {
-			l = byte(strings.ToUpper(string(l))) /* make current letter a string, upper case, and byte again */
-			b = append(b, l)
+			l := []byte(strings.ToUpper(string(l))) /* make current letter a string, upper case, and byte again */
+			b = append(b, l...)
 		}
 		if i > (length - 1) {
 			break
@@ -72,9 +73,21 @@ func Reverse() {
 	return
 }
 
-// Complement finds the complement of a nucleotide sequence
-func Complement() {
-	return
+// Complement finds the complement of a nucleotide sequence (i.e. Watson-Crick base pairs)
+func Complement(nucleotide byte) (byte, error) {
+	if !IsNucleotide(nucleotide) {
+		return 0, fmt.Errorf("invalid input: %v is not a nucleotide", nucleotide)
+	}
+	switch nucleotide {
+	case 'A', 'a':
+		return 'T', nil
+	case 'T', 't':
+		return 'A', nil
+	case 'C', 'c':
+		return 'G', nil
+	case 'G', 'g':
+		return 'C', nil
+	}
 }
 
 // AddOverhang appends pseudo-random nucleotides as an overhang to the front (`front' = True) or back (`front' = False) of the input nucleotide sequence `seq' (overhang is of length `len')
@@ -93,7 +106,7 @@ func AddOverhang(seq string, len int, front bool) string {
 		}
 	}
 	if front {
-		return overhang + result
+		return overhang + seq
 	}
-	return result + overhang
+	return seq + overhang
 }

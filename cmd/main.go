@@ -9,23 +9,22 @@ import (
 
 func main() {
 	// find forward primer with EcoRI restriction site and 5 random nucleotides
-	res, err := cloningprimer.FindForward("CAATGTGAGCTTAGCCTGATCCGTAATCGTAAGT", "GAATTC", 1, 10, 12)
+	input := "CAATGTGAGCTTAGCCTGATCCGTAATCGTAAGT"
+	forward, err := cloningprimer.FindForward(input, "GAATTC", 1, 18, 4)
 	if err != nil {
 		log.Fatalf("error finding forward primer: %s\n", err)
 	}
-	if res == "" {
-		log.Fatalf("no forward primer returned\n")
+	if forward == "" {
+		log.Fatalf("no forward primer found\n")
 	}
-	fmt.Printf("result: %s\n", res)
-
-	// find forward primer with wrong sequence
-	// TODO: implement unit test for validity checks
-	res2, err := cloningprimer.FindForward("tAATGTGACTTAGCCTGATCCGTAATCGTAAGT", "GAATTC", 1, 10, 12)
+	reverse, err := cloningprimer.FindReverse(input, "GAATTC", 1, 18, 4)
 	if err != nil {
-		log.Fatalf("error finding forward primer: %s\n", err)
+		log.Fatalf("error finding reverse primer: %s\n", err)
 	}
-	if res2 == "" {
-		log.Fatalf("no forward primer returned\n")
-	}
-	fmt.Printf("result: %s\n", res2)
+	/*
+		if reverse == "" {
+			log.Fatalf("no reverse primer found\n")
+		}
+	*/
+	fmt.Printf("input: %s\nforward primer: %s\nreverse primer: %s\n", input, forward, reverse)
 }
