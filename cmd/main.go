@@ -17,14 +17,16 @@ func main() {
 	if forward == "" {
 		log.Fatalf("no forward primer found\n")
 	}
-	reverse, err := cloningprimer.FindReverse(input, "GAATTC", 1, 18, 4)
+
+	// find reverse primer with BamHI restriction site and 8 random nucleotides
+	reverse, err := cloningprimer.FindReverse(input, "GGATCC", 1, 20, 8)
 	if err != nil {
 		log.Fatalf("error finding reverse primer: %s\n", err)
 	}
-	/*
-		if reverse == "" {
-			log.Fatalf("no reverse primer found\n")
-		}
-	*/
+	if reverse == "" {
+		log.Fatalf("no reverse primer found\n")
+	}
+
+	// print results
 	fmt.Printf("input: %s\nforward primer: %s\nreverse primer: %s\n", input, forward, reverse)
 }

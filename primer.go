@@ -27,6 +27,10 @@ import (
 // a primer will be returned that binds to nucleotides 1 - 10.
 func FindForward(seq, restrict string, seqStart, length, random int, startCodon bool) (string, error) {
 	// check validity of input
+	// return an error if `seqStart' < 1
+	if seqStart < 1 {
+		return "", fmt.Errorf("invalid input: primer start point must be an integer > 0 (not %d)", seqStart)
+	}
 	// return an error if `seq' contains invalid letters (anything except for A,T,C,G)
 	for i := 0; i < len(seq); i++ {
 		if !IsNucleotide(seq[i]) {
@@ -39,10 +43,14 @@ func FindForward(seq, restrict string, seqStart, length, random int, startCodon 
 		return "", fmt.Errorf("invalid input random = %v, expected integer value between 2 and 10", random)
 	}
 
-	// following https://www.neb.com/protocols/1/01/01/primer-design-e6901, a `length' < 16 and > `seq'
-	// returns an error
-	if (length < 16) || (length > len(seq)) {
+	// a `length' < 16, > 30 and > `seq' returns an error
+	if (length < 16) || (length > 30) || (length > len(seq)) {
 		return "", fmt.Errorf("invalid input length = %d, must be an integer value larger than 15 and smaller than the length of the given sequence", length)
+	}
+
+	// if (`seqStart' + `length' -1) > length of `seq' an error is returned
+	if (seqStart + length - 1) > len(seq) { /* subtract 1 because the nucleotide at `seqStart' is part of the sequence */
+		return "", fmt.Errorf("invalid input, the given sequence (%d nucleotides) is not long enough for a primer of length = %d starting at nucleotide %d (%d > %d)", len(seq), length, seqStart, seqStart+length-1, len(seq))
 	}
 
 	// loop over letters in sequence and append the appropriate ones to a slice of bytes
@@ -56,9 +64,11 @@ func FindForward(seq, restrict string, seqStart, length, random int, startCodon 
 			break
 		}
 	}
-	if !HasStartCodon(string(b)) {
-		return "", errors.New("input sequence does not begin with a start codon ('ATG')")
-		// TODO: automatically add start codon (`startCodon' bool)
+	if !HasStartCodon(string(b)) && !startCodon {
+		return "", errors.New("input sequence does not begin with a start codon ('ATG')\nmake sure to automatically add a start codon by setting `startCodon' to `true'")
+	}
+	if !HasStartCodon(string(b)) && startCodon {
+		b = append([]byte("ATG"), b...)
 	}
 	result := restrict + string(b)             /* concatenate the newly assembled string and the user input `restrict' */
 	result = AddOverhang(result, random, true) /* add `random' number of nucleotides to front of `result' */
