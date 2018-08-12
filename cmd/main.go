@@ -9,8 +9,8 @@ import (
 
 func main() {
 	// find forward primer with EcoRI restriction site and 5 random nucleotides
-	input := "CAATGTGAGCTTAGCCTGATCCGTAATCGTAAGT"
-	forward, err := cloningprimer.FindForward(input, "GAATTC", 1, 18, 4)
+	input := "ATGCAATGTGAGCTTAGCCTGATCCGTAATCGTAAGT"
+	forward, err := cloningprimer.FindForward(input, "GAATTC", 1, 18, 4, false)
 	if err != nil {
 		log.Fatalf("error finding forward primer: %s\n", err)
 	}
