@@ -10,15 +10,13 @@ import (
 /*
 * TODO:
 *  UNIT TESTS!
-*  find complement/reverse complement of a sequence: func Reverse(), func Complement()
 *  find reverse primer: func FindReverse()
-*  add restriction site + random bp's: AddOverhang
 *  calculate stats, e.g. GC content (read up on that): func CalcStats()
 *  check proper start and stop codon (ATC and ... stops)
 *  check for frame shifts if primer does not start in the beginning
 *  check sequence for restriction sites, start codons, stop codon, ...
 * TODO:
-*  pull restriction sites from the internet: GetRSites()
+*  pull restriction sites from file: parse.go
 *  pull plasmid information from file and test for restriction sites: func CheckPlasmid ()
 *  offer access to NCBI blast API (if available?): Blast()
 *  check spaces in sequence and just silently delete them
@@ -36,9 +34,9 @@ func FindForward(seq, restrict string, seqStart, length, random int, startCodon 
 		}
 	}
 
-	// return an error if `random' > 6 or < 3
-	if (random < 3) || (random > 6) {
-		return "", fmt.Errorf("invalid input random = %v, expected integer value between 3 and 6", random)
+	// return an error if `random' > 10 or < 2
+	if (random < 2) || (random > 10) {
+		return "", fmt.Errorf("invalid input random = %v, expected integer value between 2 and 10", random)
 	}
 
 	// following https://www.neb.com/protocols/1/01/01/primer-design-e6901, a `length' < 16 and > `seq'
