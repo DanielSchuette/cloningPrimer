@@ -1,32 +1,21 @@
 package main
 
 import (
-	"fmt"
-	"log"
+	"flag"
+)
 
-	cloningprimer "github.com/DanielSchuette/cloningPrimer"
+var (
+	seqFile     = flag.String("seq_file", "", "valid file path to a ...")
+	enzymeFile  = flag.String("enzyme_file", "", "valid file path to a ...\ndefault is the file at 'github.com/DanielSchuette/enzymes.re'")
+	enzymeNameF = flag.String("enzyme_name_forward", "", "name of the enzyme you want to use for the 5' end (must be in the '--enzyme_file')")
+	enzymeNameR = flag.String("enzyme_name_reverse", "", "name of the enzyme you want to use for the 3' end (must be in the '--enzyme_file')")
+	overhangF   = flag.Int("overhang_forward", 4, "number of random nucleotides added to the forward primer (an integer between 2 - 10)")
+	overhangR   = flag.Int("overhang_reverse", 4, "number of random nucleotides added to the reverse primer (an integer between 2 - 10)")
 )
 
 func main() {
-	// find forward primer with EcoRI restriction site and 5 random nucleotides
-	input := "ATGCAAAAACGGGCGATTTATCCGGGTACTTTCGATCCCATTACCAATGGTCATATCGATATCGTGACGCGCGCCACGCAGATGTTCGATCACGTTATTCTGGCGATTGCCGCCAGCCCCAGTAAAAAACCGATGTTTACCCTGGAAGAGCGTGTGGCACTGGCACAGCAGGCAACCGCGCATCTGGGGAACGTGGAAGTGGTCGGGTTTAGTGATTTAATGGCGAACTTCGCCCGTAATCAACACGCTACGGTGCTGATTCGTGGCCTGCGTGCGGTGGCAGATTTTGAATATGAAATGCAGCTGGCGCATATGAATCGCCACTTAATGCCGGAACTGGAAAGTGTGTTTCTGATGCCGTCGAAAGAGTGGTCGTTTATCTCTTCATCGTTGGTGAAAGAGGTGGCGCGCCATCAGGGCGATGTCACCCATTTCCTGCCGGAGAATGTCCATCAGGCGCTGATGGCGAAGTTAGCGTAG"
-	forward, err := cloningprimer.FindForward(input, "GAATTC", 1, 18, 4, false)
-	if err != nil {
-		log.Fatalf("error finding forward primer: %s\n", err)
-	}
-	if forward == "" {
-		log.Fatalf("no forward primer found\n")
-	}
+	// parse command line arguments
+	flag.Parse()
 
-	// find reverse primer with BamHI restriction site and 3 random nucleotides
-	reverse, err := cloningprimer.FindReverse(input, "GGATCC", 1, 20, 3, true)
-	if err != nil {
-		log.Fatalf("error finding reverse primer: %s\n", err)
-	}
-	if reverse == "" {
-		log.Fatalf("no reverse primer found\n")
-	}
-
-	// print results
-	fmt.Printf("input: %s\nforward primer: %s\nreverse primer: %s\n", input, forward, reverse)
+	// TODO: implement
 }

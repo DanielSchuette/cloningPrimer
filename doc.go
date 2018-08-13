@@ -33,6 +33,29 @@
 // TODO: C-terminal TAA (preferred because less prone to read-through than TAG and TGA; 2 or 3 stop codons are possible) in-frame with ORF
 //
 //
+// More TODO's:
+//
+// - UNIT TESTS!
+//
+// - Web interface
+//
+// - CLI
+//
+// - API documentation
+//
+// - calculate stats (see above): func CalcStats()
+//
+// - check sequence and recognition sites for restriction sites, start codons, stop codon, ...
+//
+// - pull restriction sites from file: parse.go
+//
+// - pull plasmid information from file and test for restriction sites: func CheckPlasmid ()
+//
+// - offer access to NCBI blast API (if available?): Blast()
+//
+// - check spaces in sequence and silently delete them
+//
+//
 // Code Example:
 //
 /*
@@ -58,30 +81,4 @@
 	// print results
 	fmt.Printf("input: %s\nforward primer: %s\nreverse primer: %s\n", input, forward, reverse)
 */
-//
-//
-// TODO: move example to ./doc.go
-//
-//
-// More TODO's:
-//
-// - UNIT TESTS!
-//
-// - Web interface
-//
-// - CLI
-//
-// - API documentation
-//
-// - calculate stats (see above): func CalcStats()
-//
-// - check sequence and recognition sites for restriction sites, start codons, stop codon, ...
-//
-// - pull restriction sites from file: parse.go
-//
-// - pull plasmid information from file and test for restriction sites: func CheckPlasmid ()
-//
-// - offer access to NCBI blast API (if available?): Blast()
-//
-// - check spaces in sequence and silently delete them
 package cloningprimer
