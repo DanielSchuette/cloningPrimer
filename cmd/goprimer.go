@@ -2,6 +2,8 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"os"
 )
 
 var (
@@ -17,5 +19,10 @@ func main() {
 	// parse command line arguments
 	flag.Parse()
 
+	// check if `seqFile' and `enzymeFile' arguments are provided
+	if (seqFile == "") || (enzymeFile == "") {
+		fmt.Println("arguments `--seq_file' and `--enzyme_file' are required (see `--help' for more information)")
+		os.Exit(1)
+	}
 	// TODO: implement
 }
