@@ -2,7 +2,9 @@
 //
 // Resources:
 // https://www.neb.com/protocols/1/01/01/primer-design-e6901
+// https://www.protocols.io/view/Primer-Design-for-Restriction-Enzyme-Cloning-E6901-imsvmd?guidelines
 // https://www.addgene.org/mol-bio-reference/restriction-enzymes/
+// https://www.addgene.org/protocols/pcr-cloning/
 // https://www.embl.de/pepcore/pepcore_services/cloning/pcr_strategy/primer_design/amplification/index.html
 // https://www.embl.de/pepcore/pepcore_services/cloning/pcr_strategy/primer_design/
 //
