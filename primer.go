@@ -42,7 +42,7 @@ func FindForward(seq, restrict string, seqStart, length, random int, startCodon 
 	}
 
 	// loop over letters in sequence and append the appropriate ones to a slice of bytes
-	b := make([]byte, 0)
+	var b []byte
 	for i, l := range []byte(seq) {
 		if (i >= (seqStart - 1)) && !(i >= (seqStart + length - 1)) {
 			l := []byte(strings.ToUpper(string(l))) /* make current letter a string, upper case, and byte again */
@@ -74,7 +74,7 @@ func FindReverse(seq, restrict string, seqStart, length, random int, stopCodon b
 
 	// compute the reverse of the input sequence and the complementary sequence of the reversed sequence `seqRev'
 	seqRev := Reverse(seq)
-	complement := make([]byte, 0)
+	var complement []byte
 	for i := 0; i < len(seq); i++ {
 		c, err := Complement([]byte(seqRev)[i])
 		if err != nil {
@@ -84,7 +84,7 @@ func FindReverse(seq, restrict string, seqStart, length, random int, stopCodon b
 	}
 
 	// loop over letters in `complement' sequence and append the appropriate ones to a slice of bytes
-	b := make([]byte, 0)
+	var b []byte
 	for i, l := range []byte(complement) {
 		if (i >= (seqStart - 1)) && !(i >= (seqStart + length - 1)) {
 			l := []byte(strings.ToUpper(string(l))) /* make current letter a string, upper case, and byte again */
@@ -122,7 +122,7 @@ func IsNucleotide(letter byte) bool {
 
 // Reverse finds the reverse of a nucleotide sequence; it requires prior checking of possible sources of errors (for example, it does not check if the input sequence contains invalid nucleotide letters); thus, `Reverse' should be called in the context of a valid `seq' input argument
 func Reverse(seq string) string {
-	seqRev := make([]byte, 0)
+	var seqRev []byte
 	for i := len(seq) - 1; i >= 0; i-- {
 		seqRev = append(seqRev, []byte(seq)[i])
 	}
