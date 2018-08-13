@@ -1,13 +1,13 @@
 # ignore data/example/... directories
-assets/
+_assets/
 examples/
 data/
 
 # ignore windows executables
-*.exe
+#*.exe
 
 # ignore bin directory
-bin/
+#bin/
 
 # ignore OS specific files
 windows*
