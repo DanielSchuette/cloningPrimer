@@ -206,7 +206,7 @@ func TestFindReverse(t *testing.T) {
 				random:   4,
 				addCodon: true,
 			},
-			want: "AGCTGAATTCATGCCGTCGCATTCTG", /* the expected output is the entire sequence plus overhang */
+			want: "AGCTGAATTCTTACAGAATGCGACGGCAT", /* the expected output is the entire sequence plus overhang */
 			err:  nil,
 		},
 		// test `seq' that is shorter than (`length' + `seqStart' - 1)
@@ -258,9 +258,9 @@ func TestFindReverse(t *testing.T) {
 				addCodon: false,
 			},
 			want: "",
-			err:  errors.New("input sequence does not begin with a start codon ('ATG')\nmake sure to automatically add a start codon by setting `startCodon' to `true'"),
+			err:  errors.New("input sequence does not begin with a stop codon ('TAA', 'TAG', 'TGA')\nmake sure to automatically add a start codon by setting `startCodon' to `true'"),
 		},
-		// addition of 'ATG' start codon
+		// recognition of valid 'TGA' stop codon at position 8 from 3' end
 		{
 			in: inputForPrimer{
 				seq:      "CTGCCGTCGCATTGTCCATCTTACTGACCTGATGTGCCA",
@@ -270,7 +270,32 @@ func TestFindReverse(t *testing.T) {
 				random:   3,
 				addCodon: true,
 			},
-			want: "GCTGAATTCATGCGCATTGTCCATCTTA", /* start codon should be inserted right after recognition sequence */
+			want: "GCTGAATTCTCAGGTCAGTAAGATG", /* stop codon should be correctly recognized and inserted */
+			err:  nil,
+		},
+		{
+			in: inputForPrimer{
+				seq:      "AAAAATTTTTTTCCATCAGGCGCTGATGGCGAAGTTAGCGTAG", /* has 'TAG' stop codon */
+				restrict: "GAATTC",
+				seqStart: 1,
+				length:   20,
+				random:   3,
+				addCodon: true,
+			},
+			want: "GCTGAATTCCTACGCTAACTTCGCCATCA",
+			err:  nil,
+		},
+		// insertion of 'TAA' stop codon
+		{
+			in: inputForPrimer{
+				seq:      "AAAAATTTTTTTCCATCAGGCGCTGATGGCGAAGTTAGCG", /* same `seq' as previous example, but w/o stop */
+				restrict: "GAATTC",
+				seqStart: 1,
+				length:   20,
+				random:   3,
+				addCodon: true,
+			},
+			want: "GCTGAATTCTTACGCTAACTTCGCCATCAGCG",
 			err:  nil,
 		},
 		// invalid `seqStart'
@@ -290,16 +315,16 @@ func TestFindReverse(t *testing.T) {
 
 	// loop over test cases
 	for _, c := range cases {
-		got, err := FindForward(c.in.seq, c.in.restrict, c.in.seqStart, c.in.length, c.in.random, c.in.addCodon)
+		got, err := FindReverse(c.in.seq, c.in.restrict, c.in.seqStart, c.in.length, c.in.random, c.in.addCodon)
 
 		// test similarity of expected and received value
 		if got != c.want {
-			t.Errorf("FindForward(%v, %v, %v, %v, %v, %v) == %v, want %v\n", c.in.seq, c.in.restrict, c.in.seqStart, c.in.length, c.in.random, c.in.addCodon, got, c.want)
+			t.Errorf("FindReverse(%v, %v, %v, %v, %v, %v) == %v, want %v\n", c.in.seq, c.in.restrict, c.in.seqStart, c.in.length, c.in.random, c.in.addCodon, got, c.want)
 		}
 
 		// if no error is returned, test if none is expected
 		if err == nil && c.err != nil {
-			t.Errorf("FindForward(%v, %v, %v, %v, %v, %v) == %v, want %v\n", c.in.seq, c.in.restrict, c.in.seqStart, c.in.length, c.in.random, c.in.addCodon, err, c.err)
+			t.Errorf("FindReverse(%v, %v, %v, %v, %v, %v) == %v, want %v\n", c.in.seq, c.in.restrict, c.in.seqStart, c.in.length, c.in.random, c.in.addCodon, err, c.err)
 		}
 
 		// if error is returned, test if an error is expected
@@ -308,12 +333,34 @@ func TestFindReverse(t *testing.T) {
 			// else if an error is wanted and received but error messages are not the same
 			// print wanted and received error
 			if c.err == nil {
-				t.Errorf("FindForward(%v, %v, %v, %v, %v, %v) == %v, want %v\n", c.in.seq, c.in.restrict, c.in.seqStart, c.in.length, c.in.random, c.in.addCodon, err, c.err)
+				t.Errorf("FindReverse(%v, %v, %v, %v, %v, %v) == %v, want %v\n", c.in.seq, c.in.restrict, c.in.seqStart, c.in.length, c.in.random, c.in.addCodon, err, c.err)
 			} else if err.Error() != c.err.Error() {
-				t.Errorf("FindForward(%v, %v, %v, %v, %v, %v) == %v, want %v\n", c.in.seq, c.in.restrict, c.in.seqStart, c.in.length, c.in.random, c.in.addCodon, err, c.err)
+				t.Errorf("FindReverse(%v, %v, %v, %v, %v, %v) == %v, want %v\n", c.in.seq, c.in.restrict, c.in.seqStart, c.in.length, c.in.random, c.in.addCodon, err, c.err)
 			}
 		}
 	}
 }
 
-// with stop codon: ATGCAAAAACGGGCGATTTATCCGGGTACTTTCGATCCCATTACCAATGGTCATATCGATATCGTGACGCGCGCCACGCAGATGTTCGATCACGTTATTCTGGCGATTGCCGCCAGCCCCAGTAAAAAACCGATGTTTACCCTGGAAGAGCGTGTGGCACTGGCACAGCAGGCAACCGCGCATCTGGGGAACGTGGAAGTGGTCGGGTTTAGTGATTTAATGGCGAACTTCGCCCGTAATCAACACGCTACGGTGCTGATTCGTGGCCTGCGTGCGGTGGCAGATTTTGAATATGAAATGCAGCTGGCGCATATGAATCGCCACTTAATGCCGGAACTGGAAAGTGTGTTTCTGATGCCGTCGAAAGAGTGGTCGTTTATCTCTTCATCGTTGGTGAAAGAGGTGGCGCGCCATCAGGGCGATGTCACCCATTTCCTGCCGGAGAATGTCCATCAGGCGCTGATGGCGAAGTTAGCGTAG
+func TestComplement(t *testing.T) {
+	// TODO: implement unit tests
+}
+
+func TestReverse(t *testing.T) {
+	// TODO: implement unit tests
+}
+
+func TestIsNucleotide(t *testing.T) {
+	// TODO: implement unit tests
+}
+
+func TestAddOverhang(t *testing.T) {
+	// TODO: implement unit tests
+}
+
+func TestHasStartCodon(t *testing.T) {
+	// TODO: implement unit tests
+}
+
+func TestHasStopCodon(t *testing.T) {
+	// TODO: implement unit tests
+}

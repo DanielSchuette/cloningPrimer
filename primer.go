@@ -19,6 +19,7 @@ func FindForward(seq, restrict string, seqStart, length, random int, startCodon 
 	if seqStart < 1 {
 		return "", fmt.Errorf("invalid input: primer start point must be an integer > 0 (not %d)", seqStart)
 	}
+
 	// return an error if `seq' contains invalid letters (anything except for A,T,C,G)
 	for i := 0; i < len(seq); i++ {
 		if !IsNucleotide(seq[i]) {
@@ -70,7 +71,32 @@ func FindForward(seq, restrict string, seqStart, length, random int, startCodon 
 // FindReverse finds a reverse primer with a `length' number of complementary nucleotides, binding to the specified start position measured from the 3' end of `seq' up to nucleotide (`seqStart' + `length' -1); `random' indicates the number of random nucleotides to be added to the primer; `restrict' indicates the restriction enzyme recognition site; the boolean `stopCodon' indicates if a stop codon should be added to the primer (only evaluated if the last 3 nucleotides of the sequence underlying the primer do not make up a valid stop codon - in that case, the stop codon adds three nucleotides to the total length of the primer)
 func FindReverse(seq, restrict string, seqStart, length, random int, stopCodon bool) (string, error) {
 	// check validity of input
-	// TODO: implement
+	// return an error if `seqStart' < 1
+	if seqStart < 1 {
+		return "", fmt.Errorf("invalid input: primer start point must be an integer > 0 (not %d)", seqStart)
+	}
+
+	// return an error if `seq' contains invalid letters (anything except for A,T,C,G)
+	for i := 0; i < len(seq); i++ {
+		if !IsNucleotide(seq[i]) {
+			return "", fmt.Errorf("invalid input %s at position %d, expected sequence of lower or upper case A,T,C,G", string(seq[i]), i+1)
+		}
+	}
+
+	// return an error if `random' > 10 or < 2
+	if (random < 2) || (random > 10) {
+		return "", fmt.Errorf("invalid input random = %v, expected integer value between 2 and 10", random)
+	}
+
+	// a `length' < 16, > 30 and > `seq' returns an error
+	if (length < 16) || (length > 30) || (length > len(seq)) {
+		return "", fmt.Errorf("invalid input length = %d, must be an integer value larger than 15 and smaller than the length of the given sequence", length)
+	}
+
+	// if (`seqStart' + `length' -1) > length of `seq' an error is returned
+	if (seqStart + length - 1) > len(seq) { /* subtract 1 because the nucleotide at `seqStart' is part of the sequence */
+		return "", fmt.Errorf("invalid input, the given sequence (%d nucleotides) is not long enough for a primer of length = %d starting at nucleotide %d (%d > %d)", len(seq), length, seqStart, seqStart+length-1, len(seq))
+	}
 
 	// compute the reverse of the input sequence and the complementary sequence of the reversed sequence `seqRev'
 	seqRev := Reverse(seq)
@@ -101,7 +127,7 @@ func FindReverse(seq, restrict string, seqStart, length, random int, stopCodon b
 		case true:
 			b = append([]byte("TTA"), b...)
 		case false:
-			return "", errors.New("input sequence does not begin with a start codon ('TAA', 'TAG', 'TGA')\nmake sure to automatically add a start codon by setting `startCodon' to `true'")
+			return "", errors.New("input sequence does not begin with a stop codon ('TAA', 'TAG', 'TGA')\nmake sure to automatically add a start codon by setting `startCodon' to `true'")
 		}
 	}
 	result := restrict + string(b)             /* concatenate the newly assembled string and the user input `restrict' */
