@@ -138,6 +138,19 @@ func TestFindForward(t *testing.T) {
 			want: "",
 			err:  errors.New("invalid input: primer start point must be an integer > 0 (not 0)"),
 		},
+		// experimentally validated primer
+		{
+			in: inputForPrimer{
+				seq:      "ATGGACTCCAACACTGCTCCGCTGGGCCCCTCCTGCCCACAGCCCCCGCCAGCACCGCAGCCCCAGGCGCGTTCCCGACTCAATGCCAC",
+				restrict: "GGATCC",
+				seqStart: 1,
+				length:   18,
+				random:   4,
+				addCodon: false,
+			},
+			want: "AGCTGGATCCATGGACTCCAACACTGCT",
+			err:  nil,
+		},
 	}
 
 	// loop over test cases
@@ -310,6 +323,19 @@ func TestFindReverse(t *testing.T) {
 			},
 			want: "",
 			err:  errors.New("invalid input: primer start point must be an integer > 0 (not 0)"),
+		},
+		// experimentally validated primer
+		{
+			in: inputForPrimer{
+				seq:      "CGTCATCCCCAGCAGCCTGTTCCTGCAGGACGACGAAGATGATGACGAGCTGGCGGGGAAGAGCCCTGAGGACCTGCCACTGCGT",
+				restrict: "GAATTC",
+				seqStart: 1,
+				length:   18,
+				random:   4,
+				addCodon: true,
+			},
+			want: "AGCTGAATTCTTAACGCAGTGGCAGGTCCTC",
+			err:  nil,
 		},
 	}
 
