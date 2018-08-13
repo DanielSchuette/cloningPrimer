@@ -6,12 +6,12 @@ import (
 )
 
 type testCasePrimer struct {
-	in   inputPrimer
+	in   inputForPrimer
 	want string
 	err  error
 }
 
-type inputPrimer struct {
+type inputForPrimer struct {
 	seq        string
 	restrict   string
 	seqStart   int
@@ -25,7 +25,7 @@ func TestFindForward(t *testing.T) {
 		// test invalid input
 		// test `seq' with non-nucleotide letters
 		{
-			in: inputPrimer{
+			in: inputForPrimer{
 				seq:        "QVDASTGASD", /* first invalid letter should result in an error */
 				restrict:   "GAATTC",
 				seqStart:   3,
@@ -37,7 +37,7 @@ func TestFindForward(t *testing.T) {
 			err:  errors.New("invalid input Q at position 1, expected sequence of lower or upper case A,T,C,G"),
 		},
 		{
-			in: inputPrimer{
+			in: inputForPrimer{
 				seq:        "ATGCCGVDASTGASD", /* first invalid letter should result in an error */
 				restrict:   "GAATTC",
 				seqStart:   3,
@@ -50,7 +50,7 @@ func TestFindForward(t *testing.T) {
 		},
 		// test `seq' that is exactly of length (`length' + `seqStart' - 1)
 		{
-			in: inputPrimer{
+			in: inputForPrimer{
 				seq:        "ATGCCGTCGCATTCTG",
 				restrict:   "GAATTC",
 				seqStart:   1,
@@ -63,7 +63,7 @@ func TestFindForward(t *testing.T) {
 		},
 		// test `seq' that is shorter than (`length' + `seqStart' - 1)
 		{
-			in: inputPrimer{
+			in: inputForPrimer{
 				seq:        "ATGCCGTCGCATTGTCCATCT",
 				restrict:   "GAATTC",
 				seqStart:   10,
@@ -76,7 +76,7 @@ func TestFindForward(t *testing.T) {
 		},
 		// test valid input for `random'
 		{
-			in: inputPrimer{
+			in: inputForPrimer{
 				seq:        "ATGCCGTCGCATTGTCCATCT",
 				restrict:   "GAATTC",
 				seqStart:   10,
@@ -88,7 +88,7 @@ func TestFindForward(t *testing.T) {
 			err:  errors.New("invalid input random = 1, expected integer value between 2 and 10"),
 		},
 		{
-			in: inputPrimer{
+			in: inputForPrimer{
 				seq:        "ATGCCGTCGCATTGTCCATCT",
 				restrict:   "GAATTC",
 				seqStart:   10,
@@ -101,7 +101,7 @@ func TestFindForward(t *testing.T) {
 		},
 		// sequence does not start with an 'ATG' (start codon) and `startCodon' is false
 		{
-			in: inputPrimer{
+			in: inputForPrimer{
 				seq:        "CTGCCGTCGCATTGTCCATCTTACTGACCTGATGTGCCA",
 				restrict:   "GAATTC",
 				seqStart:   10,
@@ -114,20 +114,20 @@ func TestFindForward(t *testing.T) {
 		},
 		// addition of 'ATG' start codon
 		{
-			in: inputPrimer{
+			in: inputForPrimer{
 				seq:        "CTGCCGTCGCATTGTCCATCTTACTGACCTGATGTGCCA",
 				restrict:   "GAATTC",
-				seqStart:   1,
+				seqStart:   8,
 				length:     16,
 				random:     3,
 				startCodon: true,
 			},
-			want: "",
+			want: "GCTGAATTCATGCGCATTGTCCATCTTA", /* start codon should be inserted right after recognition sequence */
 			err:  nil,
 		},
 		// invalid `seqStart'
 		{
-			in: inputPrimer{
+			in: inputForPrimer{
 				seq:        "CTGCCGTCGCATTGTCCATCTTACTGACCTGATGTGCCA",
 				restrict:   "GAATTC",
 				seqStart:   0,
