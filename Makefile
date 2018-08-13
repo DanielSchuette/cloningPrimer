@@ -4,18 +4,22 @@ PKGS := $(shell go list github.com/DanielSchuette/cloningprimer/ | grep -v /vend
 EXEC := $(BIN_DIR)/goprimer.go
 BIN_DIR := $(GOPATH)/bin
 GOMETALINTER := $(BIN_DIR)/gometalinter
-SHELL := $(shell which sh)
 
 $(EXEC): test windows
 	go install $(CMD_DIR)
 
 .PHONY: test
-test: echo
+test: lint 
 	go test $(PKGS)
 
-.PHONY: echo
-$(SHELL): 
-	echo "starting to compile goprimer binaries"
+.PHONY: lint
+lint: $(GOMETALINTER)
+	# remove megacheck and deadcode disable arguments as soon as possible
+	gometalinter . --enable=gofmt --enable=gosimple --enable=staticcheck --disable=deadcode --disable=megacheck --disable=gocyclo --vendor
+
+$(GOMETALINTER):
+	go get -u github.com/alecthomas/gometalinter
+	gometalinter --install &> /dev/null
 
 # create binaries for windows, linux, and darwin and put them inside a newly created bin/
 LOCAL_BIN_DIR := bin/goprimer

@@ -111,7 +111,7 @@ func FindReverse(seq, restrict string, seqStart, length, random int, stopCodon b
 
 	// loop over letters in `complement' sequence and append the appropriate ones to a slice of bytes
 	var b []byte
-	for i, l := range []byte(complement) {
+	for i, l := range complement {
 		if (i >= (seqStart - 1)) && !(i >= (seqStart + length - 1)) {
 			l := []byte(strings.ToUpper(string(l))) /* make current letter a string, upper case, and byte again */
 			b = append(b, l...)
