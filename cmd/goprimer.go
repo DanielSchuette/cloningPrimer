@@ -30,7 +30,7 @@ func main() {
 	}
 
 	// load *.re file
-	enzymes, err := cloningprimer.ParseEnyzmesFromFile(*enzymeFile)
+	enzymes, err := cloningprimer.ParseEnzymesFromFile(*enzymeFile)
 	if err != nil {
 		log.Fatalf("error while loading *.re file: %v\n", err)
 	}

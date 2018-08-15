@@ -15,10 +15,10 @@ type RestrictEnzyme struct {
 	NoPalinCleav    string /* either "no" or "(...)(...)", see *.re specification in ./assets/enzymes.re */
 }
 
-// ParseEnyzmesFromFile parses enzyme data (identifiers, recognition sequences, etc.) from
+// ParseEnzymesFromFile parses enzyme data (identifiers, recognition sequences, etc.) from
 // a *.re file (see the example in ./enzymes.re) and returns a map with enzyme names as
 // keys and `restricEnzyme' structs as values
-func ParseEnyzmesFromFile(file string) (map[string]RestrictEnzyme, error) {
+func ParseEnzymesFromFile(file string) (map[string]RestrictEnzyme, error) {
 	// check validity of input
 	// return an error if `file' is not a *.re
 	if path.Ext(file) != ".re" {
