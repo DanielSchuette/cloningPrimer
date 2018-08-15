@@ -1,0 +1,23 @@
+/* This file contains the cDNA sequence of the human TP53 gene.
+ * It serves as an example file for the cloning primer design
+ * software located at 'github.com/DanielSchuette/cloningPrimer'
+ *
+ * All data is derived from the following source:
+ * TODO!
+ *
+ * Author: Daniel Schuette
+ * Created: Oct 14, 2018
+ * Last update: Oct 15, 2018
+ *
+ * Legal Disclaimer:
+ * This file is provided "as is". The author does not provide any warranty of the item whatsoever, whether express,
+ * implied, or statutory, including, but not limited to, any warranty of merchantability or fitness for a particular 
+ * purpose or any warranty that the contents of the item will be error-free. In no respect shall the author incur any 
+ * liability for any damages, including, but limited to, direct, indirect, special, or consequential damages arising 
+ * out of, resulting from, or any way connected to the use of this file; whether or not injury was sustained by persons 
+ * or property or otherwise; and whether or not loss was sustained from, or arose out of, or is the results of, this file.
+ *
+ * Email to d.schuette(at)online.de for more information.
+ */
+ */
+ ATTAGTCTGAGTTCTGTGTCGTATTGT

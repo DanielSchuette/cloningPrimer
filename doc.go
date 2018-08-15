@@ -35,7 +35,7 @@
 //
 // More TODO's:
 //
-// - UNIT TESTS!
+// - add more unit tests
 //
 // - Web interface
 //
@@ -46,8 +46,6 @@
 // - calculate stats (see above): func CalcStats()
 //
 // - check sequence and recognition sites for restriction sites, start codons, stop codon, ...
-//
-// - pull restriction sites from file: parse.go
 //
 // - pull plasmid information from file and test for restriction sites: func CheckPlasmid ()
 //

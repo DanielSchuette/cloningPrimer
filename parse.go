@@ -22,7 +22,7 @@ func ParseEnyzmesFromFile(file string) (map[string]RestrictEnzyme, error) {
 	// check validity of input
 	// return an error if `file' is not a *.re
 	if path.Ext(file) != ".re" {
-		return nil, fmt.Errorf("invalid input: %v is not a *.re file", file)
+		return nil, fmt.Errorf("invalid input: %v is not a *.re file (see ./doc.go for more information)", file)
 	}
 
 	// TODO: implement more error checking
@@ -118,8 +118,25 @@ Loop:
 }
 
 // ParseSequenceFromFile parses a plasmid or DNA sequence from a *.seq file (see the example
-// in ./WFS1.seq) and returns the sequence as a string
+// in ./tp53.seq) and returns the sequence as a string
 func ParseSequenceFromFile(file string) string {
-	// TODO: implement
-	return ""
+	// check validity of input
+	// return an error if `file' is not a *.seq
+	if path.Ext(file) != ".seq" {
+		return nil, fmt.Errorf("invalid input: %v is not a *.seq file (see ./doc.go for more information)", file)
+	}
+
+	// TODO: implement more error checking
+
+	// open file and read its contents
+	f, err := os.Open(file)
+	defer f.Close()
+	b, err := ioutil.ReadAll(f)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// TODO: implement commenting in *.seq files
+
+	return string(b)
 }
