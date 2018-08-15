@@ -36,7 +36,7 @@
  *
  * Email to d.schuette(at)online.de for more information.
  */
-enzyme_name       recognition_sequence                  palindromic_cleaveage   PDB_ID  isoschizomers
+enzyme_name       recognition_sequence                  non_palindromic_cleaveage   PDB_ID  isoschizomers
 'AclI'            'AACGTT'                              'no'
 'HindIII'         'AAGCTT'                              'no'
 'SspI'            'AATATT'                              'no'
