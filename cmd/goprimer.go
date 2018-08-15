@@ -35,5 +35,10 @@ func main() {
 	}
 	fmt.Println(enzymes)
 
-	// TODO: implement
+	// load *.seq file
+	seq, err := cloningprimer.ParseSequenceFromFile(*seqFile)
+	if err != nil {
+		log.Fatalf("error while loading *.seq file: %v\n", err)
+	}
+	fmt.Println(seq)
 }

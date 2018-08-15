@@ -119,11 +119,11 @@ Loop:
 
 // ParseSequenceFromFile parses a plasmid or DNA sequence from a *.seq file (see the example
 // in ./tp53.seq) and returns the sequence as a string
-func ParseSequenceFromFile(file string) string {
+func ParseSequenceFromFile(file string) (string, error) {
 	// check validity of input
 	// return an error if `file' is not a *.seq
 	if path.Ext(file) != ".seq" {
-		return nil, fmt.Errorf("invalid input: %v is not a *.seq file (see ./doc.go for more information)", file)
+		return "", fmt.Errorf("invalid input: %v is not a *.seq file (see ./doc.go for more information)", file)
 	}
 
 	// TODO: implement more error checking
@@ -136,7 +136,7 @@ func ParseSequenceFromFile(file string) string {
 		log.Fatal(err)
 	}
 
-	// TODO: implement commenting in *.seq files
+	// TODO: implement commenting in *.seq files and ignore ' ' and '\n'
 
-	return string(b)
+	return string(b), nil
 }
