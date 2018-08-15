@@ -29,10 +29,18 @@ func ParseEnyzmesFromFile(file string) (map[string]RestrictEnzyme, error) {
 
 	// open file and read its contents
 	f, err := os.Open(file)
-	defer f.Close()
+	if err != nil {
+		return nil, fmt.Errorf("error opening file: %v", err)
+	}
+	defer func() {
+		err = f.Close()
+		if err != nil {
+			log.Fatalf("error closing file: %v\n", err)
+		}
+	}()
 	b, err := ioutil.ReadAll(f)
 	if err != nil {
-		log.Fatal(err)
+		return nil, fmt.Errorf("error reading from file: %v", err)
 	}
 
 	// create map that will ultimately be returned
@@ -130,10 +138,18 @@ func ParseSequenceFromFile(file string) (string, error) {
 
 	// open file and read its contents
 	f, err := os.Open(file)
-	defer f.Close()
+	if err != nil {
+		return "", fmt.Errorf("error opening file: %v", err)
+	}
+	defer func() {
+		err = f.Close()
+		if err != nil {
+			log.Fatalf("error closing file: %v", err)
+		}
+	}()
 	b, err := ioutil.ReadAll(f)
 	if err != nil {
-		log.Fatal(err)
+		return "", fmt.Errorf("error reading from file: %v", err)
 	}
 
 	// TODO: implement commenting in *.seq files and ignore ' ' and '\n'
