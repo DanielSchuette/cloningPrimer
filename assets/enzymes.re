@@ -24,7 +24,8 @@
  * https://www.neb.com/products/restriction-endonucleases
  *
  * Author: Daniel Schuette
- * Last update: Oct 11, 2018
+ * Created: Oct 11, 2018
+ * Last update: Oct 14, 2018
  *
  * Legal Disclaimer:
  * This file is provided "as is". The author does not provide any warranty of the item whatsoever, whether express,
