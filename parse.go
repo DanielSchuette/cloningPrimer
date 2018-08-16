@@ -16,7 +16,7 @@ type RestrictEnzyme struct {
 }
 
 // ParseEnzymesFromFile parses enzyme data (identifiers, recognition sequences, etc.) from
-// a *.re file (see the example in ./enzymes.re) and returns a map with enzyme names as
+// a *.re file (see the example in ./assets/enzymes.re) and returns a map with enzyme names as
 // keys and `restricEnzyme' structs as values
 func ParseEnzymesFromFile(file string) (map[string]RestrictEnzyme, error) {
 	// check validity of input
@@ -126,7 +126,7 @@ Loop:
 }
 
 // ParseSequenceFromFile parses a plasmid or DNA sequence from a *.seq file (see the example
-// in ./tp53.seq) and returns the sequence as a string
+// in ./assets/tp53.seq) and returns the sequence as a string
 func ParseSequenceFromFile(file string) (string, error) {
 	// check validity of input
 	// return an error if `file' is not a *.seq

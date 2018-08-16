@@ -1,35 +1,19 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-        <!-- Meta Tags --> 
-        <meta charset="utf-8">  
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-
-        <!-- External CSS -->
-        <link rel="stylesheet" href="../static/styles/styles.css" type="text/css">
-
-        <!-- External Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Titan+One" rel="stylesheet">
-
-        <!-- Bootstrap Javascript, jQuery, Popper.js -->
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-
-        <!-- External JavaScript -->
-        <!-- NONE -->
-
-        <title>Cloning Primers</title>
-</head>
+{{ define "index" }}
+{{ template "header" . }}
 <body id="site_top">
-    <h1>Under Construction</h1>    
-    <h2>Enzymes:</h2>
+    <div class="container-fluid" id="navbar">
+        <!-- Header goes here --> 
+    </div>
+    <div class="container-fluid" id="searchbar">
+        <form action="search" method="post">
+            <p>Search: </p>
+            <input type="text" name="search_text" id="search_text" value="search_text" />
+            <input type="submit" name="search_submit" id="search_submit" value="Submit" />
+        </form>
+    </div>
     <div class="container-fluid" id="enzyme_info_container">
-        <table summary="Information About Restriction Enzymes">
-            <thead>
+        <table summary="Information About Restriction Enzymes" class="table">
+            <thead class="thead-dark">
                 <tr>
                     <th>Name</th>
                     <th>Recognition Sequence</th>
@@ -46,4 +30,5 @@
         </table>
     </div>
 </body>
-</html>
+{{ template "footer" . }}
+{{ end }}
