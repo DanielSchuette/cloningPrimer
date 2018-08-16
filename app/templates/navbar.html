@@ -7,24 +7,57 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+          {{ with $this := . }}
+          {{ with $case := "index" }}
+          {{ if eq $this $case }}
           <li class="nav-item active">
-            <a class="nav-link" href="/index/">Home<span class="sr-only">(current)</span></a>
-          </li>
+          {{ else }}
           <li class="nav-item">
+          {{ end }}{{ end }}
+            <a class="nav-link" href="/index/">Home</a>
+          </li>
+          {{ with $case := "design" }}
+          {{ if eq $this $case }}
+          <li class="nav-item active">
+          {{ else }}
+          <li class="nav-item">
+          {{ end }}{{ end }}
             <a class="nav-link" href="/designPage/">Design Primers</a>
           </li>
+          {{ with $case := "enzymes" }}
+          {{ if eq $this $case }}
+          <li class="nav-item active">
+          {{ else }}
           <li class="nav-item">
+          {{ end }}{{ end }}
             <a class="nav-link" href="/enzymesPage/">Enzymes</a>
           </li>
+          {{ with $case := "links" }}
+          {{ if eq $this $case }}
+          <li class="nav-item active">
+          {{ else }}
           <li class="nav-item">
+          {{ end }}{{ end }}
             <a class="nav-link" href="/links/">Links</a>
           </li>
           <li class="nav-item">
+          {{ with $case := "license" }}
+          {{ if eq $this $case }}
+          <li class="nav-item active">
+          {{ else }}
+          <li class="nav-item">
+          {{ end }}{{ end }}
             <a class="nav-link" href="/license/">License</a>
           </li>
+          {{ with $case := "contribute" }}
+          {{ if eq $this $case }}
+          <li class="nav-item active">
+          {{ else }}
           <li class="nav-item">
+          {{ end }}{{ end }}
             <a class="nav-link" href="/contribute/">Contribute</a>
           </li>
+        {{ end }}
         </ul>
       </div>
     </nav>

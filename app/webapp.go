@@ -18,6 +18,7 @@ func init() {
 
 func main() {
 	// register handler funcs
+	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/index/", indexHandler)
 	http.HandleFunc("/enzymesPage/", enzymesHandler)
 	http.HandleFunc("/designPage/", designHandler)
@@ -32,8 +33,17 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+	// root directory is re-directed to '/index/'
+	http.Redirect(w, r, "/index/", http.StatusFound)
+}
+
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("under construction"))
+	err := tmpl.ExecuteTemplate(w, "index", nil)
+	if err != nil {
+		fmt.Fprintf(w, "error executing template: %v\n", err)
+		log.Fatal(err)
+	}
 }
 
 func enzymesHandler(w http.ResponseWriter, r *http.Request) {
@@ -45,7 +55,7 @@ func enzymesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// execute template with map of restriction enzymes as input
-	err = tmpl.ExecuteTemplate(w, "index", enzymes)
+	err = tmpl.ExecuteTemplate(w, "enzymes", enzymes)
 	if err != nil {
 		fmt.Fprintf(w, "error executing template: %v\n", err)
 		log.Fatal(err)
@@ -53,17 +63,33 @@ func enzymesHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func designHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("under construction"))
+	err := tmpl.ExecuteTemplate(w, "design", nil)
+	if err != nil {
+		fmt.Fprintf(w, "error executing template: %v\n", err)
+		log.Fatal(err)
+	}
 }
 
 func linksHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("under construction"))
+	err := tmpl.ExecuteTemplate(w, "links", nil)
+	if err != nil {
+		fmt.Fprintf(w, "error executing template: %v\n", err)
+		log.Fatal(err)
+	}
 }
 
 func licenseHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("under construction"))
+	err := tmpl.ExecuteTemplate(w, "license", nil)
+	if err != nil {
+		fmt.Fprintf(w, "error executing template: %v\n", err)
+		log.Fatal(err)
+	}
 }
 
 func contributeHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("under construction"))
+	err := tmpl.ExecuteTemplate(w, "contribute", nil)
+	if err != nil {
+		fmt.Fprintf(w, "error executing template: %v\n", err)
+		log.Fatal(err)
+	}
 }
