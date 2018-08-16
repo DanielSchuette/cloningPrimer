@@ -17,7 +17,7 @@ func main() {
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	// parse templates from files
-	t := template.Must(template.New("index").ParseFiles("templates/index.html", "templates/header.html", "templates/footer.html"))
+	t := template.Must(template.New("index").ParseFiles("templates/index.html", "templates/header.html", "templates/footer.html", "templates/navbar.html"))
 
 	// create map of restriction enzyme structs
 	enzymes, err := cloningprimer.ParseEnzymesFromFile("../assets/enzymes.re")

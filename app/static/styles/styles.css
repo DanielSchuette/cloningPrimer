@@ -1,5 +1,22 @@
 /* page-wide styles */
 body {
     background-color: #F0EAD6;
-    font-size: 24px;
+    font-size: 16px;
+    padding-top: 76px;
+}
+/**********************/
+/* enzyme page styles */
+/**********************/
+/* search bar styles */
+#searchbar_container {
+    padding: 0px 0px 20px 45px;
+}
+
+#searchbar {
+    padding: 0px;
+}
+
+/* enzyme table styles */
+#enzyme_info_container {
+    padding-left: 45px;
 }
