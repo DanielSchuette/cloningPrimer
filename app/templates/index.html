@@ -26,11 +26,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                {{ range . }}
+                {{ range $value := . }}
                     <tr>
-                        <td>{{ .Name }}</td>
-                        <td>{{ .RecognitionSite }}</td>
-                        <td>{{ .NoPalinCleav }}</td>
+                        <td>{{ $value.Name }}</td>
+                        <td>{{ $value.RecognitionSite }}</td>
+                        <td>{{ $value.NoPalinCleav }}</td>
                         <td>Coming</td>
                         <td>Coming</td>
                     </tr>

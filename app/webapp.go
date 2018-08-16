@@ -9,16 +9,34 @@ import (
 	cloningprimer "github.com/DanielSchuette/cloningPrimer"
 )
 
+var tmpl *template.Template
+
+func init() {
+	// parse templates
+	tmpl = template.Must(template.ParseGlob("templates/*"))
+}
+
 func main() {
-	http.HandleFunc("/index/", handler)
+	// register handler funcs
+	http.HandleFunc("/index/", indexHandler)
+	http.HandleFunc("/enzymesPage/", enzymesHandler)
+	http.HandleFunc("/designPage/", designHandler)
+	http.HandleFunc("/links/", linksHandler)
+	http.HandleFunc("/license/", licenseHandler)
+	http.HandleFunc("/contribute/", contributeHandler)
+
+	// file server for static files
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+
+	// listen and serve locally
 	http.ListenAndServe(":8080", nil)
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	// parse templates from files
-	t := template.Must(template.New("index").ParseFiles("templates/index.html", "templates/header.html", "templates/footer.html", "templates/navbar.html"))
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("under construction"))
+}
 
+func enzymesHandler(w http.ResponseWriter, r *http.Request) {
 	// create map of restriction enzyme structs
 	enzymes, err := cloningprimer.ParseEnzymesFromFile("../assets/enzymes.re")
 	if err != nil {
@@ -27,9 +45,25 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// execute template with map of restriction enzymes as input
-	err = t.ExecuteTemplate(w, "index", enzymes)
+	err = tmpl.ExecuteTemplate(w, "index", enzymes)
 	if err != nil {
 		fmt.Fprintf(w, "error executing template: %v\n", err)
 		log.Fatal(err)
 	}
+}
+
+func designHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("under construction"))
+}
+
+func linksHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("under construction"))
+}
+
+func licenseHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("under construction"))
+}
+
+func contributeHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("under construction"))
 }
