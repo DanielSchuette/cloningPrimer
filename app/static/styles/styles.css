@@ -5,6 +5,44 @@ body {
     padding-top: 76px;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
+/* Code Snippets Styles */
+.code_snippet {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 24;
+}
+
+hr {
+    border-top: 2px solid #22333B;
+    border-bottom: none;
+    margin-left: 45px;
+    margin-right: 45px;
+}
+
+/* a padded container is a .container-fluid within a row that is padded when displayed on xs devices */
+.padded_container {
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+#footer_list {
+    list-style-type: none;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+}
+
+#footer_list li {
+    display: inline-block;
+}
+
+.footer_list_item {
+    padding-left: 50px;
+}
+
 /**********************/
 /* enzyme page styles */
 /**********************/
