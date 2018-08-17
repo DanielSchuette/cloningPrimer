@@ -3,6 +3,42 @@
 <body id="site_top">
     {{ $page := "links" }}
     {{ template "navbar" $page }}
+    <div class="row">
+        <div class="container-fluid col-sm-1"></div>
+        <div class="container-fluid col-sm-10 padded_container">
+             <h3>How to Cite <em>Cloning Primer</em></h3>
+             <p>Please contact <a href="mailto:d.schuette@online.de">Daniel Schuette</a> if you want to cite this software in your publication.</p>
+        </div>
+        <div class="container-fluid col-sm-1"></div>
+    </div>
+    <div class="row">
+        <div class="container-fluid col-sm-1"></div>
+        <div class="container-fluid col-sm-10 padded_container">
+             <h3>How Does <em>Cloning Primer</em> Work?</h3>
+             <p>If you want to learn how <em>Cloning Primer</em> computes primer pairs and various statistics, please refer to the <a href="https://github.com/DanielSchuette/cloningPrimer">source code</a>. In addition, the following resources provide a high-level overview of the topic:</p>
+             <ul class="resources_list">
+                 <li>
+                    <a href="https://www.neb.com/protocols/1/01/01/primer-design-e6901">https://www.neb.com/protocols/1/01/01/primer-design-e6901</a>
+                 </li>
+                 <li>
+                    <a href="https://www.protocols.io/view/Primer-Design-for-Restriction-Enzyme-Cloning-E6901-imsvmd?guidelines">https://www.protocols.io/view/Primer-Design-for-Restriction-Enzyme-Cloning-E6901-imsvmd?guidelines</a>
+                 </li>
+                 <li>
+                     <a href="https://www.addgene.org/mol-bio-reference/restriction-enzymes/">https://www.addgene.org/mol-bio-reference/restriction-enzymes/</a>
+                 </li>
+                 <li>
+                     <a href="https://www.addgene.org/protocols/pcr-cloning/">https://www.addgene.org/protocols/pcr-cloning/</a>
+                 </li>
+                 <li>
+                     <a href="https://www.embl.de/pepcore/pepcore_services/cloning/pcr_strategy/primer_design/amplification/index.html">https://www.embl.de/pepcore/pepcore_services/cloning/pcr_strategy/primer_design/amplification/index.html</a></li>
+                 <li>
+                     <a href="https://www.embl.de/pepcore/pepcore_services/cloning/pcr_strategy/primer_design/">https://www.embl.de/pepcore/pepcore_services/cloning/pcr_strategy/primer_design/</a>
+                 </li>
+             </ul>
+        </div>
+        <div class="container-fluid col-sm-1"></div>
+    </div>
+    <div class="row container_last_on_page"></div>
 </body>
 {{ template "footer" . }}
 {{ end }}

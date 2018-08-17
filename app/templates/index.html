@@ -3,6 +3,25 @@
 <body id="site_top">
     {{ $page := "index" }}
     {{ template "navbar" $page }}
+    <div class="row">
+        <div class="container-fluid col-sm-1"></div>
+        <div class="container-fluid col-sm-10 padded_container">
+             <h3>About</h3>
+             <p><em>Cloning Primer</em> is a software tool that facilitates the design of primer pairs for gene cloning. Given a certain nucleotide sequence and a set of parameters (see <a href="#documentation_section">Documentation</a>), it returns forward and reverse primers as well as useful statistics like GC content, the probability of the primer pair to form dimers, and much more.</p>
+             <p>The software is accessible via this web application, but it is recommended to download the command line application (<a href="https://github.com/DanielSchuette/cloningPrimer/tree/master/bin">CLI</a>) to enable offline use. Also, an API (written in <a href="https://golang.org">Go</a>) is available through the <a href="https://github.com/DanielSchuette/cloningPrimer">GitHub repository</a> of this project. <em>Cloning Primer</em> is under active development, so source code, web interface, API, and CLI might change in the future!</p>
+             <p>A working version of <em>Cloning Primer</em> is currently available as an early release v0.01. Please review the documentation section of this website for more information about available functionality.</p>
+        </div>
+        <div class="container-fluid col-sm-1"></div>
+    </div>
+    <div class="row">
+        <div class="container-fluid col-sm-1"></div>
+        <div class="container-fluid col-sm-10 padded_container">
+             <h3 id="documentation_section">Documentation</h3>
+             <p>Documentation is coming soon!</p>
+        </div>
+        <div class="container-fluid col-sm-1"></div>
+    </div>
+    <div class="row container_last_on_page"></div>
 </body>
 {{ template "footer" . }}
 {{ end }}

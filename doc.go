@@ -1,21 +1,6 @@
 // Package cloningprimer ...
 //
 //
-// Resources:
-//
-// https://www.neb.com/protocols/1/01/01/primer-design-e6901
-//
-// https://www.protocols.io/view/Primer-Design-for-Restriction-Enzyme-Cloning-E6901-imsvmd?guidelines
-//
-// https://www.addgene.org/mol-bio-reference/restriction-enzymes/
-//
-// https://www.addgene.org/protocols/pcr-cloning/
-//
-// https://www.embl.de/pepcore/pepcore_services/cloning/pcr_strategy/primer_design/amplification/index.html
-//
-// https://www.embl.de/pepcore/pepcore_services/cloning/pcr_strategy/primer_design/
-//
-//
 // TODO: Methylation can block cleavage by some restriction enzymes. In E. coli, Dam methylase affects the sequence GATC and Dcm methylase affects the sequence CCAGG or CCTGG. If these sequences are present, you will need to use a dam-, dcm- E. coli strain to grow your plasmid.
 //
 // TODO: check 3' end of primer (3 or more G or C bases at this position - may stabilize nonspecific annealing; 3' thymidine - more prone to mispriming)

@@ -28,6 +28,12 @@ hr {
     padding-right: 35px;
 }
 
+/* a last-on-page container is a .container-fluid that has some bottom padding because it is the last item before a footer */
+.container_last_on_page {
+    padding-bottom: 75px;
+}
+
+/* style footer lists */
 #footer_list {
     list-style-type: none;
     display: inline-block;
@@ -37,6 +43,14 @@ hr {
 
 #footer_list li {
     display: inline-block;
+}
+
+/* style resources lists */
+.resources_list li {
+    list-style-type: none;
+}
+.resources_list li:before {
+    content: "➜ ";
 }
 
 .footer_list_item {
