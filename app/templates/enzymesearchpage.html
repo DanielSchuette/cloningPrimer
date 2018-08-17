@@ -25,13 +25,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                {{ range . }}
+                {{ range $value := . }}
                     <tr>
-                        <td>{{ . }}</td>
-                        <td>Fix this!</td>
-                        <td>Fix this!</td>
-                        <td>Fix this!</td>
-                        <td>Fix this!</td>
+                        <td>{{ $value.Name }}</td>
+                        <td>{{ $value.RecognitionSite  }}</td>
+                        <td>{{ $value.NoPalinCleav  }}</td>
+                        <td>filtered</td>
+                        <td>filtered</td>
                     </tr>
                 {{ end }}
                 </tbody>
