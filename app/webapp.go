@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -72,6 +73,11 @@ func enzymesSearchHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func designHandler(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	fmt.Println(r.Form)
+	fmt.Println("path", r.URL.Path)
+	fmt.Println("scheme", r.URL.Scheme)
+	fmt.Println(r.Form["url_long"])
 	err := tmpl.ExecuteTemplate(w, "design", nil)
 	if err != nil {
 		log.Fatal(err)
