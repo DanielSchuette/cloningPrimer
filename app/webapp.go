@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -66,18 +65,56 @@ func enzymesHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func enzymesSearchHandler(w http.ResponseWriter, r *http.Request) {
-	err := tmpl.ExecuteTemplate(w, "enzymessearch", enzymes)
-	if err != nil {
-		log.Fatal(err)
+	// parse request form and print query information on server site
+	r.ParseForm()
+	log.Printf("/search/ r.Form['Query']: %v\n", r.Form["Query"])
+	log.Printf("type of r.Form['Query']: %T\n", r.Form["Query"])
+
+	// execute template with map of restriction enzymes as input
+	// if user entered a search term, filter `enzymes' accordingly
+	// otherwise, do not filter at all
+	if len(r.Form["Query"]) > 0 {
+		if r.Form["Query"][0] != "" {
+			// filter enzyme map
+			e, err := cloningprimer.FilterEnzymeMap(enzymes, r.Form["Query"][0])
+			if err != nil {
+				log.Fatalf("error filtering enzymes: %v\n", err)
+			}
+
+			// if at least one enzyme name matches the query, parse template with that result
+			if len(e) > 0 {
+				err := tmpl.ExecuteTemplate(w, "enzymessearch", e)
+				if err != nil {
+					log.Fatal(err)
+				}
+			}
+
+			// if no enzyme name matches the query, parse template without data
+			if len(e) == 0 {
+				err := tmpl.ExecuteTemplate(w, "enzymessearch", nil)
+				if err != nil {
+					log.Fatal(err)
+				}
+			}
+		}
+
+		// if query is empty, return full list of enzymes
+		if r.Form["Query"][0] == "" {
+			err := tmpl.ExecuteTemplate(w, "enzymes", enzymes)
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
+	if len(r.Form["Query"]) == 0 {
+		err := tmpl.ExecuteTemplate(w, "enzymes", enzymes)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 
 func designHandler(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
-	fmt.Println(r.Form)
-	fmt.Println("path", r.URL.Path)
-	fmt.Println("scheme", r.URL.Scheme)
-	fmt.Println(r.Form["url_long"])
 	err := tmpl.ExecuteTemplate(w, "design", nil)
 	if err != nil {
 		log.Fatal(err)
