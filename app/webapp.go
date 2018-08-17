@@ -68,7 +68,6 @@ func enzymesSearchHandler(w http.ResponseWriter, r *http.Request) {
 	// parse request form and print query information on server site
 	r.ParseForm()
 	log.Printf("/search/ r.Form['Query']: %v\n", r.Form["Query"])
-	log.Printf("type of r.Form['Query']: %T\n", r.Form["Query"])
 
 	// execute template with map of restriction enzymes as input
 	// if user entered a search term, filter `enzymes' accordingly
