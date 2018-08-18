@@ -1,0 +1,37 @@
+{{ define "designcompute" }}
+{{ template "header" . }}
+<body id="site_top">
+    {{ $page := "design" }}
+    {{ template "navbar" $page }}
+    <form id="sequence_form" action="/computePrimers/" method="post">
+        <div class="row">
+            <div class="container-fluid col-sm-1"></div>
+            <div class="container-fluid col-sm-10">
+                <h3>Step 1: Enter a Sequence</h3>
+                <div class="form-group">
+                    <textarea class="form-control" id="sequenceQuery" name="sequenceQuery" placeholder="Enter your sequence here..." rows="6"></textarea>
+                </div>
+            </div>
+            <div class="container-fluid col-sm-1"></div>
+        </div>
+        <div class="row">
+            <div class="container-fluid col-sm-1"></div>
+            <div class="container-fluid col-sm-10">
+                <h3>Step 2: Enter Parameters</h3>        
+                <p>Placeholder</p>
+                <button type="submit" class="btn btn-primary mb-2" id="search_button">Compute Primers!</button>
+            </div>
+            <div class="container-fluid col-sm-1"></div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="container-fluid col-sm-1"></div>
+        <div class="container-fluid col-sm-10">
+            <h3>Step 3: Results</h3>        
+        </div>
+        <div class="container-fluid col-sm-1"></div>
+    </div>
+    <div class="row container_last_on_page"></div>
+</body>
+{{ template "footer" . }}
+{{ end }}
