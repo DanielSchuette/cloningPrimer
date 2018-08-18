@@ -16,23 +16,27 @@
 8. C-terminal TAA (preferred because less prone to read-through than TAG and TGA; 2 or 3 stop codons are possible) in-frame with ORF
 
 
+
 ## More TODO's
 1. add more unit tests
 
 2. set up Travis CI
 
-3. Web interface
+3. Deploy web app with Heroku
 
-4. CLI
+4. Web interface
 
-5. API documentation
+5. CLI
 
-6. calculate stats (see above): func CalcStats()
+6. API documentation
 
-7. check sequence and recognition sites for restriction sites, start codons, stop codon, ...
+7. calculate stats (see above): func CalcStats()
 
-8. pull plasmid information from file and test for restriction sites: func CheckPlasmid ()
+8. check sequence and recognition sites for restriction sites, start codons, stop codon, ...
 
-9. offer access to NCBI blast API (if available?): Blast()
+9. pull plasmid information from file and test for restriction sites: func CheckPlasmid ()
 
-10. check spaces in sequence and silently delete them
+10. offer access to NCBI blast API (if available?): Blast()
+
+11. check spaces in sequence and silently delete them
+
