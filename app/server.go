@@ -30,6 +30,7 @@ func main() {
 	http.HandleFunc("/enzymesPage/", enzymesHandler)
 	http.HandleFunc("/search/", enzymesSearchHandler)
 	http.HandleFunc("/designPage/", designHandler)
+	http.HandleFunc("/computePrimers/", computePrimersHandler)
 	http.HandleFunc("/links/", linksHandler)
 	http.HandleFunc("/license/", licenseHandler)
 	http.HandleFunc("/contribute/", contributeHandler)

@@ -7,4 +7,7 @@
 Work in progress.
 
 
+## License
+
+This software is licensed under the MIT license, see *LICENSE.txt* for more information.
 
