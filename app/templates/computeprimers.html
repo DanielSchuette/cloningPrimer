@@ -1,33 +1,123 @@
-{{ define "designcompute" }}
+{{ define "design" }}
 {{ template "header" . }}
 <body id="site_top">
     {{ $page := "design" }}
     {{ template "navbar" $page }}
     <form id="sequence_form" action="/computePrimers/" method="post">
-        <div class="row">
+        <div class="row row_paragraph">
             <div class="container-fluid col-sm-1"></div>
             <div class="container-fluid col-sm-10">
                 <h3>Step 1: Enter a Sequence</h3>
+                <p>Please enter a nucleotide sequence:</p>
                 <div class="form-group">
                     <textarea class="form-control" id="sequenceQuery" name="sequenceQuery" placeholder="Enter your sequence here..." rows="6"></textarea>
                 </div>
             </div>
             <div class="container-fluid col-sm-1"></div>
         </div>
-        <div class="row">
+        <div class="row row_paragraph">
             <div class="container-fluid col-sm-1"></div>
             <div class="container-fluid col-sm-10">
                 <h3>Step 2: Enter Parameters</h3>        
-                <p>Placeholder</p>
+                <div class="row_subparagraph">
+                    <h4>Restriction Enzyme</h4>
+                    <p>Please select a restriction enzyme for the 5' end of the target sequence:</p>
+                    <div class="col-sm-6 col_no_padding">
+                        <select class="custom-select">
+                          <option value="" selected>Select an Enzyme</option>
+                          {{ range $value := . }}
+                          <option value="{{ $value.Name }}">{{ $value.Name }}</option>
+                          {{ end }}
+                        </select>
+                    </div>
+                    <p class="spaced_p">Please select a restriction enzyme for the 3' end of the target sequence:</p>
+                    <div class="col-sm-6 col_no_padding">
+                        <select class="custom-select">
+                          <option value="" selected>Select an Enzyme</option>
+                          {{ range $value := . }}
+                          <option value="{{ $value.Name }}">{{ $value.Name }}</option>
+                          {{ end }}
+                        </select>
+                    </div>
+                </div>
+                <div class="row_subparagraph">
+                    <h4>Number of Random Nucleotides</h4>
+                    <p>Please select how many random nucleotides you want to add to the forward primer:</p>
+                    <div class="col-sm-2 col_no_padding">
+                        <select class="custom-select" size="3">
+                          <option value="2" selected>2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-10"></div>
+                    <p class="spaced_p">Please select how many random nucleotides you want to add to the reverse primer:</p>
+                    <div class="col-sm-2 col_no_padding">
+                        <select class="custom-select" size="3">
+                          <option value="2" selected>2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-10"></div>
+                </div>
+                <div class="row_subparagraph">
+                    <h4>Start/Stop Codons</h4>
+                    <div class="row multirow_subparagraph">
+                        <div class="col-sm-7 col_no_padding">
+                            <p>Does the sequence have a start codon (if not, an <span class="code_snippet">ATG</span> will be added automatically)?</p>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="custom-control custom-radio custom-control-inline">
+                              <input type="radio" id="startRadio1" name="startRadio" class="custom-control-input" checked="checked">
+                              <label class="custom-control-label" for="startRadio1">Yes</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                              <input type="radio" id="startRadio2" name="startRadio" class="custom-control-input">
+                              <label class="custom-control-label" for="startRadio2">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row multirow_subparagraph">
+                        <div class="col-sm-7 col_no_padding">
+                        <p>Does the sequence have a stop codon (if not, a <span class="code_snippet">TAA</span> will be added automatically)?</p>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="custom-control custom-radio custom-control-inline">
+                              <input type="radio" id="stopRadio1" name="stopRadio" class="custom-control-input" checked="checked">
+                              <label class="custom-control-label" for="stopRadio1">Yes</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                              <input type="radio" id="stopRadio2" name="stopRadio" class="custom-control-input">
+                              <label class="custom-control-label" for="stopRadio2">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row_subparagraph">
                 <button type="submit" class="btn btn-primary mb-2" id="search_button">Compute Primers!</button>
+                </div>
             </div>
             <div class="container-fluid col-sm-1"></div>
         </div>
     </form>
-    <div class="row">
+    <div class="row row_paragraph">
         <div class="container-fluid col-sm-1"></div>
         <div class="container-fluid col-sm-10">
-            <h3>Step 3: Results</h3>        
+            <h3>Step 3: Results</h3> 
+            <p>No results to display. Enter a sequence (<em>step 1</em>), choose from a list of parameters (<em>step 2</em>) and click the blue button!</p>
         </div>
         <div class="container-fluid col-sm-1"></div>
     </div>

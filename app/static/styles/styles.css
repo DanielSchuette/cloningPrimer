@@ -61,12 +61,6 @@ hr {
 /* enzyme page styles */
 /**********************/
 /* search bar and button styles */
-#search_button {
-}
-
-#search_form {
-}
-
 #searchform_container {
     margin-left: 0px!important; /* to overwrite bootstrap css attributes */
 }
@@ -75,10 +69,31 @@ hr {
     padding: 0px 0px 20px 45px;
 }
 
-#search_input {
-}
-
 /* enzyme table styles */
 #enzyme_info_container {
     padding-left: 45px;
+}
+
+/*****************************/
+/* Primer Design Page Styles */
+/*****************************/
+.row_paragraph {
+    padding-bottom: 30px;
+}
+
+.row_subparagraph {
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.spaced_p {
+    padding-top: 15px;
+}
+
+.col_no_padding {
+    padding-left: 0px!important;
+}
+
+.multirow_subparagraph {
+    padding-left: 15px!important;
 }

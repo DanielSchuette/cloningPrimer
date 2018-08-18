@@ -47,7 +47,7 @@ func main() {
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	// root directory is re-directed to '/index/'
-	http.Redirect(w, r, "/index", http.StatusFound)
+	http.Redirect(w, r, "/index/", http.StatusFound)
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
@@ -68,7 +68,7 @@ func enzymesHandler(w http.ResponseWriter, r *http.Request) {
 func enzymesSearchHandler(w http.ResponseWriter, r *http.Request) {
 	// parse request form and print query information on server site
 	r.ParseForm()
-	log.Printf("/search r.Form['Query']: %v\n", r.Form["Query"])
+	log.Printf("/search/ r.Form['Query']: %v\n", r.Form["Query"])
 
 	// execute template with map of restriction enzymes as input
 	// if user entered a search term, filter `enzymes' accordingly
@@ -115,16 +115,32 @@ func enzymesSearchHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func designHandler(w http.ResponseWriter, r *http.Request) {
-	err := tmpl.ExecuteTemplate(w, "design", nil)
+	err := tmpl.ExecuteTemplate(w, "design", enzymes)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
 func computePrimersHandler(w http.ResponseWriter, r *http.Request) {
-	err := tmpl.ExecuteTemplate(w, "designcompute", nil)
-	if err != nil {
-		log.Fatal(err)
+	// parse request form and print query information on server site
+	r.ParseForm()
+	log.Printf("/computePrimers/ r.Form['sequenceQuery']: %v\n", r.Form["sequenceQuery"])
+
+	// if no input was received, return `designcompute' template without data
+	// this particular input box returns a slice containing just one string
+	if len(r.Form["sequenceQuery"]) > 0 {
+		if r.Form["sequenceQuery"][0] == "" {
+			err := tmpl.ExecuteTemplate(w, "design", nil)
+			if err != nil {
+				log.Fatal(err)
+			}
+			return
+		}
+		err := tmpl.ExecuteTemplate(w, "designcompute", nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+		return
 	}
 }
 
