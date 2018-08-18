@@ -114,7 +114,6 @@ func enzymesSearchHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func designHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("get request received")
 	err := tmpl.ExecuteTemplate(w, "design", nil)
 	if err != nil {
 		log.Fatal(err)
@@ -122,7 +121,10 @@ func designHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func computePrimersHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("not yet implemented"))
+	err := tmpl.ExecuteTemplate(w, "designcompute", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func linksHandler(w http.ResponseWriter, r *http.Request) {
