@@ -17,7 +17,7 @@ func init() {
 	tmpl = template.Must(template.ParseGlob("templates/*"))
 
 	// parse `enzymes.re' and create map of restriction enzyme structs
-	enzymes, err = cloningprimer.ParseEnzymesFromFile("../assets/enzymes.re")
+	enzymes, err = cloningprimer.ParseEnzymesFromFile("assets/enzymes.re")
 	if err != nil {
 		log.Fatalf("error loading enzymes: %v\n", err)
 	}
