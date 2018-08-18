@@ -1,16 +1,21 @@
 package main
 
 import (
+	"flag"
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 
 	cloningprimer "github.com/DanielSchuette/cloningPrimer"
 )
 
-var tmpl *template.Template
-var enzymes map[string]cloningprimer.RestrictEnzyme
-var err error
+var (
+	tmpl    *template.Template
+	enzymes map[string]cloningprimer.RestrictEnzyme
+	err     error
+	local   = flag.Bool("local", false, "set this argument to `true' to run the server locally at 127.0.0.1:8080")
+)
 
 func init() {
 	// parse templates
@@ -24,6 +29,12 @@ func init() {
 }
 
 func main() {
+	// parse command line flags
+	flag.Parse()
+
+	// get port
+	port := getPort()
+
 	// register handler funcs
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/index/", indexHandler)
@@ -39,10 +50,27 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	// listen and serve locally
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(port, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+// Get the Port from the environment for Heroku (only if `--local' is not set)
+func getPort() string {
+	if *local {
+		return ":8080"
+	}
+
+	// get port from the environment when running Heroku app
+	var port = os.Getenv("PORT")
+
+	// Set a default port if `$PORT' is not set
+	if port == "" {
+		port = "8080"
+		log.Printf("no $PORT environment variable detected, defaulting to %v\n" + port)
+	}
+	return ":" + port
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
