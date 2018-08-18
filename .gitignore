@@ -20,3 +20,6 @@ Godeps/
 
 # ignore .git/ directory in web app directory of repository
 app/.git/
+
+# ignore files that are required by Heroku
+Procfile
