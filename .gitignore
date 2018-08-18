@@ -13,3 +13,7 @@ data/
 windows*
 macos*
 linux*
+
+# Godeps and vendor directories
+vendor/
+Godeps/
