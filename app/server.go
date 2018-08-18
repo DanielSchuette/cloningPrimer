@@ -46,7 +46,7 @@ func main() {
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	// root directory is re-directed to '/index/'
-	http.Redirect(w, r, "/index/", http.StatusFound)
+	http.Redirect(w, r, "/index", http.StatusFound)
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
@@ -67,7 +67,7 @@ func enzymesHandler(w http.ResponseWriter, r *http.Request) {
 func enzymesSearchHandler(w http.ResponseWriter, r *http.Request) {
 	// parse request form and print query information on server site
 	r.ParseForm()
-	log.Printf("/search/ r.Form['Query']: %v\n", r.Form["Query"])
+	log.Printf("/search r.Form['Query']: %v\n", r.Form["Query"])
 
 	// execute template with map of restriction enzymes as input
 	// if user entered a search term, filter `enzymes' accordingly
@@ -114,10 +114,15 @@ func enzymesSearchHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func designHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("get request received")
 	err := tmpl.ExecuteTemplate(w, "design", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func computePrimersHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("not yet implemented"))
 }
 
 func linksHandler(w http.ResponseWriter, r *http.Request) {
