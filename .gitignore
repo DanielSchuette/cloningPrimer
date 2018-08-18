@@ -17,3 +17,6 @@ linux*
 # Godeps and vendor directories
 vendor/
 Godeps/
+
+# ignore .git/ directory in web app directory of repository
+app/.git/
