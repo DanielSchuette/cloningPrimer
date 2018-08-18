@@ -22,21 +22,20 @@
 
 2. set up Travis CI
 
-3. Deploy web app with Heroku
+3. Web interface
 
-4. Web interface
+4. CLI
 
-5. CLI
+5. API documentation
 
-6. API documentation
+6. calculate stats (see above): func CalcStats()
 
-7. calculate stats (see above): func CalcStats()
+7. check sequence and recognition sites for restriction sites, start codons, stop codon, ...
 
-8. check sequence and recognition sites for restriction sites, start codons, stop codon, ...
+8. pull plasmid information from file and test for restriction sites: func CheckPlasmid ()
 
-9. pull plasmid information from file and test for restriction sites: func CheckPlasmid ()
+9. offer access to NCBI blast API (if available?): Blast()
 
-10. offer access to NCBI blast API (if available?): Blast()
+10. check spaces in sequence and silently delete them
 
-11. check spaces in sequence and silently delete them
 
