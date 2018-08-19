@@ -17,25 +17,25 @@
 
 
 
+
 ## More TODO's
-1. add more unit tests
+1. increase test coverage + add codecov badge
 
-2. set up Travis CI
+2. Web interface
 
-3. Web interface
+3. CLI
 
-4. CLI
+4. API documentation/web app documentation tab
 
-5. API documentation
+5. calculate stats (see above): func CalcStats()
 
-6. calculate stats (see above): func CalcStats()
+6. check sequence and recognition sites for restriction sites, start codons, stop codon, ...
 
-7. check sequence and recognition sites for restriction sites, start codons, stop codon, ...
+7. pull plasmid information from file and test for restriction sites: func CheckPlasmid()
 
-8. pull plasmid information from file and test for restriction sites: func CheckPlasmid ()
+8. offer access to NCBI blast API (if available?): Blast()
 
-9. offer access to NCBI blast API (if available?): Blast()
+9. check spaces in sequence and silently delete them
 
-10. check spaces in sequence and silently delete them
-
+10. Virtual digest?
 
