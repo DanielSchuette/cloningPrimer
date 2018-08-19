@@ -38,6 +38,7 @@ func main() {
 	// register handler funcs
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/index/", indexHandler)
+	http.HandleFunc("/documentation/", documentationHandler)
 	http.HandleFunc("/enzymesPage/", enzymesHandler)
 	http.HandleFunc("/search/", enzymesSearchHandler)
 	http.HandleFunc("/designPage/", designHandler)
@@ -80,6 +81,13 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	err := tmpl.ExecuteTemplate(w, "index", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func documentationHandler(w http.ResponseWriter, r *http.Request) {
+	err := tmpl.ExecuteTemplate(w, "documentation", nil)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -25,7 +25,7 @@
 
 3. CLI
 
-4. API documentation/web app documentation tab
+4. API documentation/web app documentation
 
 5. calculate stats (see above): func CalcStats()
 
@@ -38,4 +38,5 @@
 9. check spaces in sequence and silently delete them
 
 10. Virtual digest?
+
 

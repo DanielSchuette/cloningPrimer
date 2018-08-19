@@ -16,6 +16,14 @@
           {{ end }}{{ end }}
             <a class="nav-link" href="/index/">Home</a>
           </li>
+          {{ with $case := "documentation" }}
+          {{ if eq $this $case }}
+          <li class="nav-item active">
+          {{ else }}
+          <li class="nav-item">
+          {{ end }}{{ end }}
+            <a class="nav-link" href="/documentation/">Documentation</a>
+          </li>
           {{ with $case := "design" }}
           {{ if eq $this $case }}
           <li class="nav-item active">
