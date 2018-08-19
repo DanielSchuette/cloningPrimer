@@ -68,7 +68,8 @@ func main() {
 ## <a name="license"></a> License
 
 
-This software is licensed under the MIT license, see *LICENSE.txt* for more information.
+This software is licensed under the MIT license, see *[LICENSE](./LICENSE.txt)* for more information.
+
 
 
 
