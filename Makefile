@@ -15,7 +15,7 @@ test: lint
 .PHONY: lint
 lint: $(GOMETALINTER)
 	# remove megacheck and deadcode disable arguments as soon as possible
-	gometalinter . --enable=gofmt --enable=gosimple --enable=staticcheck --disable=deadcode --disable=megacheck --disable=gocyclo --vendor
+	gometalinter . --enable=gofmt --enable=gosimple --enable=staticcheck --disable=gocyclo --vendor
 
 $(GOMETALINTER):
 	go get -u github.com/alecthomas/gometalinter

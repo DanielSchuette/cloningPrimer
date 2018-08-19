@@ -2,3 +2,6 @@ language: go
 
 go:
     - "1.10"
+
+install:
+    - go get github.com/DanielSchuette/cloningPrimer
