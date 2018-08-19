@@ -7,12 +7,8 @@ go_import_path:
     - github.com/DanielSchuette/cloningPrimer
 
 before_install:
-    - go get -u honnef.co/go/tools/...
-    - go get -u github.com/opennota/check
-    - go get -u mvdan.cc/interfacer
-    - go get -u github.com/jgautheron/goconst
-    - go get -u github.com/mdempsky/unconvert
-    - go get -u github.com/securego/gosec
-    - go get -u github.com/gordonklaus/ineffassign
-    - go get -u github.com/alecthomas/gometalinter
     - go get -u github.com/DanielSchuette/cloningPrimer
+
+script:
+    - go build -v
+    - go test . -v -cover
