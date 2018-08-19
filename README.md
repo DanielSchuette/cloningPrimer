@@ -1,6 +1,6 @@
 # CloningPrimer
 
-![GitHub (pre-)release](https://img.shields.io/badge/release-v0.0.1-green.svg) [![GoDoc](https://godoc.org/github.com/DanielSchuette/cloningPrimer?status.svg)](https://godoc.org/github.com/DanielSchuette/cloningPrimer) ![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg) 
+![GitHub (pre-)release](https://img.shields.io/badge/release-v0.0.1-green.svg) [![GoDoc](https://godoc.org/github.com/DanielSchuette/cloningPrimer?status.svg)](https://godoc.org/github.com/DanielSchuette/cloningPrimer) ![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg) [![Build Status](https://travis-ci.org/DanielSchuette/cloningPrimer.svg?branch=master)](https://travis-ci.org/DanielSchuette/cloningPrimer)
 
 ## Overview
 
@@ -12,6 +12,7 @@ A pre-release version of the web application is available [here](https://peacefu
 ## License
 
 This software is licensed under the MIT license, see *LICENSE.txt* for more information.
+
 
 
 
