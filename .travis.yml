@@ -6,5 +6,6 @@ go:
 go_import_path:
     - github.com/DanielSchuette/cloningPrimer
 
-install:
+before_install:
+    - go get -u honnef.co/go/tools/...
     - go get github.com/DanielSchuette/cloningPrimer
