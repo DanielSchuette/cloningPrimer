@@ -14,5 +14,5 @@ deploy:
     provider: heroku
     api_key:
         secure: ShM7gy2WsLlWEwPJ3qWD8ySV4fk4IeEuGedEnFPfa34vsirYUwOHfjpG08JR8zZJCPwqNP744Wr11jUBPvrd7zcAGr6d3MqPJVXfF9Ylqc725+r5WzIcvhKlaItMQSs7L2NNupd0WmqKvl4oCBRNs34/BjWkwscNIR1rOcnD4GNuHYc0sJq/YhxpGB5kwRR/5taNY+RlQ82QhFy/3tdJf0q8y0dASy2AQudJ1+cQ8wO4P9H2FbM5lkDxYWkEYvcMItn9p2EaqgQbLGpJhJpnZrV9eTYdyXGOzHkx9GaWBVyNWMYYR2Y8urAetHXX7EehkKXOR6fA9lR/aYYJuXVA46q1CoExso+ILfqacK9Z32e195pD7jLH7G1m0ZVqHGqaYoU0ZjIDSG3tTevwcbOIgKLfwpRe4Zg5WzBcyARNBW9rkc4Cy9piR7O3rjowxGh+Rgb8Guadbn8d/KFXmwnOCaXSerI8PoMgnVKbGsQZ0U4z243VibV0C52rUOu73pPZDZc6XheE1W/E2gENQRn4cgxp2z0kM1xLdMUfQFk4IUt9+hW9kSpDBHvry1RhuwPqVGbLgvagpeQAmF4/dxMPtvzNHxRmo3lpRCqAAk3rSu8lUwXghNUgDEom9y1AxhbgUhUKVih+mGzEJtWc9Z374VYrvBw0V4X5dBjkNQ3HzKM=
-    app: app
+    app: peaceful-coast-24395
     strategy: git
