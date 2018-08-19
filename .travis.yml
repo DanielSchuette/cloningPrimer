@@ -5,7 +5,10 @@ go:
 
 before_install:
     - go get -u github.com/DanielSchuette/cloningPrimer
+    - go get -u github.com/alecthomas/gometalinter
+    - gometalinter --install
 
 script:
-    - go build -v
     - go test . -v -cover
+    - gometalinter . --disable=gocyclo
+    - go build -v
