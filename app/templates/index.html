@@ -1,6 +1,15 @@
 {{ define "index" }}
 {{ template "header" . }}
 <body id="site_top">
+    <!-- "Fork me" banner -->
+    <div class="fork-me-wrapper">
+        <div class="fork-me">
+            <a class="fork-me-link" href="https://github.com/DanielSchuette/cloningPrimer">
+                <span class="fork-me-text">Fork Me On GitHub</span>
+            </a>
+        </div>
+    </div>
+    <!-- page content -->
     {{ $page := "index" }}
     {{ template "navbar" $page }}
     <div class="row row_paragraph">
@@ -15,6 +24,8 @@
               <h3>Project Status</h3>
               <p>Version: 0.01</p>
               <p><a href="https://godoc.org/github.com/DanielSchuette/cloningPrimer"><img src="https://godoc.org/github.com/DanielSchuette/cloningPrimer?status.svg" alt="GoDoc"></a></p>
+              <p><a href="/license/"><img src="https://badges.frapsoft.com/os/mit/mit.svg?v=103" alt="MIT license"></a></p>
+              <p><a href="https://github.com/ellerbrock/open-source-badges/"><img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=103" alt="Open Source Love"></a></p>
         </div>
         <div class="container-fluid col-sm-1"></div>
     </div>
