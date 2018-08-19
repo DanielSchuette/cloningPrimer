@@ -10,5 +10,5 @@ before_install:
 
 script:
     - go test . -v -cover
-    - gometalinter . --disable=gocyclo
+    - gometalinter . --disable=gocyclo --disable=gosec
     - go build -v
