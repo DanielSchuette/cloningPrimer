@@ -3,8 +3,8 @@ language: go
 go:
     - "1.10"
 
-before_install:
-    - go get -u github.com/alecthomas/gometalinter
+go_import_path:
+    - github.com/DanielSchuette/cloningPrimer
 
 install:
     - go get github.com/DanielSchuette/cloningPrimer
