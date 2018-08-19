@@ -1,6 +1,6 @@
 # list everything except for vendored pkgs, then lint, test, and install
 CMD_DIR := cmd/goprimer.go
-PKGS := $(shell go list /github.com/DanielSchuette/cloningprimer/ | grep -v /vendor)
+PKGS := $(shell go list github.com/DanielSchuette/cloningprimer/ | grep -v /vendor)
 EXEC := $(BIN_DIR)/goprimer.go
 BIN_DIR := $(GOPATH)/bin
 GOMETALINTER := $(BIN_DIR)/gometalinter
