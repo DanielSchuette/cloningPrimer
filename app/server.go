@@ -158,13 +158,13 @@ func computePrimersHandler(w http.ResponseWriter, r *http.Request) {
 	// this particular input box returns a slice containing just one string
 	if len(r.Form["sequenceQuery"]) > 0 {
 		if r.Form["sequenceQuery"][0] == "" {
-			err := tmpl.ExecuteTemplate(w, "design", nil)
+			err := tmpl.ExecuteTemplate(w, "design", enzymes)
 			if err != nil {
 				log.Fatal(err)
 			}
 			return
 		}
-		err := tmpl.ExecuteTemplate(w, "designcompute", nil)
+		err := tmpl.ExecuteTemplate(w, "designcompute", enzymes)
 		if err != nil {
 			log.Fatal(err)
 		}
