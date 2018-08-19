@@ -8,11 +8,11 @@ go_import_path:
 
 before_install:
     - go get -u honnef.co/go/tools/...
-    - go get -u https://github.com/opennota/check
-    - go get -u https://github.com/mvdan/interfacer
-    - go get -u https://github.com/jgautheron/goconst
-    - go get -u https://github.com/mdempsky/unconvert
-    - go get -u https://github.com/securego/gosec
-    - go get -u https://github.com/gordonklaus/ineffassign
-    - go get -u https://github.com/alecthomas/gometalinter
+    - go get -u github.com/opennota/check
+    - go get -u github.com/mvdan/interfacer
+    - go get -u github.com/jgautheron/goconst
+    - go get -u github.com/mdempsky/unconvert
+    - go get -u github.com/securego/gosec
+    - go get -u github.com/gordonklaus/ineffassign
+    - go get -u github.com/alecthomas/gometalinter
     - go get -u github.com/DanielSchuette/cloningPrimer
