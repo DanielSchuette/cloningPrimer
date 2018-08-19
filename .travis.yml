@@ -9,7 +9,7 @@ go_import_path:
 before_install:
     - go get -u honnef.co/go/tools/...
     - go get -u github.com/opennota/check
-    - go get -u github.com/mvdan/interfacer
+    - go get -u mvdan.cc/interfacer
     - go get -u github.com/jgautheron/goconst
     - go get -u github.com/mdempsky/unconvert
     - go get -u github.com/securego/gosec
