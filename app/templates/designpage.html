@@ -3,6 +3,18 @@
 <body id="site_top">
     {{ $page := "design" }}
     {{ template "navbar" $page }}
+    <div class="row row_paragraph">
+        <div class="container-fluid col-sm-1"></div>
+        <div class="container-fluid col-sm-10">
+            <ul class="horizontal_list">
+                <li class="horizontal_list_item first_list_item">Content: </li>
+                <li class="horizontal_list_item"><a href="#sequence_section">Step 1: Enter a Sequence</a></li>
+                <li class="horizontal_list_item"><a href="#parameters_section">Step 2: Enter Parameters</a></li>
+                <li class="horizontal_list_item"><a href="#results_section">Step 3: Results</a></li>
+            </ul>
+        </div>
+        <div class="container-fluid col-sm-1"></div>
+    </div>
     <form id="sequence_form" action="/computePrimers/" method="post">
         <div class="row row_paragraph">
             <div class="container-fluid col-sm-1"></div>
