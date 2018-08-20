@@ -6,16 +6,18 @@
 
 Cloning Primer is a software tool that facilitates the design of primer pairs for gene cloning. Given a certain nucleotide sequence and a set of parameters (see [Documentation](#documentation)), it returns forward and reverse primers as well as useful statistics like GC content, the probability of the primer pair to form dimers, and much more.
 
-The software is accessible via a [web application](https://peaceful-coast-24395.herokuapp.com/), but it is recommended to download the command line application ([CLI](./bin)) to enable offline use. Also, an API (written in Go) is available through this GitHub repository. Cloning Primer is under active development, so source code, web interface, API, and CLI might change in the future!
+The software is accessible via a [web application](http://www.cloningprimer.com), but it is recommended to download the command line application ([CLI](./bin)) to enable offline use. Also, an API (written in Go) is available through this GitHub repository. Cloning Primer is under active development, so source code, web interface, API, and CLI might change in the future!
 
 A working version of Cloning Primer is currently available as a pre-release version v0.0.1. Please review the [documentation section](#documentation) of this README file for more information about available functionality.
 
 
+
 ## <a name="overview"></a> Overview
 
-A pre-release version of the web application is available [here](https://peaceful-coast-24395.herokuapp.com/).
+A pre-release version of the web application is available [here](http://www.cloningprimer.com).
 
 CLI binaries can be downloaded from [./bin](./bin) in this repository.
+
 
 
 
@@ -69,6 +71,7 @@ func main() {
 
 
 This software is licensed under the MIT license, see *[LICENSE](./LICENSE.txt)* for more information.
+
 
 
 
