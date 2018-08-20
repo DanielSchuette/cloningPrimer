@@ -17,6 +17,19 @@ var (
 	local   = flag.Bool("local", false, "set this argument to `true' to run the server locally at 127.0.0.1:8080")
 )
 
+// struct designForm is used by the server to hold data that was parsed from the
+// designpage.html and computeprimers.html pages
+type designForm struct {
+	Sequence        string                                  /* the nucleotide sequence from the user input */
+	ForwardEnzyme   string                                  /* the 5' restriction enzyme from the user input */
+	ReverseEnzyme   string                                  /* the 3' restriction enzyme from the user input */
+	ForwardOverhang string                                  /* the number of 5' random nucleotides from the user input */
+	ReverseOverhang string                                  /* the number of 3' random nucleotides from the user input */
+	Start           string                                  /* either 'yes' or 'no', indicating presence of start codon */
+	Stop            string                                  /* either 'yes' or 'no', indicating presence of stop codon */
+	Enzymes         map[string]cloningprimer.RestrictEnzyme /* holds restriction enzyme information */
+}
+
 func init() {
 	// parse templates
 	tmpl = template.Must(template.ParseGlob("templates/*"))
@@ -160,13 +173,9 @@ func designHandler(w http.ResponseWriter, r *http.Request) {
 func computePrimersHandler(w http.ResponseWriter, r *http.Request) {
 	// parse request form and print query information on server site
 	r.ParseForm()
-	log.Printf("/computePrimers/ r.Form['sequenceQuery']: %v\n", r.Form["sequenceQuery"])
-	log.Printf("/computePrimers/ r.Form['forwardEnzyme']: %v\n", r.Form["forwardEnzyme"])
-	log.Printf("/computePrimers/ r.Form['reverseEnzyme']: %v\n", r.Form["reverseEnzyme"])
-	log.Printf("/computePrimers/ r.Form['forwardOverhang']: %v\n", r.Form["forwardOverhang"])
-	log.Printf("/computePrimers/ r.Form['reverseOverhang']: %v\n", r.Form["reverseOverhang"])
-	log.Printf("/computePrimers/ r.Form['startRadio']: %v\n", r.Form["startRadio"])
-	log.Printf("/computePrimers/ r.Form['stopRadio']: %v\n", r.Form["stopRadio"])
+	printDesignFormData(r)
+	d := parseDesignFormData(r)
+	d.Enzymes = enzymes
 
 	// if no input was received, return `designcompute' template without data
 	// this particular input box returns a slice containing just one string
@@ -178,7 +187,7 @@ func computePrimersHandler(w http.ResponseWriter, r *http.Request) {
 			}
 			return
 		}
-		err := tmpl.ExecuteTemplate(w, "designcompute", enzymes)
+		err := tmpl.ExecuteTemplate(w, "designcompute", d)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -205,4 +214,27 @@ func contributeHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func printDesignFormData(r *http.Request) {
+	log.Printf("/computePrimers/ r.Form['sequenceQuery']: %v\n", r.Form["sequenceQuery"])
+	log.Printf("/computePrimers/ r.Form['forwardEnzyme']: %v\n", r.Form["forwardEnzyme"])
+	log.Printf("/computePrimers/ r.Form['reverseEnzyme']: %v\n", r.Form["reverseEnzyme"])
+	log.Printf("/computePrimers/ r.Form['forwardOverhang']: %v\n", r.Form["forwardOverhang"])
+	log.Printf("/computePrimers/ r.Form['reverseOverhang']: %v\n", r.Form["reverseOverhang"])
+	log.Printf("/computePrimers/ r.Form['startRadio']: %v\n", r.Form["startRadio"])
+	log.Printf("/computePrimers/ r.Form['stopRadio']: %v\n", r.Form["stopRadio"])
+}
+
+func parseDesignFormData(r *http.Request) designForm {
+	d := designForm{
+		Sequence:        r.Form["sequenceQuery"][0],
+		ForwardEnzyme:   r.Form["forwardEnzyme"][0],
+		ReverseEnzyme:   r.Form["reverseEnzyme"][0],
+		ForwardOverhang: r.Form["forwardOverhang"][0],
+		ReverseOverhang: r.Form["reverseOverhang"][0],
+		Start:           r.Form["startRadio"][0],
+		Stop:            r.Form["stopRadio"][0],
+	}
+	return d
 }

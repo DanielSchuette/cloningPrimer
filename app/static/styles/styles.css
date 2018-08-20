@@ -45,16 +45,16 @@ hr {
     display: inline-block;
 }
 
+.footer_list_item {
+    padding-left: 50px;
+}
+
 /* style resources lists */
 .resources_list li {
     list-style-type: none;
 }
 .resources_list li:before {
     content: "➜ ";
-}
-
-.footer_list_item {
-    padding-left: 50px;
 }
 
 /**********************/
@@ -96,4 +96,25 @@ hr {
 
 .multirow_subparagraph {
     padding-left: 15px!important;
+}
+
+/* list styles */
+.horizontal_list {
+    list-style-type: none;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+}
+
+.horizontal_list li {
+    display: inline-block;
+}
+
+.horizontal_list_item {
+    padding-left: 50px;
+    font-size: 18px;
+}
+
+.first_list_item {
+    padding-left: 0px;
 }
