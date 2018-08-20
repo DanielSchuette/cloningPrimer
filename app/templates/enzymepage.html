@@ -3,46 +3,48 @@
 <body id="site_top">
     {{ $page := "enzymes" }}
     {{ template "navbar" $page }}
-    <div class="row" id="searchbar_container">
-        <div class="container-fluid col-lg-1"></div>
-        <div class="container-fluid col-lg-10 col_no_padding">
-            <form class="form-inline" id="search_form" action="/search/" method="post">
-              <div class="form-group mx-sm-3 mb-2" id="searchform_container">
-                <label for="search_input" class="sr-only">Search</label>
-                <input type="text" class="form-control" id="search_input" name="Query" placeholder="Search Enzymes...">
-              </div>
-              <button type="submit" class="btn btn-primary mb-2" id="search_button">Search!</button>
-            </form>
+    <div class="container-fluid">
+        <div class="row row_paragraph" id="searchbar_container">
+            <div class="container-fluid col-sm-1"></div>
+            <div class="container-fluid col-sm-10">
+                <form class="form-inline" id="search_form" action="/search/" method="post">
+                  <div class="form-group mx-sm-3 mb-2" id="searchform_container">
+                    <label for="search_input" class="sr-only">Search</label>
+                    <input type="text" class="form-control" id="search_input" name="Query" placeholder="Search Enzymes...">
+                  </div>
+                  <button type="submit" class="btn btn-primary mb-2" id="search_button">Search!</button>
+                </form>
+            </div>
+            <div class="container-fluid col-sm-1"></div>
         </div>
-        <div class="container-fluid col-lg-1"></div>
-    </div>
-    <div class="row">
-        <div class="container-fluid col-lg-1"></div>
-        <div class="container-fluid col-lg-10" id="enzyme_info_container">
-            <table summary="Information About Restriction Enzymes" class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Name</th>
-                        <th>Recognition Sequence</th>
-                        <th>Non-Palindromic Cleaveage</th>
-                        <th>PDB Identifier</th>
-                        <th>Isoschizomeres</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {{ range $value := . }}
-                    <tr>
-                        <td>{{ $value.Name }}</td>
-                        <td>{{ $value.RecognitionSite }}</td>
-                        <td>{{ $value.NoPalinCleav }}</td>
-                        <td>Coming soon!</td>
-                        <td>Coming soon!</td>
-                    </tr>
-                {{ end }}
-                </tbody>
-            </table>
+        <div class="row row_paragraph">
+            <div class="container-fluid col-sm-1"></div>
+            <div class="container-fluid col-sm-10" id="enzyme_info_container">
+                <table summary="Information About Restriction Enzymes" class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Recognition Sequence</th>
+                            <th>Non-Palindromic Cleaveage</th>
+                            <th>PDB Identifier</th>
+                            <th>Isoschizomeres</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {{ range $value := . }}
+                        <tr>
+                            <td>{{ $value.Name }}</td>
+                            <td>{{ $value.RecognitionSite }}</td>
+                            <td>{{ $value.NoPalinCleav }}</td>
+                            <td>Coming soon!</td>
+                            <td>Coming soon!</td>
+                        </tr>
+                    {{ end }}
+                    </tbody>
+                </table>
+            </div>
+            <div class="container-fluid col-sm-1"></div>
         </div>
-        <div class="container-fluid col-lg-1"></div>
     </div>
     <div class="row container_last_on_page"></div>
 </body>

@@ -63,15 +63,16 @@ hr {
 /* search bar and button styles */
 #searchform_container {
     margin-left: 0px!important; /* to overwrite bootstrap css attributes */
+    margin-bottom: 0px!important; /* to overwrite bootstrap css attributes */
 }
 
 #searchbar_container {
-    padding: 0px 0px 20px 45px;
+    /* padding: 0px 0px 20px 45px; */
 }
 
 /* enzyme table styles */
 #enzyme_info_container {
-    padding-left: 45px;
+    /* padding-left: 45px; */
 }
 
 /*****************************/
@@ -117,4 +118,9 @@ hr {
 
 .first_list_item {
     padding-left: 0px;
+}
+
+.link_on_button {
+    color: white!important;
+    font-size: 20px;
 }
