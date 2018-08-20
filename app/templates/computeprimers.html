@@ -23,7 +23,7 @@
                     <h4>Restriction Enzyme</h4>
                     <p>Please select a restriction enzyme for the 5' end of the target sequence:</p>
                     <div class="col-sm-6 col_no_padding">
-                        <select class="custom-select">
+                        <select class="custom-select" name="forwardEnzyme">
                           <option value="" selected>Select an Enzyme</option>
                           {{ range $value := . }}
                           <option value="{{ $value.Name }}">{{ $value.Name }}</option>
@@ -32,7 +32,7 @@
                     </div>
                     <p class="spaced_p">Please select a restriction enzyme for the 3' end of the target sequence:</p>
                     <div class="col-sm-6 col_no_padding">
-                        <select class="custom-select">
+                        <select class="custom-select" name="reverseEnzyme">
                           <option value="" selected>Select an Enzyme</option>
                           {{ range $value := . }}
                           <option value="{{ $value.Name }}">{{ $value.Name }}</option>
@@ -44,7 +44,7 @@
                     <h4>Number of Random Nucleotides</h4>
                     <p>Please select how many random nucleotides you want to add to the forward primer:</p>
                     <div class="col-sm-2 col_no_padding">
-                        <select class="custom-select" size="3">
+                        <select class="custom-select" size="3" name="forwardOverhang">
                           <option value="2" selected>2</option>
                           <option value="3">3</option>
                           <option value="4">4</option>
@@ -59,7 +59,7 @@
                     <div class="col-sm-10"></div>
                     <p class="spaced_p">Please select how many random nucleotides you want to add to the reverse primer:</p>
                     <div class="col-sm-2 col_no_padding">
-                        <select class="custom-select" size="3">
+                        <select class="custom-select" size="3" name="reverseOverhang">
                           <option value="2" selected>2</option>
                           <option value="3">3</option>
                           <option value="4">4</option>
@@ -81,11 +81,11 @@
                         </div>
                         <div class="col-sm-5">
                             <div class="custom-control custom-radio custom-control-inline">
-                              <input type="radio" id="startRadio1" name="startRadio" class="custom-control-input" checked="checked">
+                               <input type="radio" id="startRadio1" name="startRadio" class="custom-control-input" checked="checked" value="yes">
                               <label class="custom-control-label" for="startRadio1">Yes</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
-                              <input type="radio" id="startRadio2" name="startRadio" class="custom-control-input">
+                              <input type="radio" id="startRadio2" name="startRadio" class="custom-control-input" value="no">
                               <label class="custom-control-label" for="startRadio2">No</label>
                             </div>
                         </div>
@@ -96,11 +96,11 @@
                         </div>
                         <div class="col-sm-5">
                             <div class="custom-control custom-radio custom-control-inline">
-                              <input type="radio" id="stopRadio1" name="stopRadio" class="custom-control-input" checked="checked">
+                              <input type="radio" id="stopRadio1" name="stopRadio" class="custom-control-input" checked="checked" value="yes">
                               <label class="custom-control-label" for="stopRadio1">Yes</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
-                              <input type="radio" id="stopRadio2" name="stopRadio" class="custom-control-input">
+                              <input type="radio" id="stopRadio2" name="stopRadio" class="custom-control-input" value="no">
                               <label class="custom-control-label" for="stopRadio2">No</label>
                             </div>
                         </div>

@@ -39,4 +39,6 @@
 
 10. Virtual digest?
 
+11. 'Assets' tab in web app (*.re, *.seq)
 
+12. enable file upload for primer computation

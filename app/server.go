@@ -161,6 +161,12 @@ func computePrimersHandler(w http.ResponseWriter, r *http.Request) {
 	// parse request form and print query information on server site
 	r.ParseForm()
 	log.Printf("/computePrimers/ r.Form['sequenceQuery']: %v\n", r.Form["sequenceQuery"])
+	log.Printf("/computePrimers/ r.Form['forwardEnzyme']: %v\n", r.Form["forwardEnzyme"])
+	log.Printf("/computePrimers/ r.Form['reverseEnzyme']: %v\n", r.Form["reverseEnzyme"])
+	log.Printf("/computePrimers/ r.Form['forwardOverhang']: %v\n", r.Form["forwardOverhang"])
+	log.Printf("/computePrimers/ r.Form['reverseOverhang']: %v\n", r.Form["reverseOverhang"])
+	log.Printf("/computePrimers/ r.Form['startRadio']: %v\n", r.Form["startRadio"])
+	log.Printf("/computePrimers/ r.Form['stopRadio']: %v\n", r.Form["stopRadio"])
 
 	// if no input was received, return `designcompute' template without data
 	// this particular input box returns a slice containing just one string
