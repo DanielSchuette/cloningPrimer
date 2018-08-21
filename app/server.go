@@ -23,16 +23,18 @@ var (
 // struct designForm is used by the server to hold data that was parsed from the
 // designpage.html and computeprimers.html pages
 type designForm struct {
-	Sequence        string                                  /* the nucleotide sequence from the user input */
-	ForwardEnzyme   string                                  /* the 5' restriction enzyme from the user input */
-	ReverseEnzyme   string                                  /* the 3' restriction enzyme from the user input */
-	ForwardOverhang string                                  /* the number of 5' random nucleotides from the user input */
-	ReverseOverhang string                                  /* the number of 3' random nucleotides from the user input */
-	Start           string                                  /* either 'yes' or 'no', indicating presence of start codon */
-	Stop            string                                  /* either 'yes' or 'no', indicating presence of stop codon */
-	Enzymes         map[string]cloningprimer.RestrictEnzyme /* holds restriction enzyme information */
-	ForwardPrimer   string                                  /* holds the computed forward primer */
-	ReversePrimer   string                                  /* holds the computed reverse primer */
+	Sequence             string                                  /* the nucleotide sequence from the user input */
+	ForwardEnzyme        string                                  /* the 5' restriction enzyme from the user input */
+	ReverseEnzyme        string                                  /* the 3' restriction enzyme from the user input */
+	ForwardComplementary string                                  /* length of 5' primer overlap with target sequence */
+	ReverseComplementary string                                  /* length of 3' primer overlap with target sequence */
+	ForwardOverhang      string                                  /* number of 5' random nucleotides from the user input */
+	ReverseOverhang      string                                  /* number of 3' random nucleotides from the user input */
+	Start                string                                  /* 'yes' or 'no', indicating presence of start codon */
+	Stop                 string                                  /* 'yes' or 'no', indicating presence of stop codon */
+	Enzymes              map[string]cloningprimer.RestrictEnzyme /* holds restriction enzyme information */
+	ForwardPrimer        string                                  /* holds the computed forward primer */
+	ReversePrimer        string                                  /* holds the computed reverse primer */
 }
 
 func init() {
@@ -221,7 +223,11 @@ func computePrimersHandler(w http.ResponseWriter, r *http.Request) {
 	case "no":
 		startBool = true
 	}
-	d.ForwardPrimer, err = cloningprimer.FindForward(d.Sequence, restrictF, 1, 18, overhangF, startBool)
+	compF, err := strconv.Atoi(d.ForwardComplementary) /* get length of 5' complementary sequence */
+	if err != nil {
+		log.Fatal(err)
+	}
+	d.ForwardPrimer, err = cloningprimer.FindForward(d.Sequence, restrictF, 1, compF, overhangF, startBool)
 	if err != nil {
 		d.ForwardPrimer = fmt.Sprintf("an error occured: %v", err)
 		log.Printf("error calculating forward primer: %v\n", err)
@@ -243,7 +249,11 @@ func computePrimersHandler(w http.ResponseWriter, r *http.Request) {
 	case "no":
 		stopBool = true
 	}
-	d.ReversePrimer, err = cloningprimer.FindReverse(d.Sequence, restrictR, 1, 18, overhangR, stopBool)
+	compR, err := strconv.Atoi(d.ReverseComplementary) /* get length of 5' complementary sequence */
+	if err != nil {
+		log.Fatal(err)
+	}
+	d.ReversePrimer, err = cloningprimer.FindReverse(d.Sequence, restrictR, 1, compR, overhangR, stopBool)
 	if err != nil {
 		d.ReversePrimer = fmt.Sprintf("an error occured: %v", err)
 		log.Printf("error calculating reverse primer: %v\n", err)
@@ -281,6 +291,8 @@ func printDesignFormData(r *http.Request) {
 	log.Printf("/computePrimers/ r.Form['sequenceQuery']: %v\n", r.Form["sequenceQuery"])
 	log.Printf("/computePrimers/ r.Form['forwardEnzyme']: %v\n", r.Form["forwardEnzyme"])
 	log.Printf("/computePrimers/ r.Form['reverseEnzyme']: %v\n", r.Form["reverseEnzyme"])
+	log.Printf("/computePrimers/ r.Form['forwardComplementary']: %v\n", r.Form["forwardComplementary"])
+	log.Printf("/computePrimers/ r.Form['reverseComplementary']: %v\n", r.Form["reverseComplementary"])
 	log.Printf("/computePrimers/ r.Form['forwardOverhang']: %v\n", r.Form["forwardOverhang"])
 	log.Printf("/computePrimers/ r.Form['reverseOverhang']: %v\n", r.Form["reverseOverhang"])
 	log.Printf("/computePrimers/ r.Form['startRadio']: %v\n", r.Form["startRadio"])
@@ -289,13 +301,15 @@ func printDesignFormData(r *http.Request) {
 
 func parseDesignFormData(r *http.Request) designForm {
 	d := designForm{
-		Sequence:        r.Form["sequenceQuery"][0],
-		ForwardEnzyme:   r.Form["forwardEnzyme"][0],
-		ReverseEnzyme:   r.Form["reverseEnzyme"][0],
-		ForwardOverhang: r.Form["forwardOverhang"][0],
-		ReverseOverhang: r.Form["reverseOverhang"][0],
-		Start:           r.Form["startRadio"][0],
-		Stop:            r.Form["stopRadio"][0],
+		Sequence:             r.Form["sequenceQuery"][0],
+		ForwardEnzyme:        r.Form["forwardEnzyme"][0],
+		ReverseEnzyme:        r.Form["reverseEnzyme"][0],
+		ForwardComplementary: r.Form["forwardComplementary"][0],
+		ReverseComplementary: r.Form["reverseComplementary"][0],
+		ForwardOverhang:      r.Form["forwardOverhang"][0],
+		ReverseOverhang:      r.Form["reverseOverhang"][0],
+		Start:                r.Form["startRadio"][0],
+		Stop:                 r.Form["stopRadio"][0],
 	}
 	return d
 }

@@ -32,7 +32,7 @@
                 <div class="container-fluid col-sm-1"></div>
                 <div class="container-fluid col-sm-10">
                     <h3 id="sequence_section">Step 1: Enter a Sequence</h3>
-                    <p>Please enter a nucleotide sequence:</p>
+                    <p>Please enter a nucleotide sequence from 5' to 3' (only <span class="code_snippet">A</span>, <span class="code_snippet">T</span>, <span class="code_snippet">G</span>, and <span class="code_snippet">C</span> and the lower-case equivalents are allowed):</p>
                     <div class="form-group">
                         <textarea class="form-control" id="sequenceQuery" name="sequenceQuery" placeholder="Enter your sequence here..." rows="6"></textarea>
                     </div>
@@ -63,6 +63,63 @@
                               {{ end }}
                             </select>
                         </div>
+                    </div>
+                    <div class="row_subparagraph">
+                        <h4>Length of Complementary Primer Sequence</h4>
+                        <p>Please indicate how long the 5' overlap of the forward primer with your sequence should be:</p>
+                        <div class="col-sm-2 col_no_padding">
+                            <select class="custom-select" size="3" name="forwardComplementary">
+                              <option value="10" selected>10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+                              <option value="13">13</option>
+                              <option value="14">14</option>
+                              <option value="15">15</option>
+                              <option value="16">16</option>
+                              <option value="17">17</option>
+                              <option value="18">18</option>
+                              <option value="19">19</option>
+                              <option value="20">20</option>
+                              <option value="21">21</option>
+                              <option value="22">22</option>
+                              <option value="23">23</option>
+                              <option value="24">24</option>
+                              <option value="25">25</option>
+                              <option value="26">26</option>
+                              <option value="27">27</option>
+                              <option value="28">28</option>
+                              <option value="29">29</option>
+                              <option value="30">30</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-10"></div>
+                        <p class="spaced_p">Please indicate how long the 3' overlap of the reverse primer with your sequence should be:</p>
+                        <div class="col-sm-2 col_no_padding">
+                            <select class="custom-select" size="3" name="reverseComplementary">
+                              <option value="10" selected>10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+                              <option value="13">13</option>
+                              <option value="14">14</option>
+                              <option value="15">15</option>
+                              <option value="16">16</option>
+                              <option value="17">17</option>
+                              <option value="18">18</option>
+                              <option value="19">19</option>
+                              <option value="20">20</option>
+                              <option value="21">21</option>
+                              <option value="22">22</option>
+                              <option value="23">23</option>
+                              <option value="24">24</option>
+                              <option value="25">25</option>
+                              <option value="26">26</option>
+                              <option value="27">27</option>
+                              <option value="28">28</option>
+                              <option value="29">29</option>
+                              <option value="30">30</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-10"></div>
                     </div>
                     <div class="row_subparagraph">
                         <h4>Number of Random Nucleotides</h4>
@@ -161,6 +218,14 @@
                         <tr>
                             <td scope="row">3' Restriction Enzyme</td>
                             <td><span class="code_snippet">{{ .ReverseEnzyme }}</span></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Length of 5' Overlap with Sequence</td>
+                            <td><span class="code_snippet">{{ .ForwardComplementary }}</span></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Length of 3' Overlap with Sequence</td>
+                            <td><span class="code_snippet">{{ .ReverseComplementary }}</span></td>
                         </tr>
                         <tr>
                             <td scope="row">Length of 5' Overhang</td>

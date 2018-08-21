@@ -8,8 +8,14 @@ import (
 )
 
 const (
-	// Codon is a constant of length 3
+	// Codon is a sequence of 3 nucleotides
 	Codon = 3
+
+	// MinimumPrimerLength gives the minimum length that a primer must be
+	MinimumPrimerLength = 10
+
+	// MaximumPrimerLength gives the maximum length that a primer can be
+	MaximumPrimerLength = 30
 )
 
 // FindForward finds a forward primer with a `length' number of complementary nucleotides, binding to the specified starting position (`seqStart'), counting from the 5' end) and up to (`seqStart' + `length' - 1); e.g. if `length' = 10 and `start' = 1, a primer will be returned that binds to nucleotides 1 - 10; the boolean `startCodon' indicates if an 'ATG' should be added and is only evaluated if no 'ATG' is found in the input `seq' (if that is the case, 'ATG' adds three nucleotides to the total length of the primer); `random' indicates how many random nucleotides should be added as an overhang; `restrict' is a string giving the recognition sequence of a restriction enzyme
@@ -32,9 +38,9 @@ func FindForward(seq, restrict string, seqStart, length, random int, startCodon 
 		return "", fmt.Errorf("invalid input random = %v, expected integer value between 2 and 10", random)
 	}
 
-	// a `length' < 16, > 30 and > `seq' returns an error
-	if (length < 16) || (length > 30) || (length > len(seq)) {
-		return "", fmt.Errorf("invalid input length = %d, must be an integer value larger than 15 and smaller than the length of the given sequence", length)
+	// a `length' < 10, > 30 and > `seq' returns an error
+	if (length < MinimumPrimerLength) || (length > MaximumPrimerLength) || (length > len(seq)) {
+		return "", fmt.Errorf("invalid input length = %d, must be an integer value >= %d and smaller than the length of the given sequence (as well as <= the maximum primer length of %d)", length, MinimumPrimerLength, MaximumPrimerLength)
 	}
 
 	// if (`seqStart' + `length' -1) > length of `seq' an error is returned
@@ -88,9 +94,9 @@ func FindReverse(seq, restrict string, seqStart, length, random int, stopCodon b
 		return "", fmt.Errorf("invalid input random = %v, expected integer value between 2 and 10", random)
 	}
 
-	// a `length' < 16, > 30 and > `seq' returns an error
-	if (length < 16) || (length > 30) || (length > len(seq)) {
-		return "", fmt.Errorf("invalid input length = %d, must be an integer value larger than 15 and smaller than the length of the given sequence", length)
+	// a `length' < 10, > 30 and > `seq' returns an error
+	if (length < MinimumPrimerLength) || (length > MaximumPrimerLength) || (length > len(seq)) {
+		return "", fmt.Errorf("invalid input length = %d, must be an integer value >= %d and smaller than the length of the given sequence (as well as <= the maximum primer length of %d)", length, MinimumPrimerLength, MaximumPrimerLength)
 	}
 
 	// if (`seqStart' + `length' -1) > length of `seq' an error is returned

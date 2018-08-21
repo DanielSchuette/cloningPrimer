@@ -151,6 +151,32 @@ func TestFindForward(t *testing.T) {
 			want: "AGCTGGATCCATGGACTCCAACACTGCT",
 			err:  nil,
 		},
+		// length of primer shorter than `MinimumPrimerLength'
+		{
+			in: inputForPrimer{
+				seq:      "ATGGACTCCAACACTGCTCCGCTGGGCCCCTCCTGCCC",
+				restrict: "GGATTC",
+				seqStart: 1,
+				length:   8,
+				random:   4,
+				addCodon: false,
+			},
+			want: "",
+			err:  errors.New("invalid input length = 8, must be an integer value >= 10 and smaller than the length of the given sequence (as well as <= the maximum primer length of 30)"),
+		},
+		// length of primer larger than `MaximumPrimerLength'
+		{
+			in: inputForPrimer{
+				seq:      "ATGGACTCCAACACTGCTCCGCTGGGCCCCTCCTGCCC",
+				restrict: "GGATTC",
+				seqStart: 1,
+				length:   32,
+				random:   4,
+				addCodon: false,
+			},
+			want: "",
+			err:  errors.New("invalid input length = 32, must be an integer value >= 10 and smaller than the length of the given sequence (as well as <= the maximum primer length of 30)"),
+		},
 	}
 
 	// loop over test cases
@@ -336,6 +362,32 @@ func TestFindReverse(t *testing.T) {
 			},
 			want: "AGCTGAATTCTTAACGCAGTGGCAGGTCCTC",
 			err:  nil,
+		},
+		// length of primer shorter than `MinimumPrimerLength'
+		{
+			in: inputForPrimer{
+				seq:      "ATGGACTCCAACACTGCTCCGCTGGGCCCCTCCTGCCC",
+				restrict: "GGATTC",
+				seqStart: 1,
+				length:   8,
+				random:   4,
+				addCodon: false,
+			},
+			want: "",
+			err:  errors.New("invalid input length = 8, must be an integer value >= 10 and smaller than the length of the given sequence (as well as <= the maximum primer length of 30)"),
+		},
+		// length of primer larger than `MaximumPrimerLength'
+		{
+			in: inputForPrimer{
+				seq:      "ATGGACTCCAACACTGCTCCGCTGGGCCCCTCCTGCCC",
+				restrict: "GGATTC",
+				seqStart: 1,
+				length:   32,
+				random:   4,
+				addCodon: false,
+			},
+			want: "",
+			err:  errors.New("invalid input length = 32, must be an integer value >= 10 and smaller than the length of the given sequence (as well as <= the maximum primer length of 30)"),
 		},
 	}
 
