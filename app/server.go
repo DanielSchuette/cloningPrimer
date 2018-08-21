@@ -309,9 +309,9 @@ func printDesignFormData(r *http.Request) {
 }
 
 func parseDesignFormData(r *http.Request) (designForm, error) {
-	// check validity of input
+	// check validity of form field input
 	if (len(r.Form["sequenceQuery"]) == 0) || (len(r.Form["forwardEnzyme"]) == 0) || (len(r.Form["reverseEnzyme"]) == 0) || (len(r.Form["forwardComplementary"]) == 0) || (len(r.Form["reverseComplementary"]) == 0) || (len(r.Form["forwardOverhang"]) == 0) || (len(r.Form["reverseOverhang"]) == 0) || (len(r.Form["startRadio"]) == 0) || (len(r.Form["stopRadio"]) == 0) {
-		// if any of the form field is empty, return an empty `designForm' struct and an error
+		// if any of the form fields is empty, return an empty `designForm' struct and an error
 		return designForm{}, errors.New("zero-length form element")
 	}
 

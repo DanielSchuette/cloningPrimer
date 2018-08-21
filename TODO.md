@@ -36,5 +36,6 @@
 
 8. enable custom primer input
 
+9. Python port
 
 
