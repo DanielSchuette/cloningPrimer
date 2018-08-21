@@ -2,10 +2,13 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
+	"strconv"
+	"strings"
 
 	cloningprimer "github.com/DanielSchuette/cloningPrimer"
 )
@@ -28,6 +31,8 @@ type designForm struct {
 	Start           string                                  /* either 'yes' or 'no', indicating presence of start codon */
 	Stop            string                                  /* either 'yes' or 'no', indicating presence of stop codon */
 	Enzymes         map[string]cloningprimer.RestrictEnzyme /* holds restriction enzyme information */
+	ForwardPrimer   string                                  /* holds the computed forward primer */
+	ReversePrimer   string                                  /* holds the computed reverse primer */
 }
 
 func init() {
@@ -179,19 +184,75 @@ func computePrimersHandler(w http.ResponseWriter, r *http.Request) {
 
 	// if no input was received, return `designcompute' template without data
 	// this particular input box returns a slice containing just one string
-	if len(r.Form["sequenceQuery"]) > 0 {
-		if r.Form["sequenceQuery"][0] == "" {
-			err := tmpl.ExecuteTemplate(w, "design", enzymes)
-			if err != nil {
-				log.Fatal(err)
-			}
-			return
-		}
-		err := tmpl.ExecuteTemplate(w, "designcompute", d)
+	if d.Sequence == "" || d.ForwardEnzyme == "" || d.ReverseEnzyme == "" {
+		err := tmpl.ExecuteTemplate(w, "design", enzymes)
 		if err != nil {
 			log.Fatal(err)
 		}
 		return
+	}
+
+	// if input was received, validate input sequence
+	d.Sequence, err = validateSequence([]byte(d.Sequence))
+	if err != nil {
+		log.Printf("error validating user input sequence: %v\n", err)
+
+		// return `designpage' template to user and return from handler
+		err = tmpl.ExecuteTemplate(w, "designcompute", d)
+		if err != nil {
+			log.Fatal(err)
+		}
+		return
+	}
+
+	// compute forward primer and append it to `d' struct
+	restrictF := enzymes[d.ForwardEnzyme].RecognitionSite /* get recognition sequence of primer from `enzymes' map */
+	overhangF, err := strconv.Atoi(d.ForwardOverhang)     /* get number of random nucleotides */
+	if err != nil {
+		log.Fatal(err)
+	}
+	var startBool bool
+	switch d.Start {
+	// if input sequence has a start codon, set `startCodon' to false (no start codon is going to be added)
+	case "yes":
+		startBool = false
+
+	// if input sequence has no start codon, set `startCodon' to true (a start codon is going to be added automatically)
+	case "no":
+		startBool = true
+	}
+	d.ForwardPrimer, err = cloningprimer.FindForward(d.Sequence, restrictF, 1, 18, overhangF, startBool)
+	if err != nil {
+		d.ForwardPrimer = fmt.Sprintf("an error occured: %v", err)
+		log.Printf("error calculating forward primer: %v\n", err)
+	}
+
+	// compute reverse primer and append it to `d' struct
+	restrictR := enzymes[d.ReverseEnzyme].RecognitionSite /* get recognition sequence of primer from `enzymes' map */
+	overhangR, err := strconv.Atoi(d.ReverseOverhang)     /* get number of random nucleotides */
+	if err != nil {
+		log.Fatal(err)
+	}
+	var stopBool bool
+	switch d.Stop {
+	// if input sequence has a stop codon, set `stopCodon' to false (no stop codon is going to be added)
+	case "yes":
+		stopBool = false
+
+	// if input sequence has no stop codon, set `stopCodon' to true (a stop codon is going to be added automatically)
+	case "no":
+		stopBool = true
+	}
+	d.ReversePrimer, err = cloningprimer.FindReverse(d.Sequence, restrictR, 1, 18, overhangR, stopBool)
+	if err != nil {
+		d.ReversePrimer = fmt.Sprintf("an error occured: %v", err)
+		log.Printf("error calculating reverse primer: %v\n", err)
+	}
+
+	// execute template with data
+	err = tmpl.ExecuteTemplate(w, "designcompute", d)
+	if err != nil {
+		log.Fatal(err)
 	}
 }
 
@@ -237,4 +298,25 @@ func parseDesignFormData(r *http.Request) designForm {
 		Stop:            r.Form["stopRadio"][0],
 	}
 	return d
+}
+
+func validateSequence(seq []byte) (string, error) {
+	// iterate over sequence and append bytes to `s' while ignoring ' ', '\n', '\r', and so forth
+	// return the sequence and an error if a byte is not a valid nucleotide
+	var s []byte
+	for _, b := range seq {
+		if b == 9 || b == 10 || b == 11 || b == 12 || b == 13 || b == 32 {
+			continue
+		}
+
+		// if the current letter is not a valid nucleotide, return the sequence up to
+		// this point and an error
+		if !cloningprimer.IsNucleotide(b) {
+			s = append(s, b)
+			s = append(s, []byte(" ... this character is not a valid nucleotide (must be one of A,T,C,G)")...)
+			return string(s), fmt.Errorf("invalid char in nucleotide sequence: %v", string(b))
+		}
+		s = append(s, []byte(strings.ToUpper(string(b)))...)
+	}
+	return string(s), nil
 }

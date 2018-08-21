@@ -142,19 +142,82 @@
             <div class="container-fluid col-sm-10">
                 <h3 id="results_section">Step 3: Results</h3> 
                 <h4 class="spaced_p">Input Parameters</h4>
-                <p>
-                Nucleotide Sequence: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&thinsp;&thinsp;<span class="code_snippet">{{ .Sequence }}</span><br>
-                5' Restriction Enzyme: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&thinsp;&thinsp;<span class="code_snippet">{{ .ForwardEnzyme }}</span><br>
-                3' Restriction Enzyme: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&thinsp;&thinsp;<span class="code_snippet">{{ .ReverseEnzyme }}</span><br>
-                Length of 5' Overhang: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="code_snippet">{{ .ForwardOverhang }}</span><br>
-                Length of 3' Overhang: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span class="code_snippet">{{ .ReverseOverhang }}</span><br>
-                Does Sequence Have a Start Codon: &emsp;&emsp;<span class="code_snippet">{{ .Start }}</span><br>
-                Does Sequence Have a Stop Codon: &emsp;&emsp;&thinsp;<span class="code_snippet">{{ .Stop }}</span>
-                </p>
+                <table class="table table-hover" summary="Input Parameters">
+                    <thead>
+                        <tr>
+                            <th scope="col">Parameter</th>
+                            <th scope="col">Input</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row">Nucleotide Sequence</td>
+                            <td><span class="code_snippet">{{ .Sequence }}</span></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">5' Restriction Enzyme</td>
+                            <td><span class="code_snippet">{{ .ForwardEnzyme }}</span></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">3' Restriction Enzyme</td>
+                            <td><span class="code_snippet">{{ .ReverseEnzyme }}</span></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Length of 5' Overhang</td>
+                            <td><span class="code_snippet">{{ .ForwardOverhang }}</span></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Length of 3' Overhang</td>
+                            <td><span class="code_snippet">{{ .ReverseOverhang }}</span></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Sequence with Start Codon</td>
+                            <td><span class="code_snippet">{{ .Start }}</span></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Sequence with Stop Codon</td>
+                            <td><span class="code_snippet">{{ .Stop }}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
                 <h4 class="spaced_p">Predicted Primers</h4>
-                <p>Coming soon!</p>
+                <table class="table table-hover" summary="Primer Computation Results">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Primer Sequence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row">Forward</td>
+                            <td><span class="code_snippet">{{ .ForwardPrimer }}</span></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Reverse</td>
+                            <td><span class="code_snippet">{{ .ReversePrimer }}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
                 <h4 class="spaced_p">Statistics</h4>
-                <p>Coming soon!</p>
+                <table class="table table-hover" summary="Primer Computation Statistics">
+                    <thead>
+                        <tr>
+                            <th scope="col">...</th>
+                            <th scope="col">...</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row">...</td>
+                            <td><span class="code_snippet">...</span></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">...</td>
+                            <td><span class="code_snippet">...</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="container-fluid col-sm-1"></div>
         </div>
