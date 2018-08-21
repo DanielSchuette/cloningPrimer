@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"html/template"
@@ -181,13 +182,21 @@ func computePrimersHandler(w http.ResponseWriter, r *http.Request) {
 	// parse request form and print query information on server site
 	r.ParseForm()
 	printDesignFormData(r)
-	d := parseDesignFormData(r)
+	d, err := parseDesignFormData(r)
+	if err != nil {
+		log.Printf("error while parsing form for primer computation: %v\n", err)
+		err = tmpl.ExecuteTemplate(w, "design", enzymes)
+		if err != nil {
+			log.Fatal(err)
+		}
+		return
+	}
 	d.Enzymes = enzymes
 
 	// if no input was received, return `designcompute' template without data
 	// this particular input box returns a slice containing just one string
 	if d.Sequence == "" || d.ForwardEnzyme == "" || d.ReverseEnzyme == "" {
-		err := tmpl.ExecuteTemplate(w, "design", enzymes)
+		err = tmpl.ExecuteTemplate(w, "design", enzymes)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -299,7 +308,14 @@ func printDesignFormData(r *http.Request) {
 	log.Printf("/computePrimers/ r.Form['stopRadio']: %v\n", r.Form["stopRadio"])
 }
 
-func parseDesignFormData(r *http.Request) designForm {
+func parseDesignFormData(r *http.Request) (designForm, error) {
+	// check validity of input
+	if (len(r.Form["sequenceQuery"]) == 0) || (len(r.Form["forwardEnzyme"]) == 0) || (len(r.Form["reverseEnzyme"]) == 0) || (len(r.Form["forwardComplementary"]) == 0) || (len(r.Form["reverseComplementary"]) == 0) || (len(r.Form["forwardOverhang"]) == 0) || (len(r.Form["reverseOverhang"]) == 0) || (len(r.Form["startRadio"]) == 0) || (len(r.Form["stopRadio"]) == 0) {
+		// if any of the form field is empty, return an empty `designForm' struct and an error
+		return designForm{}, errors.New("zero-length form element")
+	}
+
+	// populate `designForm' fields and return `d' to caller
 	d := designForm{
 		Sequence:             r.Form["sequenceQuery"][0],
 		ForwardEnzyme:        r.Form["forwardEnzyme"][0],
@@ -311,7 +327,7 @@ func parseDesignFormData(r *http.Request) designForm {
 		Start:                r.Form["startRadio"][0],
 		Stop:                 r.Form["stopRadio"][0],
 	}
-	return d
+	return d, nil
 }
 
 func validateSequence(seq []byte) (string, error) {
