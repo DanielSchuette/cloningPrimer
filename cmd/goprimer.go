@@ -14,10 +14,14 @@ var (
 	enzymeFile  = flag.String("enzyme_file", "../app/assets/enzymes.re", "valid file path to a *.re file with correctly formatted restriction enzyme information\ndefault is the file at 'github.com/DanielSchuette/app/assets/enzymes.re'")
 	enzymeNameF = flag.String("enzyme_name_forward", "BamHI", "name of the enzyme you want to use for the 5' end (must be in the '--enzyme_file')")
 	enzymeNameR = flag.String("enzyme_name_reverse", "EcoRI", "name of the enzyme you want to use for the 3' end (must be in the '--enzyme_file')")
-	start       = flag.Int("5prime_start", 1, "5' position of the first complementary nucleotide in the provided sequence that the forward primer should bind to\nsee './doc' for more information on how to customize primer calculations")
-	stop        = flag.Int("3prime_start", 1, "3' position of the first complementary nucleotide in the provided sequence that the reverse primer should bind to\nsee './doc' for more information on how to customize primer calculations")
+	startPos    = flag.Int("5prime_start", 1, "5' position of the first complementary nucleotide in the provided sequence that the forward primer should bind to\nsee './doc' for more information on how to customize primer calculations")
+	stopPos     = flag.Int("3prime_start", 1, "3' position of the first complementary nucleotide in the provided sequence that the reverse primer should bind to\nsee './doc' for more information on how to customize primer calculations")
 	overhangF   = flag.Int("overhang_forward", 4, "number of random nucleotides added to the forward primer (an integer between 2 - 10)")
 	overhangR   = flag.Int("overhang_reverse", 4, "number of random nucleotides added to the reverse primer (an integer between 2 - 10)")
+	lengthF     = flag.Int("length_forward", 18, "length of the complementary part of the forward primer")
+	lengthR     = flag.Int("length_reverse", 18, "length of the complementary part of the reverse primer")
+	startCodon  = flag.Bool("start_codon", true, "set this flag to 'false' if the input sequence does not have a start codon (an ATG will be added automatically)")
+	stopCodon   = flag.Bool("stop_codon", true, "set this flag to 'false' if the input sequence does not have a stop cdon (then, a TAA will be added automatically)")
 	verbose     = flag.Bool("verbose", false, "enable verbose output (defaults to false)")
 )
 
@@ -85,5 +89,12 @@ func main() {
 	}
 	fmt.Println(enzymeF, enzymeR)
 
-	// TODO: calculate primers based upon `seq', `enzymeNameF', and `enzymeNameR'
+	// calculate primers based upon `seq', `enzymeF', and `enzymeR'
+	primerF, err := cloningprimer.FindForward(seq, enzymeF, *startPos, *lengthF, *overhangF, *startCodon)
+	primerR, err := cloningprimer.FindReverse(seq, enzymeR, *stopPos, *lengthR, *overhangR, *stopCodon)
+
+	// print input parameters and result of calculations
+	fmt.Println("computing primers...")
+	fmt.Printf("a forward primer was computed starting at position %d (from the 5' end of the sequence)\n%d random nucleotides were added before the enzyme recognition sequence (%s)\nthe length of the complementary part of the primer is %d\na start codon was added automatically: %v\nresult: %s\n", *startPos, *overhangF, enzymeF, *lengthF, !*startCodon, primerF)
+	fmt.Printf("a reverse primer was computed starting at position %d (from the 3' end of the sequence)\n%d random nucleotides were added before the enzyme recognition sequence (%s)\nthe length of the complementary part of the primer is %d\na start codon was added automatically: %v\nresult: %s\n", *stopPos, *overhangR, enzymeR, *lengthR, !*stopCodon, primerR)
 }
