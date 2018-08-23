@@ -25,7 +25,9 @@ CLI binaries can be downloaded from [./bin](./bin) in this repository.
 
 ## <a name="documentation"></a> Documentation
 
-Documentation regarding the Go API of *Cloning Primer* is available [here](https://godoc.org/github.com/DanielSchuette/cloningPrimer).
+### Application Programming Interface (API)
+
+More documentation regarding the Go API of *Cloning Primer* is available [here](https://godoc.org/github.com/DanielSchuette/cloningPrimer).
 
 A minimal, working example:
 
@@ -66,12 +68,17 @@ func main() {
 }
 ```
 
+### Command Line Interface (CLI)
+
+Documentation is coming soon.
 
 
+### Web Application
+
+Documentation is coming soon.
 
 
 ## <a name="license"></a> License
-
 
 This software is licensed under the MIT license, see *[LICENSE](./LICENSE.txt)* for more information.
 
