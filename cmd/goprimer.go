@@ -91,7 +91,13 @@ func main() {
 
 	// calculate primers based upon `seq', `enzymeF', and `enzymeR'
 	primerF, err := cloningprimer.FindForward(seq, enzymeF, *startPos, *lengthF, *overhangF, *startCodon)
+	if err != nil {
+		log.Fatalf("error while computing forward primer: %v\n", err)
+	}
 	primerR, err := cloningprimer.FindReverse(seq, enzymeR, *stopPos, *lengthR, *overhangR, *stopCodon)
+	if err != nil {
+		log.Fatalf("error while computing reverse primer: %v\n", err)
+	}
 
 	// print input parameters and result of calculations
 	fmt.Println("computing primers...")
