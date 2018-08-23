@@ -55,7 +55,7 @@ func ParseEnzymesFromFile(file string) (map[string]RestrictEnzyme, error) {
 	var itemContainer *RestrictEnzyme /* temporary variable to hold current data item before adding it to map */
 
 Loop:
-	for i := 0; i < len(b); i++ {
+	for i, n := 0, len(b); i < n; i++ {
 		// decide what to do next
 		if i < len(b)-2 {
 			// if current char is a new line delimiter, decide how to proceed
@@ -121,7 +121,7 @@ Loop:
 		}
 	}
 
-	fmt.Printf("parsed %d enzymes\n", line)
+	fmt.Printf("parsed %d enzymes from '%s'\n", line, file)
 	return enzymesMap, nil
 }
 
@@ -152,7 +152,54 @@ func ParseSequenceFromFile(file string) (string, error) {
 		return "", fmt.Errorf("error reading from file: %v", err)
 	}
 
-	// TODO: implement commenting in *.seq files and ignore ' ' and '\n'
+	// parse data line-wise into a `restrictEnzyme' struct
+	var noNucleotides int /* variable to keep track of number of parsed nucleotides *.seq file (for user output) */
+	var parse bool        /* variable to keep track of whether the current line should be parsed or not */
+	var seq []byte        /* temporary variable to hold the growing nucleotide sequence as it is parsed */
 
-	return string(b), nil
+Loop:
+	for i, n := 0, len(b); i < n; i++ {
+		// decide what to do next
+		if i < len(b)-2 {
+			// if current char is a new line delimiter, decide how to proceed
+			if b[i] == '\n' {
+				switch {
+				// if next char is not a comment '/' and the next char not '*' => set parse to true and continue parsing the next line
+				case (b[i+1] != '/') && (b[i+2] != '*'):
+					parse = true
+					continue Loop
+
+				// if next char is a comment '/' or '*' => do not parse next line
+				case (b[i+1] == '/') || (b[i+2] == '*'):
+					parse = false
+				}
+			}
+		}
+
+		// edge case: if the current line is the first line, set parse to false if this line is a comment
+		if i < len(b)-1 {
+			if (b[i] == '/') && (b[i+1] == '*') {
+				parse = false
+			}
+		}
+
+		// if parse is false, continue the loop until the switch triggers again
+		if !parse {
+			continue Loop
+		}
+
+		// if current char is not within a comment line, assume that it is part of a nucleotide sequence
+		// if the current char is not a valid nucleotide char, return an error to the caller (but ignore white spaces)
+		if b[i] == 10 {
+			continue Loop
+		}
+		if !IsNucleotide(b[i]) {
+			return string(seq), fmt.Errorf("invalid letter in nucleotide sequence: %s at position %d", string(b[i]), noNucleotides)
+		}
+		seq = append(seq, b[i])
+		noNucleotides++
+	}
+
+	fmt.Printf("parsed %d nucleotides from '%s'\n", noNucleotides, file)
+	return string(seq), nil
 }
