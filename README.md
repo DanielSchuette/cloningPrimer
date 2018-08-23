@@ -20,12 +20,27 @@ A pre-release version of the web application is available [here](http://www.clon
 CLI binaries can be downloaded from [./bin](./bin) in this repository.
 
 
+### Table of Contents
+
+1. [About](#about)
+
+2. [Overview](#overview)
+
+3. [Documentation](#documentation)
+
+    * [API](#api)
+
+    * [CLI](#cli)
+
+    * [Web App](#web_app)
+
+4. [License](#license)
 
 
 
 ## <a name="documentation"></a> Documentation
 
-### Application Programming Interface (API)
+### <a name="api"></a> Application Programming Interface (API)
 
 More documentation regarding the Go API of *Cloning Primer* is available [here](https://godoc.org/github.com/DanielSchuette/cloningPrimer).
 
@@ -68,12 +83,12 @@ func main() {
 }
 ```
 
-### Command Line Interface (CLI)
+### <a name="cli"></a> Command Line Interface (CLI)
 
 Documentation is coming soon.
 
 
-### Web Application
+### <a name="web_app"></a> Web Application
 
 Documentation is coming soon.
 
@@ -81,6 +96,7 @@ Documentation is coming soon.
 ## <a name="license"></a> License
 
 This software is licensed under the MIT license, see *[LICENSE](./LICENSE.txt)* for more information.
+
 
 
 
