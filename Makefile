@@ -10,7 +10,7 @@ $(EXEC): test windows
 
 .PHONY: test
 test: lint 
-	go test $(PKGS)
+	go test -v -cover $(PKGS)
 
 .PHONY: lint
 lint: $(GOMETALINTER)
