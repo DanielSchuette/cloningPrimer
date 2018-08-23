@@ -97,4 +97,7 @@ func main() {
 	fmt.Println("computing primers...")
 	fmt.Printf("a forward primer was computed starting at position %d (from the 5' end of the sequence)\n%d random nucleotides were added before the enzyme recognition sequence (%s)\nthe length of the complementary part of the primer is %d\na start codon was added automatically: %v\nresult: %s\n", *startPos, *overhangF, enzymeF, *lengthF, !*startCodon, primerF)
 	fmt.Printf("a reverse primer was computed starting at position %d (from the 3' end of the sequence)\n%d random nucleotides were added before the enzyme recognition sequence (%s)\nthe length of the complementary part of the primer is %d\na start codon was added automatically: %v\nresult: %s\n", *stopPos, *overhangR, enzymeR, *lengthR, !*stopCodon, primerR)
+
+	// TODO: calculate statistics and output them to the user
+	// TODO: make output colorful to increase readability
 }

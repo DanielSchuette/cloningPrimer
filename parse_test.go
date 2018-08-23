@@ -1,3 +1,11 @@
 package cloningprimer
 
-// TODO: implement unit tests
+import "testing"
+
+func TestParseEnzymesFromFile(t *testing.T) {
+	// TODO: implement
+}
+
+func TestParseSequenceFromFile(t *testing.T) {
+	// TODO: implement
+}
