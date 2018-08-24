@@ -7,6 +7,7 @@ import (
 	"os"
 
 	cloningprimer "github.com/DanielSchuette/cloningPrimer"
+	"github.com/fatih/color"
 )
 
 var (
@@ -31,26 +32,41 @@ func main() {
 
 	// check if `seqFile' and `enzymeFile' arguments are provided
 	if (*seqFile == "") || (*enzymeFile == "") {
+		color.Set(color.FgRed) /* make output colorful */
 		fmt.Println("arguments `--seq_file' and `--enzyme_file' are required (see `--help' for more information)")
+		color.Unset() /* unset colorful output */
 		os.Exit(1)
 	}
 
 	// load *.re file
+	color.Set(color.FgGreen) /* make output colorful */
 	enzymes, err := cloningprimer.ParseEnzymesFromFile(*enzymeFile)
+	color.Unset() /* unset colorful output */
+	color.Unset()
 	if err != nil {
+		color.Set(color.FgRed) /* make output colorful */
 		log.Fatalf("error while loading *.re file: %v\n", err)
+		color.Unset() /* unset colorful output */
 	}
 	if *verbose {
+		color.Set(color.FgBlue) /* make output colorful */
 		fmt.Println(enzymes)
+		color.Unset() /* unset colorful output */
 	}
 
 	// load *.seq file
+	color.Set(color.FgGreen) /* make output colorful */
 	seq, err := cloningprimer.ParseSequenceFromFile(*seqFile)
+	color.Unset() /* unset colorful output */
 	if err != nil {
+		color.Set(color.FgRed) /* make output colorful */
 		log.Fatalf("error while loading *.seq file: %v\n", err)
+		color.Unset() /* unset colorful output */
 	}
 	if *verbose {
+		color.Set(color.FgBlue) /* make output colorful */
 		fmt.Println(seq)
+		color.Unset() /* unset colorful output */
 	}
 
 	// get forward and reverse primer recognition sequences from the `enzymes' map using regular expression matching
@@ -59,51 +75,77 @@ func main() {
 	var enzymeR string /* variable to hold the 3' enzyme */
 	enzymeFMap, err := cloningprimer.FilterEnzymeMap(enzymes, *enzymeNameF)
 	if err != nil {
+		color.Set(color.FgRed) /* make output colorful */
 		log.Fatalf("error filtering enzyme map: %v\n", err)
+		color.Unset() /* unset colorful output */
 	}
 	if len(enzymeFMap) < 1 {
+		color.Set(color.FgRed) /* make output colorful */
 		log.Fatalf("invalid input: cannot find %v in '%s'\n", *enzymeNameF, *enzymeFile)
+		color.Unset() /* unset colorful output */
 	}
 	if len(enzymeFMap) > 1 {
+		color.Set(color.FgRed) /* make output colorful */
 		log.Fatalf("invalid input: %v matches multiple enzyme names in '%s':\n%v\n", *enzymeNameF, *enzymeFile, enzymeFMap)
+		color.Unset() /* unset colorful output */
 	}
 	for k, v := range enzymeFMap {
+		color.Set(color.FgYellow) /* make output colorful */
 		fmt.Printf("using %v as the 5' restriction enzyme (recognition sequence: %v)\n", k, v.RecognitionSite)
+		color.Unset() /* unset colorful output */
 		enzymeF = v.RecognitionSite
 	}
 
 	// reverse primer:
 	enzymeRMap, err := cloningprimer.FilterEnzymeMap(enzymes, *enzymeNameR)
 	if err != nil {
+		color.Set(color.FgRed) /* make output colorful */
 		log.Fatalf("error filtering enzyme map: %v\n", err)
+		color.Unset() /* unset colorful output */
 	}
 	if len(enzymeRMap) < 1 {
+		color.Set(color.FgRed) /* make output colorful */
 		log.Fatalf("invalid input: cannot find %v in '%s'\n", *enzymeNameR, *enzymeFile)
+		color.Unset() /* unset colorful output */
 	}
 	if len(enzymeRMap) > 1 {
+		color.Set(color.FgRed) /* make output colorful */
 		log.Fatalf("invalid input: %v matches multiple enzyme names in '%s':\n%v\n", *enzymeNameR, *enzymeFile, enzymeRMap)
+		color.Unset() /* unset colorful output */
 	}
 	for k, v := range enzymeRMap {
+		color.Set(color.FgYellow) /* make output colorful */
 		fmt.Printf("using %v as the 3' restriction enzyme (recognition sequence: %v)\n", k, v.RecognitionSite)
+		color.Unset() /* unset colorful output */
 		enzymeR = v.RecognitionSite
 	}
-	fmt.Println(enzymeF, enzymeR)
 
 	// calculate primers based upon `seq', `enzymeF', and `enzymeR'
 	primerF, err := cloningprimer.FindForward(seq, enzymeF, *startPos, *lengthF, *overhangF, *startCodon)
 	if err != nil {
+		color.Set(color.FgRed) /* make output colorful */
 		log.Fatalf("error while computing forward primer: %v\n", err)
+		color.Unset() /* unset colorful output */
 	}
 	primerR, err := cloningprimer.FindReverse(seq, enzymeR, *stopPos, *lengthR, *overhangR, *stopCodon)
 	if err != nil {
+		color.Set(color.FgRed) /* make output colorful */
 		log.Fatalf("error while computing reverse primer: %v\n", err)
+		color.Unset() /* unset colorful output */
 	}
 
 	// print input parameters and result of calculations
+	color.Set(color.FgYellow, color.Bold) /* make output colorful */
 	fmt.Println("computing primers...")
-	fmt.Printf("a forward primer was computed starting at position %d (from the 5' end of the sequence)\n%d random nucleotides were added before the enzyme recognition sequence (%s)\nthe length of the complementary part of the primer is %d\na start codon was added automatically: %v\nresult: %s\n", *startPos, *overhangF, enzymeF, *lengthF, !*startCodon, primerF)
-	fmt.Printf("a reverse primer was computed starting at position %d (from the 3' end of the sequence)\n%d random nucleotides were added before the enzyme recognition sequence (%s)\nthe length of the complementary part of the primer is %d\na start codon was added automatically: %v\nresult: %s\n", *stopPos, *overhangR, enzymeR, *lengthR, !*stopCodon, primerR)
+	color.Unset() /* unset colorful output */
+	fmt.Printf("a forward primer was computed starting at position %d (from the 5' end of the sequence)\n%d random nucleotides were added before the enzyme recognition sequence (%s)\nthe length of the complementary part of the primer is %d\na start codon was added automatically: %v\n", *startPos, *overhangF, enzymeF, *lengthF, !*startCodon)
+	color.Set(color.FgGreen, color.Bold) /* make output colorful */
+	fmt.Printf("result: %s\n", primerF)
+	color.Unset() /* unset colorful ouput */
+	fmt.Printf("a reverse primer was computed starting at position %d (from the 3' end of the sequence)\n%d random nucleotides were added before the enzyme recognition sequence (%s)\nthe length of the complementary part of the primer is %d\na start codon was added automatically: %v\n", *stopPos, *overhangR, enzymeR, *lengthR, !*stopCodon)
+	color.Set(color.FgGreen, color.Bold) /* make output colorful */
+	fmt.Printf("result: %s\n", primerR)
+	color.Unset() /* unset colorful ouput */
 
 	// TODO: calculate statistics and output them to the user
-	// TODO: make output colorful to increase readability
 }
