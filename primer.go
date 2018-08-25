@@ -258,3 +258,27 @@ func HasStopCodon3(seq string) bool {
 	}
 	return true
 }
+
+// ValidateSequence takes a slice of bytes as an input and checks if it contains anything else but
+// valid nucleotide letters ('A', 'G', 'T', 'C'); lower case letters are accepted and capitalized
+// '/n' and white spaces are silently ignored and a valid sequence is returned to the caller
+func ValidateSequence(seq []byte) (string, error) {
+	// iterate over sequence and append bytes to `s' while ignoring ' ', '\n', '\r', and so forth
+	// return the all upper case sequence and an error if a byte is not a valid nucleotide
+	var s []byte
+	for _, b := range seq {
+		if b == 9 || b == 10 || b == 11 || b == 12 || b == 13 || b == 32 {
+			continue
+		}
+
+		// if the current letter is not a valid nucleotide, return the sequence up to
+		// this point and an error
+		if !IsNucleotide(b) {
+			s = append(s, b)
+			s = append(s, []byte(" ... this character is not a valid nucleotide (must be one of A,T,C,G)")...)
+			return string(s), fmt.Errorf("invalid char in nucleotide sequence: %v", string(b))
+		}
+		s = append(s, []byte(strings.ToUpper(string(b)))...)
+	}
+	return string(s), nil
+}

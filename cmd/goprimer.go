@@ -147,5 +147,32 @@ func main() {
 	fmt.Printf("result: %s\n", primerR)
 	color.Unset() /* unset colorful ouput */
 
-	// TODO: calculate statistics and output them to the user
+	// calculate 'GC' content of forward and reverse primer
+	fmt.Println("----------------------------------------------------------------------\nStatistics:")
+	gcContentF, err := cloningprimer.CalculateGC(primerF)
+	if err != nil {
+		log.Fatalf("error calculating forward primer 'GC' content: %v\n", err)
+	}
+	gcContentR, err := cloningprimer.CalculateGC(primerR)
+	if err != nil {
+		log.Fatalf("error calculating reverse primer 'GC' content: %v\n", err)
+	}
+	color.Set(color.FgGreen, color.Bold)
+	fmt.Printf("GC content of forward primer: %v\n", gcContentF)
+	fmt.Printf("GC content of reverse primer: %v\n", gcContentR)
+	color.Unset()
+
+	// calculate 'Tm' values
+	tmF, err := cloningprimer.CalculateTm(primerF, *lengthF)
+	if err != nil {
+		log.Fatalf("error calculating forward primer Tm: %v\n", err)
+	}
+	tmR, err := cloningprimer.CalculateTm(primerR, *lengthR)
+	if err != nil {
+		log.Fatalf("error calculating reverse primer Tm: %v\n", err)
+	}
+	color.Set(color.FgGreen, color.Bold)
+	fmt.Printf("Tm of complementary part of forward primer: %v\n", tmF)
+	fmt.Printf("Tm of complementary part of reverse primer: %v\n", tmR)
+	color.Unset()
 }

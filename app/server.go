@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
 
 	cloningprimer "github.com/DanielSchuette/cloningPrimer"
 )
@@ -204,7 +203,7 @@ func computePrimersHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// if input was received, validate input sequence
-	d.Sequence, err = validateSequence([]byte(d.Sequence))
+	d.Sequence, err = cloningprimer.ValidateSequence([]byte(d.Sequence))
 	if err != nil {
 		log.Printf("error validating user input sequence: %v\n", err)
 
@@ -328,25 +327,4 @@ func parseDesignFormData(r *http.Request) (designForm, error) {
 		Stop:                 r.Form["stopRadio"][0],
 	}
 	return d, nil
-}
-
-func validateSequence(seq []byte) (string, error) {
-	// iterate over sequence and append bytes to `s' while ignoring ' ', '\n', '\r', and so forth
-	// return the sequence and an error if a byte is not a valid nucleotide
-	var s []byte
-	for _, b := range seq {
-		if b == 9 || b == 10 || b == 11 || b == 12 || b == 13 || b == 32 {
-			continue
-		}
-
-		// if the current letter is not a valid nucleotide, return the sequence up to
-		// this point and an error
-		if !cloningprimer.IsNucleotide(b) {
-			s = append(s, b)
-			s = append(s, []byte(" ... this character is not a valid nucleotide (must be one of A,T,C,G)")...)
-			return string(s), fmt.Errorf("invalid char in nucleotide sequence: %v", string(b))
-		}
-		s = append(s, []byte(strings.ToUpper(string(b)))...)
-	}
-	return string(s), nil
 }
