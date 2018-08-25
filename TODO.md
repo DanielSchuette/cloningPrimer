@@ -10,11 +10,20 @@
 
 4. GC content (40 - 60%)
 
-5. annealing temperature between overlap of target and primer (delta 2 - 4°C and > 60°C, according to: Tm = 2°C * (A + T) + 4°C * (C + G))
+5. add more methods for Tm calculation
 
-6. check sequence and recognition sites for restriction sites, start codons, stop codon, ...
+6. Tm between overlap of target and primer (delta 2 - 4°C and > 60°C)
 
-7. optional: 1 or 2 additional stop codons 
+7. check sequence and recognition sites for restriction sites, start codons, stop codon, ...
+
+8. optional: 1 or 2 additional stop codons 
+
+9. HasRestrictionSite(): check if a certain sequence has a certain restriction enzyme recognition site
+
+10. HasStartInSeq(): check if a certain sequence has more than one start codon
+
+11. HasStopInSeq(): check if a certain sequence has more than one stop codon
+
 
 
 ## More TODO's
@@ -30,12 +39,8 @@
 
 5. Virtual digest?
 
-6. 'Assets' tab in web app (*.re, *.seq)
+6. enable file upload for primer computation (or even sequence upload from database ?)
 
-7. enable file upload for primer computation
+7. allow for checking custom cloning primers ('check your primer' tab) 
 
-8. enable custom primer input
-
-9. Python port
-
-
+8. Python port
