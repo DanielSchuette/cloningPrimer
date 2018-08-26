@@ -99,6 +99,30 @@ func TestParseSequenceFromFile(t *testing.T) {
 			want: "",
 			err:  errors.New("error opening file: open tests/doesnotexist.seq: no such file or directory"),
 		},
+		// test correct parsing of sequence from a file without comments: `parse1.seq'
+		{
+			in:   "tests/parse1.seq",
+			want: "ATGGCCGCGT",
+			err:  nil,
+		},
+		// test correct parsing of enzymes from a file with comments: `parse2.seq'
+		{
+			in:   "tests/parse2.seq",
+			want: "ATGGCCGCGT",
+			err:  nil,
+		},
+		// test correct parsing of sequence from a file with additional white spaces and returns: `parse3.seq'
+		{
+			in:   "tests/parse3.seq",
+			want: "ATGGCCGCGTTGACGAGTGAGCATAGGCA",
+			err:  nil,
+		},
+		// test parsing of sequence with non-nucleotide letters from a file: `parse4.seq'
+		{
+			in:   "tests/parse4.seq",
+			want: "ATTATGA",
+			err:  errors.New("invalid letter in nucleotide sequence: Q at position 7"),
+		},
 	}
 
 	// loop over test cases

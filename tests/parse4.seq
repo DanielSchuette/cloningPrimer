@@ -1,0 +1,7 @@
+/*
+ * This file is for testing purposes only
+ * it demonstrates that non-nucleotide characters in
+ * a '.seq' file cause the API to return an error
+ * and the sequence up to the non-nucleotide char
+ */
+ATTATGAQ

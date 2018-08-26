@@ -180,9 +180,12 @@ Loop:
 		}
 
 		// edge case: if the current line is the first line, set parse to false if this line is a comment
-		if i < len(b)-1 {
+		// otherwise, set parse to true and start parsing the sequence
+		if i == 0 {
 			if (b[i] == '/') && (b[i+1] == '*') {
 				parse = false
+			} else {
+				parse = true
 			}
 		}
 
@@ -192,8 +195,9 @@ Loop:
 		}
 
 		// if current char is not within a comment line, assume that it is part of a nucleotide sequence
-		// if the current char is not a valid nucleotide char, return an error to the caller (but ignore white spaces)
-		if b[i] == 10 {
+		// if the current char is not a valid nucleotide char, return an error to the caller
+		// white spaces and other funky characters are ignored
+		if b[i] == 9 || b[i] == 10 || b[i] == 11 || b[i] == 12 || b[i] == 13 || b[i] == 32 {
 			continue Loop
 		}
 		if !IsNucleotide(b[i]) {

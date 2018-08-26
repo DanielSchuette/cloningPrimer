@@ -1,0 +1,11 @@
+/*
+ * This is a file for testing purposes only
+ * it demonstrates that '.seq' files can have comments
+ * and white spaces and returns are silently ignored during parsing
+ */
+ATGGCCGCGT
+
+TGAC     GAGTGAGCA
+TA
+
+GGCA
