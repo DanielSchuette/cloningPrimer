@@ -6,13 +6,16 @@ import (
 	"log"
 	"os"
 	"path"
+	"strings"
 )
 
 // RestrictEnzyme is an internally used struct that holds data of a certain restriction enzyme
 type RestrictEnzyme struct {
-	Name            string /* e.g. EcoRI */
-	RecognitionSite string /* e.g. AACGTT */
-	NoPalinCleav    string /* either "no" or "(...)(...)", see *.re specification in ./assets/enzymes.re */
+	Name            string   /* e.g. EcoRI */
+	RecognitionSite string   /* e.g. AACGTT */
+	NoPalinCleav    string   /* either "no" or "(...)(...)", see *.re specification in ./assets/enzymes.re */
+	ID              string   /* the PDB ID of the enzyme */
+	Isoschizomeres  []string /* common isoschizomeres */
 }
 
 // ParseEnzymesFromFile parses enzyme data (identifiers, recognition sequences, etc.) from
@@ -24,8 +27,6 @@ func ParseEnzymesFromFile(file string) (map[string]RestrictEnzyme, error) {
 	if path.Ext(file) != ".re" {
 		return nil, fmt.Errorf("invalid input: %v is not a *.re file (see ./doc.go for more information)", file)
 	}
-
-	// TODO: implement more error checking
 
 	// open file and read its contents
 	f, err := os.Open(file)
@@ -101,6 +102,10 @@ Loop:
 						itemContainer.RecognitionSite = string(dataItem)
 					case 2:
 						itemContainer.NoPalinCleav = string(dataItem)
+					case 3:
+						itemContainer.ID = string(dataItem)
+					case 4:
+						itemContainer.Isoschizomeres = strings.Split(string(dataItem), ",")
 					}
 					column++
 					dataItem = make([]byte, 0)
@@ -133,8 +138,6 @@ func ParseSequenceFromFile(file string) (string, error) {
 	if path.Ext(file) != ".seq" {
 		return "", fmt.Errorf("invalid input: %v is not a *.seq file (see ./doc.go for more information)", file)
 	}
-
-	// TODO: implement more error checking
 
 	// open file and read its contents
 	f, err := os.Open(file)
