@@ -1,6 +1,6 @@
 # CloningPrimer
 
-![GitHub (pre-)release](https://img.shields.io/badge/release-v0.0.2-green.svg) [![GoDoc](https://godoc.org/github.com/DanielSchuette/cloningPrimer?status.svg)](https://godoc.org/github.com/DanielSchuette/cloningPrimer) ![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg) [![Build Status](https://travis-ci.org/DanielSchuette/cloningPrimer.svg?branch=master)](https://travis-ci.org/DanielSchuette/cloningPrimer) [![codecov](https://codecov.io/gh/DanielSchuette/cloningPrimer/branch/master/graph/badge.svg)](https://codecov.io/gh/DanielSchuette/cloningPrimer)
+![GitHub (pre-)release](https://img.shields.io/badge/release-v0.0.3-green.svg) [![GoDoc](https://godoc.org/github.com/DanielSchuette/cloningPrimer?status.svg)](https://godoc.org/github.com/DanielSchuette/cloningPrimer) ![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg) [![Build Status](https://travis-ci.org/DanielSchuette/cloningPrimer.svg?branch=master)](https://travis-ci.org/DanielSchuette/cloningPrimer) [![codecov](https://codecov.io/gh/DanielSchuette/cloningPrimer/branch/master/graph/badge.svg)](https://codecov.io/gh/DanielSchuette/cloningPrimer)
 
 ## <a name="about"></a> About
 
@@ -8,7 +8,8 @@ Cloning Primer is a software tool that facilitates the design of primer pairs fo
 
 The software is accessible via a [web application](http://www.cloningprimer.com), but it is recommended to download the command line application ([CLI](./bin)) to enable offline use. Also, an API (written in Go) is available through this GitHub repository. Cloning Primer is under active development, so source code, web interface, API, and CLI might change in the future!
 
-A working version of Cloning Primer is currently available as a pre-release version v0.0.2. Please review the [documentation section](#documentation) of this README file for more information about available functionality.
+A working version of Cloning Primer is currently available as a pre-release version v0.0.3. Please review the [documentation section](#documentation) of this README file for more information about available functionality.
+
 
 
 
@@ -35,6 +36,7 @@ CLI binaries can be downloaded from [./bin](./bin) in this repository.
     * [Web App](#web_app)
 
 4. [License](#license)
+
 
 
 
@@ -83,9 +85,11 @@ func main() {
 }
 ```
 
+
 ### <a name="cli"></a> Command Line Interface (CLI)
 
 Documentation is coming soon.
+
 
 
 ### <a name="web_app"></a> Web Application
@@ -93,9 +97,11 @@ Documentation is coming soon.
 Documentation is coming soon.
 
 
+
 ## <a name="license"></a> License
 
 This software is licensed under the MIT license, see *[LICENSE](./LICENSE.txt)* for more information.
+
 
 
 
