@@ -326,6 +326,9 @@ func HasStopCodon3(seq string, exact bool) bool {
 // valid nucleotide letters ('A', 'G', 'T', 'C'); lower case letters are accepted and capitalized
 // '/n' and white spaces are silently ignored and a valid sequence is returned to the caller
 func ValidateSequence(seq []byte) (string, error) {
+	if seq == nil {
+		return "", errors.New("nil slice is not a valid sequence")
+	}
 	// iterate over sequence and append bytes to `s' while ignoring ' ', '\n', '\r', and so forth
 	// return the all upper case sequence and an error if a byte is not a valid nucleotide
 	var s []byte

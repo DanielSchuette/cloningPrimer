@@ -8,6 +8,9 @@ import (
 // CalculateGC takes a `primer' as an input and returns the GC nucleotide content as a floating point number between 0.0 and 1.0
 func CalculateGC(primer string) (float64, error) {
 	// check validity of input
+	if primer == "" {
+		return 0.0, errors.New("input sequence `primer' cannot be empty")
+	}
 	seq, err := ValidateSequence([]byte(primer))
 	if err != nil {
 		return 0.0, fmt.Errorf("error while calculating GC content: %v", err)
@@ -32,6 +35,9 @@ func CalculateGC(primer string) (float64, error) {
 // if `complementary' is `0', this argument is ignored and the entire `primer' is used for calculations
 func CalculateTm(primer string, complementary int) (float64, error) {
 	// check validity of input
+	if primer == "" {
+		return 0.0, errors.New("input sequence `primer' cannot be empty")
+	}
 	if complementary < 0 {
 		return 0.0, fmt.Errorf("invalid input: `complementary' should be >= 0, not %d", complementary)
 	}
