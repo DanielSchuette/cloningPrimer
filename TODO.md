@@ -27,7 +27,7 @@
 
 
 ## More TODO's
-0. increase test coverage + add codecov badge
+0. increase test coverage
 
 1. Web interface
 
@@ -44,3 +44,4 @@
 7. allow for checking custom cloning primers ('check your primer' tab) 
 
 8. Python port
+
