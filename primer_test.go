@@ -5,12 +5,15 @@ import (
 	"testing"
 )
 
+// test case struct for functions that compute primers
 type testCasePrimer struct {
 	in   inputForPrimer
 	want string
 	err  error
 }
 
+// struct that is used in primer test case struct and that holds
+// input for functions that compute primers
 type inputForPrimer struct {
 	seq      string
 	restrict string
@@ -18,6 +21,19 @@ type inputForPrimer struct {
 	length   int
 	random   int
 	addCodon bool
+}
+
+// test case struct for functions that do computations on codons
+type testCaseCodon struct {
+	in   hasCodon
+	want bool
+}
+
+// struct that is used in codon test case struct and that holds
+// input for respective functions
+type hasCodon struct {
+	in    string
+	exact bool
 }
 
 func TestFindForward(t *testing.T) {
@@ -419,6 +435,166 @@ func TestFindReverse(t *testing.T) {
 	}
 }
 
+func TestHasStartCodon(t *testing.T) {
+	cases := []testCaseCodon{
+		// test just a start codon
+		{
+			in:   hasCodon{"ATG", true},
+			want: true,
+		},
+		// test start codon at beginning of a sequence
+		{
+			in:   hasCodon{"ATGCCGAGACAGT", true},
+			want: true,
+		},
+		// test start codon at end of a sequence (in this case, `exact' must be false)
+		{
+			in:   hasCodon{"GAGAGCCCACGCGAGATG", false},
+			want: true,
+		},
+		// test sequence without a start codon
+		{
+			in:   hasCodon{"GAGAGCCACGAGCAGCG", true},
+			want: false,
+		},
+		// if the length of the input is < 3, false should always be returned
+		{
+			in:   hasCodon{"AT", true},
+			want: false,
+		},
+	}
+
+	// loop over test cases
+	for _, c := range cases {
+		got := HasStartCodon(c.in.in, c.in.exact)
+
+		// test similarity of expected and received value
+		if got != c.want {
+			t.Errorf("HasStartCodon(%v, %v) == %v, want %v\n", c.in.in, c.in.exact, got, c.want)
+		}
+	}
+}
+
+func TestHasStopCodon1(t *testing.T) {
+	cases := []testCaseCodon{
+		// test just a stop codon
+		{
+			in:   hasCodon{"TTA", true},
+			want: true,
+		},
+		// test stop codon at beginning of a sequence
+		{
+			in:   hasCodon{"TTACCGAGACAGT", true},
+			want: true,
+		},
+		// test stop codon at end of a sequence (in this case, `exact' must be false)
+		{
+			in:   hasCodon{"GAGAGCCCACGCGAGTTA", false},
+			want: true,
+		},
+		// test sequence without a stop codon
+		{
+			in:   hasCodon{"GAGAGCCACGAGCAGCG", true},
+			want: false,
+		},
+		// if the length of the input is < 3, false should always be returned
+		{
+			in:   hasCodon{"AT", true},
+			want: false,
+		},
+	}
+
+	// loop over test cases
+	for _, c := range cases {
+		got := HasStopCodon1(c.in.in, c.in.exact)
+
+		// test similarity of expected and received value
+		if got != c.want {
+			t.Errorf("HasStopCodon1(%v, %v) == %v, want %v\n", c.in.in, c.in.exact, got, c.want)
+		}
+	}
+}
+
+func TestHasStopCodon2(t *testing.T) {
+	cases := []testCaseCodon{
+		// test just a stop codon
+		{
+			in:   hasCodon{"CTA", true},
+			want: true,
+		},
+		// test stop codon at beginning of a sequence
+		{
+			in:   hasCodon{"CTACCGAGACAGT", true},
+			want: true,
+		},
+		// test stop codon at end of a sequence (in this case, `exact' must be false)
+		{
+			in:   hasCodon{"GAGAGCCCACGCGAGCTA", false},
+			want: true,
+		},
+		// test sequence without a stop codon
+		{
+			in:   hasCodon{"GAGAGCCACGAGCAGCG", true},
+			want: false,
+		},
+		// if the length of the input is < 3, false should always be returned
+		{
+			in:   hasCodon{"AT", true},
+			want: false,
+		},
+	}
+
+	// loop over test cases
+	for _, c := range cases {
+		got := HasStopCodon2(c.in.in, c.in.exact)
+
+		// test similarity of expected and received value
+		if got != c.want {
+			t.Errorf("HasStopCodon2(%v, %v) == %v, want %v\n", c.in.in, c.in.exact, got, c.want)
+		}
+	}
+}
+
+func TestHasStopCodon3(t *testing.T) {
+	cases := []testCaseCodon{
+		// test just a stop codon
+		{
+			in:   hasCodon{"TCA", true},
+			want: true,
+		},
+		// test stop codon at beginning of a sequence
+		{
+			in:   hasCodon{"TCACCGAGACAGT", true},
+			want: true,
+		},
+		// test stop codon at end of a sequence (in this case, `exact' must be false)
+		{
+			in:   hasCodon{"GAGAGCCCACGCGAGTCA", false},
+			want: true,
+		},
+		// test sequence without a stop codon
+		{
+			in:   hasCodon{"GAGAGCCACGAGCAGCG", true},
+			want: false,
+		},
+		// if the length of the input is < 3, false should always be returned
+		{
+			in:   hasCodon{"AT", true},
+			want: false,
+		},
+	}
+
+	// loop over test cases
+	for _, c := range cases {
+		got := HasStopCodon3(c.in.in, c.in.exact)
+
+		// test similarity of expected and received value
+		if got != c.want {
+			t.Errorf("HasStopCodon3(%v, %v) == %v, want %v\n", c.in.in, c.in.exact, got, c.want)
+		}
+	}
+}
+
 func TestComplement(t *testing.T) {
 	// TODO: implement unit tests
 }
@@ -435,10 +611,6 @@ func TestAddOverhang(t *testing.T) {
 	// TODO: implement unit tests
 }
 
-func TestHasStartCodon(t *testing.T) {
-	// TODO: implement unit tests
-}
-
-func TestHasStopCodon(t *testing.T) {
+func TestValidateSequence(t *testing.T) {
 	// TODO: implement unit tests
 }

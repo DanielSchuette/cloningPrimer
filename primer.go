@@ -60,8 +60,8 @@ func FindForward(seq, restrict string, seqStart, length, random int, startCodon 
 		}
 	}
 
-	// if the selected part of `seq' does not have a start codon, check how to proceed
-	if !HasStartCodon(string(b)) {
+	// if the selected part of `seq' does not have a start codon at the sequence start, check how to proceed
+	if !HasStartCodon(string(b), true) {
 		switch startCodon {
 		case true:
 			b = append([]byte("ATG"), b...)
@@ -128,7 +128,7 @@ func FindReverse(seq, restrict string, seqStart, length, random int, stopCodon b
 	}
 
 	// if the selected part of `seq' does not have a start codon, check how to proceed
-	if !HasStopCodon1(string(b)) && !HasStopCodon2(string(b)) && !HasStopCodon3(string(b)) {
+	if !HasStopCodon1(string(b), true) && !HasStopCodon2(string(b), true) && !HasStopCodon3(string(b), true) {
 		switch stopCodon {
 		case true:
 			b = append([]byte("TTA"), b...)
@@ -201,62 +201,125 @@ func AddOverhang(seq string, len int, front bool) string {
 }
 
 // HasStartCodon returns true if the first 3 characters of a given input sequence `seq' are 'ATG'
-func HasStartCodon(seq string) bool {
-	if []byte(seq)[0] != 'A' {
+// if `exact' is false, the entire sequence is checked for the triplet 'ATG'
+func HasStartCodon(seq string, exact bool) bool {
+	// check length of `seq' to avoid IndexOutOfBounds error
+	if len(seq) < 3 {
 		return false
 	}
-	if []byte(seq)[1] != 'T' {
-		return false
+
+	// if exact is true, only the first three nucleotides are tested
+	if exact {
+		if []byte(seq)[0] != 'A' {
+			return false
+		}
+		if []byte(seq)[1] != 'T' {
+			return false
+		}
+		if []byte(seq)[2] != 'G' {
+			return false
+		}
+		return true
 	}
-	if []byte(seq)[2] != 'G' {
-		return false
+
+	// if exact is false, the entire sequence is checked for 'ATG'
+	for i, n := 0, len(seq)-2; i < n; i++ {
+		if (seq[i] == 'A') && (seq[i+1] == 'T') && (seq[i+2] == 'G') {
+			return true
+		}
 	}
-	return true
+	return false
 }
 
 // HasStopCodon1 (see also ...2, ...3) returns true if the first 3 characters of a given input sequence `seq' are reversed complements of the stop codon TAA
-func HasStopCodon1(seq string) bool {
-	// for TAA check TTA
-	if []byte(seq)[0] != 'T' {
+// if `exact' is false, the entire sequence is checked for the reverse complement of TAA
+func HasStopCodon1(seq string, exact bool) bool {
+	// check length of `seq' to avoid IndexOutOfBounds error
+	if len(seq) < 3 {
 		return false
 	}
-	if []byte(seq)[1] != 'T' {
-		return false
+
+	// for TAA check TTA if `exact' is true
+	if exact {
+		if []byte(seq)[0] != 'T' {
+			return false
+		}
+		if []byte(seq)[1] != 'T' {
+			return false
+		}
+		if []byte(seq)[2] != 'A' {
+			return false
+		}
+		return true
 	}
-	if []byte(seq)[2] != 'A' {
-		return false
+
+	// if exact is false, the entire sequence is checked for TTA
+	for i, n := 0, len(seq)-2; i < n; i++ {
+		if (seq[i] == 'T') && (seq[i+1] == 'T') && (seq[i+2] == 'A') {
+			return true
+		}
 	}
-	return true
+	return false
 }
 
 // HasStopCodon2 tests reverse complement of TAG (see HasStopCodon1)
-func HasStopCodon2(seq string) bool {
-	// for TAG test CTA
-	if []byte(seq)[0] != 'C' {
+func HasStopCodon2(seq string, exact bool) bool {
+	// check length of `seq' to avoid IndexOutOfBounds error
+	if len(seq) < 3 {
 		return false
 	}
-	if []byte(seq)[1] != 'T' {
-		return false
+
+	// for TAG test CTA if `exact' is true
+	if exact {
+		if []byte(seq)[0] != 'C' {
+			return false
+		}
+		if []byte(seq)[1] != 'T' {
+			return false
+		}
+		if []byte(seq)[2] != 'A' {
+			return false
+		}
+		return true
 	}
-	if []byte(seq)[2] != 'A' {
-		return false
+
+	// if exact is false, the entire sequence is checked for CTA
+	for i, n := 0, len(seq)-2; i < n; i++ {
+		if (seq[i] == 'C') && (seq[i+1] == 'T') && (seq[i+2] == 'A') {
+			return true
+		}
 	}
-	return true
+	return false
 }
 
 // HasStopCodon3 tests reverse complement of TGA (see HasStopCodon1)
-func HasStopCodon3(seq string) bool {
-	// for TGA test TCA
-	if []byte(seq)[0] != 'T' {
+func HasStopCodon3(seq string, exact bool) bool {
+	// check length of `seq' to avoid IndexOutOfBounds error
+	if len(seq) < 3 {
 		return false
 	}
-	if []byte(seq)[1] != 'C' {
-		return false
+
+	// for TGA test TCA is `exact' is true
+	if exact {
+		if []byte(seq)[0] != 'T' {
+			return false
+		}
+		if []byte(seq)[1] != 'C' {
+			return false
+		}
+		if []byte(seq)[2] != 'A' {
+			return false
+		}
+		return true
 	}
-	if []byte(seq)[2] != 'A' {
-		return false
+
+	// if exact is false, the entire sequence is checked for TCA
+	for i, n := 0, len(seq)-2; i < n; i++ {
+		if (seq[i] == 'T') && (seq[i+1] == 'C') && (seq[i+2] == 'A') {
+			return true
+		}
 	}
-	return true
+	return false
 }
 
 // ValidateSequence takes a slice of bytes as an input and checks if it contains anything else but
