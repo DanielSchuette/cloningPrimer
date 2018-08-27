@@ -169,7 +169,7 @@ The output should be the forward and reverse primers for cloning the tp53 gene (
 
 ### <a name="web_app"></a> Web Application
 
-Web app documentation is available on the *Cloning Primer* [website](http//:www.cloningprimer.com/documentation).
+Web app documentation is available on the *Cloning Primer* [website](http://www.cloningprimer.com/documentation).
 
 
 
