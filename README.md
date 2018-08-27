@@ -60,7 +60,7 @@ $ make
 ```
 
 
-**NOTE**: You can install the CLI without installing **GO** by going to the `./bin` directory of this repository and downloading the respective binary for your operating system. However, this is not recommended because you will have to download the example files (in `./app/assets`) manually as well if you want to run the example code below and you cannot use the local web app or the API.
+**NOTE**: You can install the CLI without installing **Go** by going to the `./bin` directory of this repository and downloading the respective binary for your operating system. However, this is not recommended because you will have to download the example files (in `./app/assets`) manually as well if you want to run the example code below and you cannot use the local web app or the API.
 
 
 You can run a local version of the *Cloning Primer* [web app](http://cloningprimer.com), too:
@@ -156,7 +156,7 @@ $ goprimer --help
 #    	enable verbose output (defaults to false)
 ```
 
-If you installed **GO** and `goprimer` correctly (i.e. the `bin/` directory of your workspace is in your `$PATH`), you should be able to run `$ goprimer ...` from every directory. If you want to run the following example, though, navigate to the `./cmd` directory of this repository first (otherwise `goprimer` cannot find the example files):
+If you installed **Go** and `goprimer` correctly (i.e. the `bin/` directory of your workspace is in your `$PATH`), you should be able to run `$ goprimer ...` from every directory. If you want to run the following example, though, navigate to the `./cmd` directory of this repository first (otherwise `goprimer` cannot find the example files):
 
 ```bash
 $ cd $GOPATH/src/github.com/DanielSchuette/cloningPrimer/cmd
@@ -169,7 +169,7 @@ The output should be the forward and reverse primers for cloning the tp53 gene (
 
 ### <a name="web_app"></a> Web Application
 
-Documentation is coming soon.
+Web app documentation is available on the *Cloning Primer* [website](http//:www.cloningprimer.com/documentation).
 
 
 
