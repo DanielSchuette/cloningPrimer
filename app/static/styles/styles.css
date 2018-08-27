@@ -63,7 +63,9 @@ hr {
 /* search bar and button styles */
 #searchform_container {
     margin-left: 0px!important; /* to overwrite bootstrap css attributes */
-    margin-bottom: 0px!important; /* to overwrite bootstrap css attributes */
+}
+
+#search_form {
 }
 
 #searchbar_container {

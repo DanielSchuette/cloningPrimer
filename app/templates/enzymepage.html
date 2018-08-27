@@ -25,7 +25,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Recognition Sequence</th>
-                            <th>Non-Palindromic Cleaveage</th>
+                            <th>Non-Palindromic Cleavage</th>
                             <th>PDB Identifier</th>
                             <th>Isoschizomeres</th>
                         </tr>
@@ -36,10 +36,12 @@
                             <td>{{ $value.Name }}</td>
                             <td>{{ $value.RecognitionSite }}</td>
                             <td>{{ $value.NoPalinCleav }}</td>
-                            <td>Coming soon!</td>
-                            <td>Coming soon!</td>
-                            <!-- future feature: <td>{{/* $value.ID */}}</td>
-                            <td>{{/* $value.Isoschizomeres */}}</td> -->
+                            <td>{{ $value.ID }}</td>
+                            <td>
+                            {{ range $item := $value.Isoschizomeres }}
+                            <span> {{ . }} </span>
+                            {{ end }}
+                            </td>
                         </tr>
                     {{ end }}
                     </tbody>
@@ -48,6 +50,11 @@
             <div class="container-fluid col-sm-1"></div>
         </div>
     </div>
+    <div class="container-fluid col-sm-1"></div>
+    <div class="container-fluid col-sm-10">
+        <p>For a more detailed description of the contents of this table and the abbreviations used, see <a href="https://github.com/DanielSchuette/cloningPrimer/blob/master/app/assets/enzymes.re">this</a> file.</p>    
+    </div>
+    <div class="container-fluid col-sm-1"></div>
     <div class="row container_last_on_page"></div>
 </body>
 {{ template "footer" . }}
