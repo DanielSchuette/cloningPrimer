@@ -29,7 +29,7 @@ CLI binaries can be downloaded from [./bin](./bin) in this repository.
 
 3. [Documentation](#documentation)
 
-    * [API](#api)
+    * [Installation and API](#api)
 
     * [CLI](#cli)
 
@@ -42,7 +42,31 @@ CLI binaries can be downloaded from [./bin](./bin) in this repository.
 
 ## <a name="documentation"></a> Documentation
 
-### <a name="api"></a> Application Programming Interface (API)
+### <a name="api"></a> Installation and Application Programming Interface (API)
+
+#### Installation
+
+To use *Cloning Primer*, install **The Go Programming Language** from [here](https://golang.org/). Follow [these](https://golang.org/doc/code.html) instructions to set up a working **Go** programming environment (you need to set the `$GOPATH` environment variable to be able to `go get` third party packages). The, run the following command at a command prompt:
+
+```bash
+$ go get github.com/DanielSchuette/cloningPrimer
+```
+
+To install the `goprimer` command line tool (CLI), run:
+
+```bash
+$ cd $GOPATH/src/github.com/DanielSchuette/cloningPrimer
+$ make
+```
+
+You can run a local version of the *Cloning Primer* [web app](http://cloningprimer.com), too:
+
+```bash
+$ cd $GOPATH/src/github.com/DanielSchuette/cloningPrimer/app
+$ go run server.go # runs the web app at `localhost:8080'
+```
+
+#### Usage Example
 
 More documentation regarding the Go API of *Cloning Primer* is available [here](https://godoc.org/github.com/DanielSchuette/cloningPrimer).
 
@@ -101,6 +125,7 @@ Documentation is coming soon.
 ## <a name="license"></a> License
 
 This software is licensed under the MIT license, see *[LICENSE](./LICENSE.txt)* for more information.
+
 
 
 

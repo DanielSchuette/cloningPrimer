@@ -24,6 +24,7 @@
 
 11. HasStopInSeq(): check if a certain sequence has more than one stop codon
 
+12. Isoschizomere check
 
 
 ## More TODO's
@@ -45,3 +46,4 @@
 
 8. Python port
 
+9. add more information to 'enzymes.re' file
