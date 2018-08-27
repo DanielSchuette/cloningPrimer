@@ -59,6 +59,10 @@ $ cd $GOPATH/src/github.com/DanielSchuette/cloningPrimer
 $ make
 ```
 
+
+**NOTE**: You can install the CLI without installing **GO** by going to the `./bin` directory of this repository and downloading the respective binary for your operating system. However, this is not recommended because you will have to download the example files (in `./app/assets`) manually as well if you want to run the example code below and you cannot use the local web app or the API.
+
+
 You can run a local version of the *Cloning Primer* [web app](http://cloningprimer.com), too:
 
 ```bash
@@ -160,6 +164,7 @@ $ goprimer
 ```
 
 The output should be the forward and reverse primers for cloning the tp53 gene (sequence in `./app/assets/tp53.seq`). Additional command line flags (`--<argument>`) allow for further customization of these primers. If you want to use `goprimer` to design primers based on your own sequence and/or `.re` enzyme file, specify the `--seq_file` and `--enzyme_file` arguments. Be aware that your `.re` and `.seq` files have to follow the formats specified in the example files, otherwise the `goprimer` utility will not be able to parse your data and will throw an error.
+
 
 
 ### <a name="web_app"></a> Web Application
