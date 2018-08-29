@@ -26,6 +26,8 @@
 
 12. Isoschizomere check
 
+13. Non-palindromic cleavage check
+
 
 ## More TODO's
 0. increase test coverage
@@ -36,7 +38,7 @@
 
 3. API documentation/web app documentation
 
-4. offer access to NCBI blast API (if available?): Blast()
+4. offer access to NCBI blast API: Blast() library
 
 5. Virtual digest?
 
@@ -47,3 +49,4 @@
 8. Python port
 
 9. add more information to 'enzymes.re' file
+
