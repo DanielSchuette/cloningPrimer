@@ -52,3 +52,7 @@
 
 9. add more information to 'enzymes.re' file
 
+10. add a 'plasmids.seq' file and advanced parsing
+
+
+
