@@ -1,7 +1,7 @@
 /* This file provides information about restriction enzymes --
  * namely, their identifiers, recognition sequences (5' to 3'),  
  * PDB identifiers, non-palindromic cleavage [(before)(after)],
- * and 8 - 10 common isoschizomers --
+ * and a comma-separated list of common isoschizomers --
  * to a software that is able to interpret/use this information.
  *
  * Special nucleotide codes:
