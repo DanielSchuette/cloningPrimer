@@ -28,6 +28,8 @@
 
 13. Non-palindromic cleavage check
 
+14. AddTag()
+
 
 ## More TODO's
 0. increase test coverage
