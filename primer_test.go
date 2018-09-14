@@ -458,9 +458,19 @@ func TestHasStartCodon(t *testing.T) {
 			in:   hasCodon{"GAGAGCCCACGCGAGATG", false},
 			want: true,
 		},
-		// test sequence without a start codon
+		// test sequences without a start codon (no 'A', 'T', or 'G')
 		{
 			in:   hasCodon{"GAGAGCCACGAGCAGCG", true},
+			want: false,
+		},
+		// test sequences without a start codon (has 'A' but no 'T' or 'G')
+		{
+			in:   hasCodon{"AAGAGCCACGAGCAGCG", true},
+			want: false,
+		},
+		// test sequences without a start codon (has 'A' and 'T' but no 'G')
+		{
+			in:   hasCodon{"ATCAGCCACGAGCAGCG", true},
 			want: false,
 		},
 		// if the length of the input is < 3, false should always be returned
@@ -661,6 +671,19 @@ func TestComplement(t *testing.T) {
 			}
 		}
 	}
+}
+
+// isEqualByteSlice tests if two byte slices are equal
+func isEqualByteSlice(a, b []byte) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := 0; i < len(a); i++ {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
 }
 
 func TestReverse(t *testing.T) {
