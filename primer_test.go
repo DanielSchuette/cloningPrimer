@@ -36,6 +36,12 @@ type hasCodon struct {
 	exact bool
 }
 
+type testCaseComplement struct {
+	in   byte
+	want byte
+	err  error
+}
+
 func TestFindForward(t *testing.T) {
 	cases := []testCasePrimer{
 		// test invalid input
@@ -596,7 +602,53 @@ func TestHasStopCodon3(t *testing.T) {
 }
 
 func TestComplement(t *testing.T) {
-	// TODO: implement unit tests
+	cases := []testCaseComplement{
+		{
+			in:   'A',
+			want: 'T',
+			err:  nil,
+		},
+	}
+
+	// loop over test cases
+	for _, c := range cases {
+		got, err := Complement(c.in)
+
+		// test similarity of expected and received value
+		if got != c.want {
+			t.Errorf("Complement(%v) == %v, want %v\n", c.in, got, c.want)
+		}
+
+		// if no error is returned, test if none is expected
+		if err == nil && c.err != nil {
+			t.Errorf("Complement(%v) == %v, want %v\n", c.in, got, c.want)
+		}
+
+		// if error is returned, test if an error is expected
+		if err != nil {
+			// if c.err is nil, print wanted and received error
+			// else if an error is wanted and received but error messages are not the same
+			// print wanted and received error
+			if c.err == nil {
+				t.Errorf("Complement(%v) == %v, want %v\n", c.in, got, c.want)
+			} else if err.Error() != c.err.Error() {
+				t.Errorf("Complement(%v) == %v, want %v\n", c.in, got, c.want)
+			}
+		}
+	}
+}
+
+// isEqualByteSlice tests if two byte slices are equal
+func isEqualByteSlice(a, b []byte) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := 0; i < len(a); i++ {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
 }
 
 func TestReverse(t *testing.T) {
