@@ -663,19 +663,6 @@ func TestComplement(t *testing.T) {
 	}
 }
 
-// isEqualByteSlice tests if two byte slices are equal
-func isEqualByteSlice(a, b []byte) bool {
-	if len(a) != len(b) {
-		return false
-	}
-	for i := 0; i < len(a); i++ {
-		if a[i] != b[i] {
-			return false
-		}
-	}
-	return true
-}
-
 func TestReverse(t *testing.T) {
 	// TODO: implement unit tests
 }
