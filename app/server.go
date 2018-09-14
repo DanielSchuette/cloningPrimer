@@ -23,7 +23,8 @@ var (
 		Comp: []int{11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30},
 		Ov:   []int{3, 4, 5, 6, 7, 8, 9, 10},
 	}
-	local = flag.Bool("local", false, "set this argument to `true' to run the server locally at 127.0.0.1:8080")
+	local       = flag.Bool("local", false, "set this argument to `true' to run the server locally at 127.0.0.1:8080")
+	enabledSMTP = flag.Bool("smtp", false, "set this argument to `true' to run the server with SMTP enabled")
 )
 
 // struct designForm is used by the server to hold data that was parsed from the
@@ -85,6 +86,18 @@ func main() {
 	// get port
 	port := getPort()
 
+	// load credentials for SMTP server if enabled (disabled by default)
+	if *enabledSMTP {
+		// get SMTP server related environment variables
+		addr, pswd, host, port := getSMTPCredentials()
+
+		// send email to notify that server is up and running
+		err = sendMail(addr, pswd, host, port, "cloningPrimer server on heroku is up and running")
+		if err != nil {
+			log.Printf("error while sending email: %v\n", err)
+		}
+	}
+
 	// register handler funcs
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/index/", indexHandler)
@@ -125,15 +138,15 @@ func getPort() string {
 }
 
 // Get the SMTP server credentials from the environment
-func getSMTPCredentials() (hostnameSMTP, emailAddress, passwordSMTP, portSMTP string) {
-	var hostnameSMTP = os.Getenv("SMTP_HOSTNAME")
-	var emailAddress = os.Getenv("FROM_MAIL_ADDRESS")
-	var passwordSMTP = os.Getenv("SMTP_PASSWORD")
-	var portSMTP = os.Getenv("SMTP_PORT")
+func getSMTPCredentials() (string, string, string, string) {
+	hostnameSMTP := os.Getenv("SMTP_HOSTNAME")
+	emailAddress := os.Getenv("FROM_MAIL_ADDRESS")
+	passwordSMTP := os.Getenv("SMTP_PASSWORD")
+	portSMTP := os.Getenv("SMTP_PORT")
 	if (hostnameSMTP == "") || (emailAddress == "") || (passwordSMTP == "") || (portSMTP == "") {
-		log.Fatal("valid SMTP environment variables must be set (or run server with --no_smtp flag)")
+		log.Fatal("valid SMTP environment variables must be set (when running the server with --smtp flag)")
 	}
-	return
+	return emailAddress, passwordSMTP, hostnameSMTP, portSMTP
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
@@ -418,17 +431,18 @@ func parseDesignFormData(r *http.Request) (designForm, error) {
 
 // sendMail uses an SMTP server to send user input to an email address
 // all sensitive information (email address and password) is saved as environmental variables
-func sendMail() {
-	auth := smtp.PlainAuth("", emailAddress, passwordSMTP, hostnameSMTP)
-	address := fmt.Sprintf("%s\r\n", emailAddress)
-	msg := []byte("From: " + address +
-		"To: " + address +
-		"Subject: cloningPrimer User Mail\r\n" + "\r\n" +
-		"This is a test email.\r\n")
-	recipients := []string{emailAddress}
+func sendMail(addr, pswd, host, port, msg string) error {
+	auth := smtp.PlainAuth("", addr, pswd, host)
+	message := []byte("From: " + addr + "\r\n" +
+		"To: " + addr + "\r\n" +
+		"Subject: cloningPrimer Mail\r\n" + "\r\n" +
+		msg + "\r\n")
+	recipients := []string{addr}
 
-	err := smtp.SendMail(hostname+":587", auth, emailAddress, recipients, msg)
+	err := smtp.SendMail(host+":"+port, auth, addr, recipients, message)
 	if err != nil {
-		log.Printf("error while sending email: %v\n", err)
+		return err
 	}
+	log.Printf("sent message to %v\n", addr)
+	return nil
 }
