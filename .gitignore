@@ -23,3 +23,6 @@ app/.git/
 
 # ignore files that are required by Heroku
 Procfile
+
+# ignore heroku's .env file
+.env

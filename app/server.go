@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"net/smtp"
 	"os"
 	"strconv"
 
@@ -121,6 +122,18 @@ func getPort() string {
 		log.Printf("no $PORT environment variable detected, defaulting to %v\n" + port)
 	}
 	return ":" + port
+}
+
+// Get the SMTP server credentials from the environment
+func getSMTPCredentials() (hostnameSMTP, emailAddress, passwordSMTP, portSMTP string) {
+	var hostnameSMTP = os.Getenv("SMTP_HOSTNAME")
+	var emailAddress = os.Getenv("FROM_MAIL_ADDRESS")
+	var passwordSMTP = os.Getenv("SMTP_PASSWORD")
+	var portSMTP = os.Getenv("SMTP_PORT")
+	if (hostnameSMTP == "") || (emailAddress == "") || (passwordSMTP == "") || (portSMTP == "") {
+		log.Fatal("valid SMTP environment variables must be set (or run server with --no_smtp flag)")
+	}
+	return
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
@@ -287,11 +300,13 @@ func computePrimersHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	var startBool bool
 	switch d.Start {
-	// if input sequence has a start codon, set `startCodon' to false (no start codon is going to be added)
+	// if input sequence has a start codon, set `startCodon' to false
+	// (no start codon is going to be added)
 	case "yes":
 		startBool = false
 
-	// if input sequence has no start codon, set `startCodon' to true (a start codon is going to be added automatically)
+	// if input sequence has no start codon, set `startCodon' to true
+	// (a start codon is going to be added automatically)
 	case "no":
 		startBool = true
 	}
@@ -313,11 +328,13 @@ func computePrimersHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	var stopBool bool
 	switch d.Stop {
-	// if input sequence has a stop codon, set `stopCodon' to false (no stop codon is going to be added)
+	// if input sequence has a stop codon, set `stopCodon' to false
+	// (no stop codon is going to be added)
 	case "yes":
 		stopBool = false
 
-	// if input sequence has no stop codon, set `stopCodon' to true (a stop codon is going to be added automatically)
+	// if input sequence has no stop codon, set `stopCodon' to true
+	// (a stop codon is going to be added automatically)
 	case "no":
 		stopBool = true
 	}
@@ -397,4 +414,21 @@ func parseDesignFormData(r *http.Request) (designForm, error) {
 		RegionR:              r.Form["stopRegion"][0],
 	}
 	return d, nil
+}
+
+// sendMail uses an SMTP server to send user input to an email address
+// all sensitive information (email address and password) is saved as environmental variables
+func sendMail() {
+	auth := smtp.PlainAuth("", emailAddress, passwordSMTP, hostnameSMTP)
+	address := fmt.Sprintf("%s\r\n", emailAddress)
+	msg := []byte("From: " + address +
+		"To: " + address +
+		"Subject: cloningPrimer User Mail\r\n" + "\r\n" +
+		"This is a test email.\r\n")
+	recipients := []string{emailAddress}
+
+	err := smtp.SendMail(hostname+":587", auth, emailAddress, recipients, msg)
+	if err != nil {
+		log.Printf("error while sending email: %v\n", err)
+	}
 }
