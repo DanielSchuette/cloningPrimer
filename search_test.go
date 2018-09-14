@@ -1,6 +1,9 @@
 package cloningprimer
 
-import "testing"
+import (
+	"errors"
+	"testing"
+)
 
 type searchInput struct {
 	m       map[string]RestrictEnzyme
@@ -33,6 +36,12 @@ func TestFilterEnzymeMap(t *testing.T) {
 			want: "", /* do not expect a match for this test */
 			err:  nil,
 		},
+		// test matching of invalid string (i.e. with partial regex syntax)
+		{
+			in:   searchInput{map[string]RestrictEnzyme{"EcoRI": {}}, "ba(*"},
+			want: "",
+			err:  errors.New("error matching pattern ba(*.*: error parsing regexp: missing argument to repetition operator: `*`"), /* expect an error for this test */
+		},
 	}
 
 	// loop over test cases
@@ -52,7 +61,7 @@ func TestFilterEnzymeMap(t *testing.T) {
 
 		// if no error is returned, test if none is expected
 		if err == nil && c.err != nil {
-			t.Errorf("FilterEnzymeMap(%v, %v) == %v, want %v\n", c.in.m, c.in.pattern, got, c.want)
+			t.Errorf("FilterEnzymeMap(%v, %v) == %v, want %v\n", c.in.m, c.in.pattern, err, c.err)
 		}
 
 		// if error is returned, test if an error is expected
@@ -61,9 +70,9 @@ func TestFilterEnzymeMap(t *testing.T) {
 			// else if an error is wanted and received but error messages are not the same
 			// print wanted and received error
 			if c.err == nil {
-				t.Errorf("FilterEnzymeMap(%v, %v) == %v, want %v\n", c.in.m, c.in.pattern, got, c.want)
+				t.Errorf("FilterEnzymeMap(%v, %v) == %v, want %v\n", c.in.m, c.in.pattern, err, c.err)
 			} else if err.Error() != c.err.Error() {
-				t.Errorf("FilterEnzymeMap(%v, %v) == %v, want %v\n", c.in.m, c.in.pattern, got, c.want)
+				t.Errorf("FilterEnzymeMap(%v, %v) == %v, want %v\n", c.in.m, c.in.pattern, err, c.err)
 			}
 		}
 	}
