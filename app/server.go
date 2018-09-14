@@ -24,7 +24,7 @@ var (
 		Ov:   []int{3, 4, 5, 6, 7, 8, 9, 10},
 	}
 	local       = flag.Bool("local", false, "set this argument to `true' to run the server locally at 127.0.0.1:8080")
-	enabledSMTP = flag.Bool("smtp", false, "set this argument to `true' to run the server with SMTP enabled")
+	enabledSMTP = flag.Bool("smtp", true, "set this argument to `false' to run the server with SMTP disabled")
 )
 
 // struct designForm is used by the server to hold data that was parsed from the
@@ -86,7 +86,7 @@ func main() {
 	// get port
 	port := getPort()
 
-	// load credentials for SMTP server if enabled (disabled by default)
+	// load credentials for SMTP server if enabled (the default case)
 	if *enabledSMTP {
 		// get SMTP server related environment variables
 		addr, pswd, host, port := getSMTPCredentials()
