@@ -603,10 +603,35 @@ func TestHasStopCodon3(t *testing.T) {
 
 func TestComplement(t *testing.T) {
 	cases := []testCaseComplement{
+		// test nucleotide 'A'
 		{
 			in:   'A',
 			want: 'T',
 			err:  nil,
+		},
+		// test nucleotide 'T'
+		{
+			in:   'T',
+			want: 'A',
+			err:  nil,
+		},
+		// test nucleotide 'G'
+		{
+			in:   'G',
+			want: 'C',
+			err:  nil,
+		},
+		// test nucleotide 'C'
+		{
+			in:   'C',
+			want: 'G',
+			err:  nil,
+		},
+		// test invalid nucleotide
+		{
+			in:   'Q',
+			want: 0,
+			err:  errors.New("invalid input: Q is not a nucleotide"),
 		},
 	}
 
@@ -621,7 +646,7 @@ func TestComplement(t *testing.T) {
 
 		// if no error is returned, test if none is expected
 		if err == nil && c.err != nil {
-			t.Errorf("Complement(%v) == %v, want %v\n", c.in, got, c.want)
+			t.Errorf("Complement(%v) == %v, want %v\n", c.in, err, c.err)
 		}
 
 		// if error is returned, test if an error is expected
@@ -630,9 +655,9 @@ func TestComplement(t *testing.T) {
 			// else if an error is wanted and received but error messages are not the same
 			// print wanted and received error
 			if c.err == nil {
-				t.Errorf("Complement(%v) == %v, want %v\n", c.in, got, c.want)
+				t.Errorf("Complement(%v) == %v, want %v\n", c.in, err, c.err)
 			} else if err.Error() != c.err.Error() {
-				t.Errorf("Complement(%v) == %v, want %v\n", c.in, got, c.want)
+				t.Errorf("Complement(%v) == %v, want %v\n", c.in, err, c.err)
 			}
 		}
 	}

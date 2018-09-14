@@ -164,7 +164,7 @@ func Reverse(seq string) string {
 // Complement finds the complement of a nucleotide sequence (i.e. Watson-Crick base pairs)
 func Complement(nucleotide byte) (byte, error) {
 	if !IsNucleotide(nucleotide) {
-		return 0, fmt.Errorf("invalid input: %v is not a nucleotide", nucleotide)
+		return 0, fmt.Errorf("invalid input: %v is not a nucleotide", string(nucleotide))
 	}
 	switch nucleotide {
 	case 'A', 'a':
