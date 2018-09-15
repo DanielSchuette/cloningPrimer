@@ -35,7 +35,13 @@ func TestParseEnzymesFromFile(t *testing.T) {
 		{
 			in: "tests/parse1.re",
 			want: map[string]RestrictEnzyme{
-				"AclI": {Name: "AclI"},
+				"AclI": {
+					Name:            "AclI",
+					RecognitionSite: "aslkfhsdf",
+					NoPalinCleav:    "sdlfkj",
+					ID:              "sldkfj",
+					Isoschizomeres:  []string{"sdfklj", "sdlfkj"},
+				},
 			},
 			err: nil,
 		},
@@ -43,7 +49,13 @@ func TestParseEnzymesFromFile(t *testing.T) {
 		{
 			in: "tests/parse2.re",
 			want: map[string]RestrictEnzyme{
-				"AclI": {Name: "AclI"},
+				"AclI": {
+					Name:            "AclI",
+					RecognitionSite: "aslkfhsdf",
+					NoPalinCleav:    "sdlfkj",
+					ID:              "sdfk",
+					Isoschizomeres:  []string{"sdlkfj", "sdflkj"},
+				},
 			},
 			err: nil,
 		},
@@ -51,7 +63,13 @@ func TestParseEnzymesFromFile(t *testing.T) {
 		{
 			in: "tests/parse3.re",
 			want: map[string]RestrictEnzyme{
-				"AclI": {Name: "AclI"},
+				"AclI": {
+					Name:            "AclI",
+					RecognitionSite: "slfkj",
+					NoPalinCleav:    "sdlkfj",
+					ID:              "sldkfj",
+					Isoschizomeres:  []string{"sldkjf"},
+				},
 			},
 			err: nil,
 		},
@@ -154,16 +172,32 @@ func TestParseSequenceFromFile(t *testing.T) {
 }
 
 // isSimilarMap only tests if all keys in `m1' exist in `m2' and if all mapped `RestrictEnzyme'
-// structs have matching names; thus, this function can only be used for testing purposes!
-func isSimilarMap(m1 map[string]RestrictEnzyme, m2 map[string]RestrictEnzyme) bool {
+// structs have matching values for their fields
+// this function is not robust if invalid input is provided and should only be used for testing purposes!
+func isSimilarMap(m1, m2 map[string]RestrictEnzyme) bool {
 	if (m1 == nil) && (m2 == nil) {
 		return true
 	}
 	for k, v := range m1 {
+		// test fields of type string
 		if val, ok := m2[k]; !ok {
 			return false
 		} else if val.Name != v.Name {
 			return false
+		} else if val.RecognitionSite != v.RecognitionSite {
+			return false
+		} else if val.NoPalinCleav != v.NoPalinCleav {
+			return false
+		} else if val.ID != v.ID {
+			return false
+		} else if len(val.Isoschizomeres) != len(v.Isoschizomeres) {
+			return false
+		} else {
+			for i := 0; i < len(val.Isoschizomeres); i++ {
+				if val.Isoschizomeres[i] != v.Isoschizomeres[i] {
+					return false
+				}
+			}
 		}
 	}
 	return true
