@@ -3,4 +3,4 @@
  * Files with comments ('/*', or ' *', or ' */' at the start of a line)
  * a parsed without a problem; even without column labels!
  */
-'AclI'            'AACGTT'                              'no'
+'AclI'            'AACGTT'                  'no'    'A1A1'  'AclI'
