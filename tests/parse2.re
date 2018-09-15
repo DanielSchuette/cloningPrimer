@@ -4,4 +4,4 @@
  * a parsed without a problem
  */
 enzyme_name       recognition_sequence                  non_palindromic_cleaveage   PDB_ID  isoschizomers
-'AclI'            'AACGTT'                              'no'
+'AclI'            'AACGTT'                              'no'                        'A1A1'  'AclI'

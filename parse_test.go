@@ -2,6 +2,7 @@ package cloningprimer
 
 import (
 	"errors"
+	"log"
 	"testing"
 )
 
@@ -37,10 +38,10 @@ func TestParseEnzymesFromFile(t *testing.T) {
 			want: map[string]RestrictEnzyme{
 				"AclI": {
 					Name:            "AclI",
-					RecognitionSite: "aslkfhsdf",
-					NoPalinCleav:    "sdlfkj",
-					ID:              "sldkfj",
-					Isoschizomeres:  []string{"sdfklj", "sdlfkj"},
+					RecognitionSite: "invalid",
+					NoPalinCleav:    "invalid",
+					ID:              "invalid",
+					Isoschizomeres:  []string{"invalid", "invalid"},
 				},
 			},
 			err: nil,
@@ -51,10 +52,10 @@ func TestParseEnzymesFromFile(t *testing.T) {
 			want: map[string]RestrictEnzyme{
 				"AclI": {
 					Name:            "AclI",
-					RecognitionSite: "aslkfhsdf",
-					NoPalinCleav:    "sdlfkj",
-					ID:              "sdfk",
-					Isoschizomeres:  []string{"sdlkfj", "sdflkj"},
+					RecognitionSite: "invalid",
+					NoPalinCleav:    "invalid",
+					ID:              "invalid",
+					Isoschizomeres:  []string{"invalid", "invalid"},
 				},
 			},
 			err: nil,
@@ -65,10 +66,10 @@ func TestParseEnzymesFromFile(t *testing.T) {
 			want: map[string]RestrictEnzyme{
 				"AclI": {
 					Name:            "AclI",
-					RecognitionSite: "slfkj",
-					NoPalinCleav:    "sdlkfj",
-					ID:              "sldkfj",
-					Isoschizomeres:  []string{"sldkjf"},
+					RecognitionSite: "invalid",
+					NoPalinCleav:    "invalid",
+					ID:              "invalid",
+					Isoschizomeres:  []string{"invalid", "invalid"},
 				},
 			},
 			err: nil,
@@ -78,6 +79,8 @@ func TestParseEnzymesFromFile(t *testing.T) {
 	// loop over test cases
 	for _, c := range cases {
 		got, err := ParseEnzymesFromFile(c.in)
+		log.Printf("parsed len: %v, expect len: %v\n", len(got), len(c.want))
+		log.Printf("parsed: %v, expect: %v\n", got, c.want)
 
 		// test similarity of expected and received value
 		if !isSimilarMap(got, c.want) {
@@ -177,6 +180,9 @@ func TestParseSequenceFromFile(t *testing.T) {
 func isSimilarMap(m1, m2 map[string]RestrictEnzyme) bool {
 	if (m1 == nil) && (m2 == nil) {
 		return true
+	}
+	if (m1 == nil) || (m2 == nil) {
+		return false
 	}
 	for k, v := range m1 {
 		// test fields of type string

@@ -4,3 +4,4 @@
  * a parsed without a problem; even without column labels!
  */
 'AclI'            'AACGTT'                  'no'    'A1A1'  'AclI'
+'AclII'           'ACCGGT'                  'no'    'A2A2'  'AclII'

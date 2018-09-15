@@ -57,7 +57,16 @@ func ParseEnzymesFromFile(file string) (map[string]RestrictEnzyme, error) {
 
 Loop:
 	for i, n := 0, len(b); i < n; i++ {
-		// decide what to do next
+		// current char is the last char in the document => add parsed results to `enzymesMap'
+		if (i + 1) == n {
+			if itemContainer != nil {
+				if _, ok := enzymesMap[itemContainer.Name]; !ok {
+					enzymesMap[itemContainer.Name] = *itemContainer
+				}
+			}
+		}
+
+		// otherwise, the document is not yet fully parsed => decide what to do next
 		if i < len(b)-2 {
 			// if current char is a new line delimiter, decide how to proceed
 			if b[i] == '\n' {
@@ -126,7 +135,7 @@ Loop:
 		}
 	}
 
-	fmt.Printf("parsed %d enzymes from '%s'\n", line, file)
+	fmt.Printf("parsed %d of %d enzyme(s) from '%s'\n", len(enzymesMap), line, file)
 	return enzymesMap, nil
 }
 
