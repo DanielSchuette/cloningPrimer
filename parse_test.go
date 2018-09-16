@@ -2,7 +2,6 @@ package cloningprimer
 
 import (
 	"errors"
-	"log"
 	"testing"
 )
 
@@ -38,10 +37,8 @@ func TestParseEnzymesFromFile(t *testing.T) {
 			want: map[string]RestrictEnzyme{
 				"AclI": {
 					Name:            "AclI",
-					RecognitionSite: "invalid",
-					NoPalinCleav:    "invalid",
-					ID:              "invalid",
-					Isoschizomeres:  []string{"invalid", "invalid"},
+					RecognitionSite: "AACGTT",
+					NoPalinCleav:    "no",
 				},
 			},
 			err: nil,
@@ -52,24 +49,32 @@ func TestParseEnzymesFromFile(t *testing.T) {
 			want: map[string]RestrictEnzyme{
 				"AclI": {
 					Name:            "AclI",
-					RecognitionSite: "invalid",
-					NoPalinCleav:    "invalid",
-					ID:              "invalid",
-					Isoschizomeres:  []string{"invalid", "invalid"},
+					RecognitionSite: "AACGTT",
+					NoPalinCleav:    "no",
+					ID:              "A1A1",
+					Isoschizomeres:  []string{"AclI"},
 				},
 			},
 			err: nil,
 		},
 		// test correct parsing of enzymes from a file with comments but no column labels: `parse2.re'
+		// also, two enzymes are passed instead of just one
 		{
 			in: "tests/parse3.re",
 			want: map[string]RestrictEnzyme{
 				"AclI": {
 					Name:            "AclI",
-					RecognitionSite: "invalid",
-					NoPalinCleav:    "invalid",
-					ID:              "invalid",
-					Isoschizomeres:  []string{"invalid", "invalid"},
+					RecognitionSite: "AACGTT",
+					NoPalinCleav:    "no",
+					ID:              "A1A1",
+					Isoschizomeres:  []string{"AclI"},
+				},
+				"AclII": {
+					Name:            "AclII",
+					RecognitionSite: "ACCGGT",
+					NoPalinCleav:    "no",
+					ID:              "A2A2",
+					Isoschizomeres:  []string{"AclII", "AclIII"},
 				},
 			},
 			err: nil,
@@ -79,8 +84,6 @@ func TestParseEnzymesFromFile(t *testing.T) {
 	// loop over test cases
 	for _, c := range cases {
 		got, err := ParseEnzymesFromFile(c.in)
-		log.Printf("parsed len: %v, expect len: %v\n", len(got), len(c.want))
-		log.Printf("parsed: %v, expect: %v\n", got, c.want)
 
 		// test similarity of expected and received value
 		if !isSimilarMap(got, c.want) {

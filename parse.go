@@ -57,17 +57,8 @@ func ParseEnzymesFromFile(file string) (map[string]RestrictEnzyme, error) {
 
 Loop:
 	for i, n := 0, len(b); i < n; i++ {
-		// current char is the last char in the document => add parsed results to `enzymesMap'
-		if (i + 1) == n {
-			if itemContainer != nil {
-				if _, ok := enzymesMap[itemContainer.Name]; !ok {
-					enzymesMap[itemContainer.Name] = *itemContainer
-				}
-			}
-		}
-
-		// otherwise, the document is not yet fully parsed => decide what to do next
-		if i < len(b)-2 {
+		// assume that the document is not yet fully parsed => decide what to do next
+		if i < (n - 2) {
 			// if current char is a new line delimiter, decide how to proceed
 			if b[i] == '\n' {
 				switch {
@@ -96,42 +87,62 @@ Loop:
 			if !parse {
 				continue Loop
 			}
-
-			// if current char is a valid item delimiter '\'', perform the appropriate action
-			if b[i] == '\'' {
-				// if this '\'' is delimiting the end of a data item, add the current `dataItem'
-				// to the `itemContainer' field that corresponds to the current `column'
-				// then, increment column count and continue loop after resetting the temporary
-				// data item variable `dataItem' and set `openQuote' to false
-				if openQuote {
-					switch column {
-					case 0:
-						itemContainer.Name = string(dataItem)
-					case 1:
-						itemContainer.RecognitionSite = string(dataItem)
-					case 2:
-						itemContainer.NoPalinCleav = string(dataItem)
-					case 3:
-						itemContainer.ID = string(dataItem)
-					case 4:
-						itemContainer.Isoschizomeres = strings.Split(string(dataItem), ",")
-					}
-					column++
-					dataItem = make([]byte, 0)
-					openQuote = false
-					continue Loop
+		}
+		// if current char is a valid item delimiter '\'', perform the appropriate action
+		if b[i] == '\'' {
+			// if this '\'' is delimiting the end of a data item, add the current `dataItem'
+			// to the `itemContainer' field that corresponds to the current `column'
+			// then, increment column count and continue loop after resetting the temporary
+			// data item variable `dataItem' and set `openQuote' to false
+			if openQuote {
+				switch column {
+				case 0:
+					itemContainer.Name = string(dataItem)
+				case 1:
+					itemContainer.RecognitionSite = string(dataItem)
+				case 2:
+					itemContainer.NoPalinCleav = string(dataItem)
+				case 3:
+					itemContainer.ID = string(dataItem)
+				case 4:
+					itemContainer.Isoschizomeres = strings.Split(string(dataItem), ",")
 				}
-
-				// if this '\'' is delimiting the start of a data item set `openQuote' to true
-				// and continue loop to not add the opening '\'' to the respective string
-				openQuote = true
+				column++
+				dataItem = make([]byte, 0)
+				openQuote = false
 				continue Loop
 			}
+
+			// if this '\'' is delimiting the start of a data item set `openQuote' to true
+			// and continue loop to not add the opening '\'' to the respective string
+			openQuote = true
+
+			// current char is the last char in the document => add parsed results to `enzymesMap'
+			if (i + 1) == n {
+				if itemContainer != nil {
+					if _, ok := enzymesMap[itemContainer.Name]; !ok {
+						enzymesMap[itemContainer.Name] = *itemContainer
+					}
+				}
+			}
+
+			// otherwise => continue the loop
+			continue Loop
 		}
 
 		// if parser is inbetween quotes, append byte to current `dataItem'
 		if openQuote {
 			dataItem = append(dataItem, b[i])
+		}
+
+		// current char is the last char in the document and
+		// no other condition triggered at this point => add parsed results to `enzymesMap'
+		if (i + 1) == n {
+			if itemContainer != nil {
+				if _, ok := enzymesMap[itemContainer.Name]; !ok {
+					enzymesMap[itemContainer.Name] = *itemContainer
+				}
+			}
 		}
 	}
 
