@@ -4,7 +4,7 @@
 
 ## <a name="about"></a> About
 
-Cloning Primer is a software tool that facilitates the design of primer pairs for gene cloning. Given a certain nucleotide sequence and a set of parameters (see [Documentation](#documentation)), it returns forward and reverse primers as well as useful statistics like GC content, the probability of the primer pair to form dimers, and much more.
+Cloning Primer is a software tool to facilitate the design of primer pairs for gene cloning. Given a certain nucleotide sequence and a set of parameters (see [Documentation](#documentation)), it returns forward and reverse primers as well as useful statistics like GC content, the probability of the primer pair to form dimers, and much more.
 
 The software is accessible via a [web application](http://www.cloningprimer.com), but it is recommended to download the command line application ([CLI](./bin)) to enable offline use. Also, an API (written in Go) is available through this GitHub repository. Cloning Primer is under active development, so source code, web interface, API, and CLI might change in the future!
 
