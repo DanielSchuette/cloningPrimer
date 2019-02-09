@@ -92,7 +92,7 @@ func main() {
 		addr, pswd, host, port := getSMTPCredentials()
 
 		// send email to notify that server is up and running
-		err = sendMail(addr, pswd, host, port, "cloningPrimer server on heroku is up and running")
+		err = sendMail(addr, pswd, host, port, "The cloningPrimer server on heroku is up and running")
 		if err != nil {
 			log.Printf("error while sending email: %v\n", err)
 		}
@@ -132,7 +132,7 @@ func getPort() string {
 	// Set a default port if `$PORT' is not set
 	if port == "" {
 		port = "8080"
-		log.Printf("no $PORT environment variable detected, defaulting to %v\n" + port)
+		log.Printf("no $PORT environment variable detected, defaulting to %v\n", port)
 	}
 	return ":" + port
 }
