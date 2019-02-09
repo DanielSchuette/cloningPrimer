@@ -146,6 +146,12 @@ func getSMTPCredentials() (string, string, string, string) {
 	if (hostnameSMTP == "") || (emailAddress == "") || (passwordSMTP == "") || (portSMTP == "") {
 		log.Fatal("valid SMTP environment variables must be set (when running the server with --smtp flag)")
 	}
+
+	// Instead of returning the correct password, return
+	// a mock, so that emails don't get sent. In the future,
+	// this behavior can be reverted back, e.g. for email
+	// notifications that come from a form field.
+	emailAddress = "invalid-address"
 	return emailAddress, passwordSMTP, hostnameSMTP, portSMTP
 }
 
